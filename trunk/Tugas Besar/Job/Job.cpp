@@ -6,30 +6,25 @@ using namespace std;
 
 Job::Job(){}
 
-Job::Job (const string& Race) {
-int i = 0;
-string race;
-while (Race[i] != '\0')
-{	race[i]=Race[i]; 
-	if (race[i]>=65 && race[i]<=90)
-	{race[i] = race[i]+32;}
-	i++; }
+Job::Job (const string& Race)
+{
+    // Race Human
+    if (Race == "human")
+    {
+        RaceName = "Human";
+        AttackPoint    = 300;
+        Defense        = 100;
+        Acc            =  30;
+        Evade          =  15;
+        SpecialBonus   =   1.2;
+        RangeMove      =   4;
+        RangeAttack    =   1;
 
-//Race Human
-if (Race == "human") {
-RaceName = "Human";
-AttackPoint    = 300;
-Defense        = 100;
-Acc            =  30;
-Evade          =  15;
-SpecialBonus   =   1.2;
-RangeMove      =   4;
-RangeAttack    =   1;
-      
-HP             = 1600;
-SP             =  140;
-X              =    0;
-Y              =    0; }
+        HP             = 1600;
+        SP             =  140;
+        X              =    0;
+        Y              =    0;
+    }
 
 //Race Elf
 if (Race == "elf") {
@@ -80,6 +75,38 @@ X              =    0;
 Y              =    0; }
 }
 
+Job::Job(const Job& J)
+{
+    RaceName = J.RaceName;
+    AttackPoint = J.AttackPoint;
+    Defense = J.Defense;
+    Acc = J.Acc;
+    Evade = J.Evade;
+    SpecialBonus = J.SpecialBonus;
+    RangeMove = J.RangeMove;
+    RangeAttack = J.RangeAttack;
+    HP = J.HP;
+    SP = J.SP;
+    X = J.X;
+    Y = J.Y;
+}
+
+Job& Job::operator=(const Job& J)
+{
+    RaceName = J.RaceName;
+    AttackPoint = J.AttackPoint;
+    Defense = J.Defense;
+    Acc = J.Acc;
+    Evade = J.Evade;
+    SpecialBonus = J.SpecialBonus;
+    RangeMove = J.RangeMove;
+    RangeAttack = J.RangeAttack;
+    HP = J.HP;
+    SP = J.SP;
+    X = J.X;
+    Y = J.Y;
+    return *this;
+}
 
 Job::~Job () {}
 //Attribut
