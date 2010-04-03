@@ -37,7 +37,9 @@ protected :
       //METHOD
       //Constructor dan destructor
       Job ();
-	  Job (const string&);
+      Job (const string&);
+      Job (const Job& J);
+      Job& operator=(const Job& J);
       virtual ~Job ();
       
       //Attribute
