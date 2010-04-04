@@ -17,6 +17,7 @@
 
 #include "Job/Job.h"
 #include "Map/Map.h"
+#include "Display/Display.h"
 
 using namespace std;
 
@@ -43,6 +44,7 @@ public:
     static vector<Job*> P2;
 
     static Map M;
+    static Display D;
     
 private:
     
