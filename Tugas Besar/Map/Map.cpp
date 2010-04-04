@@ -51,8 +51,6 @@ void Map::Save(string s)
     Folder ="Data/";
 
     NameFile = Folder+s+ExtFile;
-    //NameFile.append(s,0,s.length());
-    //NameFile.append(ExtFile,0,ExtFile.length());
     ofstream outputfile(NameFile.c_str());
 
     outputfile << SizeX << " " << SizeY<< " #"<<endl;
@@ -135,3 +133,14 @@ void Map::SetMapRandom()
     }
 }
 
+void Map::GetTerrain(int X, int Y)
+{
+    if (X>SizeX || Y>SizeY || Y<1 || X<1)
+    {
+        throw "X Y nya salah oi, diluar jangkauan tau!";
+    }
+    else
+    {
+        return Terrain[X-1][Y-1];
+    }
+}
