@@ -405,11 +405,11 @@
 			preX=x;
 			preY=y;
 			sleep(1);
-			system("cls");
+			system("clear");
 			displayBoxMap(9,9);
 		}
 		sleep(1);
-		system("cls");
+		system("clear");
 		MapPlayer[targetX-1][targetY-1]=MapPlayer[preX][preY];
 		MapPlayer[preX][preY]=0;
 		displayBoxMap(9,9);

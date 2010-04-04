@@ -15,6 +15,7 @@ int DunnoTactic::CommandLength;
 vector<Job*> DunnoTactic::P1;
 vector<Job*> DunnoTactic::P2;
 Map DunnoTactic::M;
+Display DunnoTactic::D;
 
 DunnoTactic::DunnoTactic() {
 }
@@ -117,6 +118,7 @@ void DunnoTactic::Build()
             }
             else if (CommandLength==1 && CommandParse[0]=="exit")
             {
+                D.displayBoxMap(9,9);
                 break;
             }
             else
