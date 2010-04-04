@@ -1,8 +1,8 @@
 /* 
  * File:   Map.h
- * Author: rezanachmad
+ * Author: Akbar Gumbira
  *
- * Created on April 4, 2010, 1:43 PM
+ * Created on April 1, 2010, 1:43 PM
  */
 
 #ifndef _MAP_H
@@ -22,8 +22,8 @@ public :
     void CreateMap(const int&, const int&);
     void Load(string);
     void Save(string);
-    void SetTerrainXY(int,int,int);
-    void SetTerrainArea(int,int,int,int,int);
+    void SetTerrainXY(int X,int Y, string GridContent); //udah pake throw
+    void SetTerrainArea(int X1,int Y1,int X2,int Y2, string GridContent); //udah pake throw
     void SetMapRandom();
     int GetTerrain(int X, int Y);
 
