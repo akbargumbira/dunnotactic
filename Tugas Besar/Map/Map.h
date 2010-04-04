@@ -25,7 +25,7 @@ public :
     void SetTerrainXY(int,int,int);
     void SetTerrainArea(int,int,int,int,int);
     void SetMapRandom();
-    void GetTerrain(int X, int Y);
+    int GetTerrain(int X, int Y);
 
 private :
     int SizeX;
