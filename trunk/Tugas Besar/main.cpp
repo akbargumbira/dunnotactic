@@ -9,6 +9,7 @@
 #include "DunnoTactic.h"
 #include "Job/Knight.h"
 #include "Job/Assassin.h"
+#include "Map/Map.h"
 /*
  * 
  */
@@ -33,6 +34,21 @@ int main(int argc, char** argv) {
     (*R)->Attack(*(*S));
     cout << (*S)->GetHP() << endl;
    */
+/*
+    Map M;
+    try
+    {
+        M.SetMapRandom();
+        //M.Save("Cob");
+        M.Load("Coba");
+        M.SetTerrainXY(31,31,3);
+        M.Save("Voba2");
+    }
+    catch (const char* e)
+    {
+        cout << e << endl;
+
+    }*/
     return (EXIT_SUCCESS);
 }
 

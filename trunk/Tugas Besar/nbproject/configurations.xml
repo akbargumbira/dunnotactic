@@ -32,6 +32,10 @@
         <itemPath>Job/Warrior.cpp</itemPath>
         <itemPath>Job/Warrior.h</itemPath>
       </logicalFolder>
+      <logicalFolder name="f1" displayName="Map" projectFiles="true">
+        <itemPath>Map/Map.cpp</itemPath>
+        <itemPath>Map/Map.h</itemPath>
+      </logicalFolder>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

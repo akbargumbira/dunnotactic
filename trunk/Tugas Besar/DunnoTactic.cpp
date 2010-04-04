@@ -14,6 +14,7 @@ string DunnoTactic::CommandParse[10];
 int DunnoTactic::CommandLength;
 vector<Job*> DunnoTactic::P1;
 vector<Job*> DunnoTactic::P2;
+Map DunnoTactic::M;
 
 DunnoTactic::DunnoTactic() {
 }
@@ -71,11 +72,14 @@ void DunnoTactic::Build()
             ParseCommand();
             if (CommandLength==4 && CommandParse[0]=="create" && CommandParse[1]=="map")
             {
-                for(int i=0;i<4;++i)
+                if (!IsInteger(CommandParse[2]) || !IsInteger(CommandParse[3]))
                 {
-                    cout << CommandParse[i] << " ";
+                    throw "Ukuran Map harus dalam integer.";
                 }
-                cout << endl;
+                else
+                {
+                    cout << "create" << endl;
+                }
             }
             else if (CommandLength==3 && CommandParse[0]=="load" && CommandParse[1]=="map")
             {
@@ -87,11 +91,7 @@ void DunnoTactic::Build()
             }
             else if (CommandLength==3 && CommandParse[0]=="save" && CommandParse[1]=="map")
             {
-                for(int i=0;i<CommandLength;++i)
-                {
-                    cout << CommandParse[i] << " ";
-                }
-                cout << endl;
+                M.Save(CommandParse[2]);
             }
             else if ((CommandLength==4 || CommandLength==6) && CommandParse[0]=="edit")
             {
@@ -318,4 +318,17 @@ void DunnoTactic::StringToLower(char* s)
         s[i] = tolower(s[i]);
         ++i;
     }
+}
+
+bool DunnoTactic::IsInteger(string &s)
+{
+    for(int i=0;i<s.length();++i)
+    {
+        if (!isdigit(s[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
