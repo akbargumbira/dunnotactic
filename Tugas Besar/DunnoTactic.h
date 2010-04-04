@@ -16,6 +16,7 @@
 #include <string.h>
 
 #include "Job/Job.h"
+#include "Map/Map.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ public:
     static void Action(const int &id, string s);
     static void ParseCommand();
     static void StringToLower(char* s);
+    static bool IsInteger(string &s);
 
     static char Command[100];
     static string CommandParse[10];
@@ -39,6 +41,8 @@ public:
 
     static vector<Job*> P1;
     static vector<Job*> P2;
+
+    static Map M;
     
 private:
     
