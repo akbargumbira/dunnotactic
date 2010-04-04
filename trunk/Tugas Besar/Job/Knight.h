@@ -15,7 +15,7 @@ class Knight : public Job {
 	Knight(const Knight&);	
 	~Knight();
 	
-	void Special (Job &Target);
+	void Special (const string & STR, Job &Target);
 	
 };
 

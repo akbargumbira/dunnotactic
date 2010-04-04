@@ -19,6 +19,8 @@ Knight::Knight(const string& RaceName) : Job(RaceName){
 	SP         = int(SP*0.8);
 	HPDefault  = HP;
 	SPDefault  = SP;
+	AttackPointDefault = AttackPoint;
+	SpecialArray[0] = "Sword of Fury         30";
 
 }
 Knight::Knight(const Knight& k){
@@ -50,7 +52,16 @@ Knight::~Knight(){
 	
 }
 
-void Knight::Special (Job &Target) {
-srand(time(NULL));
-Target.ReceiveAttack (int(float(AttackPoint*2)*SpecialBonus * (0.01 * float(rand()%21 + 90)))); }
+
+void Knight::Special (const string & STR, Job &Target) {
+if (STR == "Sword of Fury") {
+	if (SP<30) {
+	AttackPoint = int(AttackPoint*2*SpecialBonus) ; 
+	Attack(Target);
+	AttackPoint = AttackPointDefault;
+	SP	-= 30;}
+	else {cout<<"SP tidak mencukupi"<<endl;}
+	}
+else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;}
+}
 

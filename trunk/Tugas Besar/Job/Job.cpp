@@ -6,25 +6,22 @@ using namespace std;
 
 Job::Job(){}
 
-Job::Job (const string& Race)
-{
-    // Race Human
-    if (Race == "human")
-    {
-        RaceName = "Human";
-        AttackPoint    = 300;
-        Defense        = 100;
-        Acc            =  30;
-        Evade          =  15;
-        SpecialBonus   =   1.2;
-        RangeMove      =   4;
-        RangeAttack    =   1;
-
-        HP             = 1600;
-        SP             =  140;
-        X              =    0;
-        Y              =    0;
-    }
+Job::Job (const string& Race) {
+//Race Human
+if (Race == "human") {
+RaceName = "Human";
+AttackPoint    = 300;
+Defense        = 100;
+Acc            =  30;
+Evade          =  15;
+SpecialBonus   =   1.2;
+RangeMove      =   4;
+RangeAttack    =   1;
+      
+HP             = 1600;
+SP             =  140;
+X              =    0;
+Y              =    0; }
 
 //Race Elf
 if (Race == "elf") {
@@ -73,40 +70,10 @@ HP             = 2000;
 SP             =   80;
 X              =    0;
 Y              =    0; }
+for (int w = 0; w<10;w++) {
+SpecialArray[w] = "none";  }
 }
 
-Job::Job(const Job& J)
-{
-    RaceName = J.RaceName;
-    AttackPoint = J.AttackPoint;
-    Defense = J.Defense;
-    Acc = J.Acc;
-    Evade = J.Evade;
-    SpecialBonus = J.SpecialBonus;
-    RangeMove = J.RangeMove;
-    RangeAttack = J.RangeAttack;
-    HP = J.HP;
-    SP = J.SP;
-    X = J.X;
-    Y = J.Y;
-}
-
-Job& Job::operator=(const Job& J)
-{
-    RaceName = J.RaceName;
-    AttackPoint = J.AttackPoint;
-    Defense = J.Defense;
-    Acc = J.Acc;
-    Evade = J.Evade;
-    SpecialBonus = J.SpecialBonus;
-    RangeMove = J.RangeMove;
-    RangeAttack = J.RangeAttack;
-    HP = J.HP;
-    SP = J.SP;
-    X = J.X;
-    Y = J.Y;
-    return *this;
-}
 
 Job::~Job () {}
 //Attribut
@@ -154,6 +121,9 @@ string Job::GetJobName(){
 void Job::SetName(const string& str){
 	Name = str;}
 
+string Job::GetSpecialArray(int &j) {
+	return SpecialArray[j]; }
+
 //posisi
 int Job::GetX (){
       return X; }
@@ -182,11 +152,11 @@ void Job::Attack (Job &Target) {
 }
 
 void Job:: ReceiveAttack (const int& Attack) {
-     HP = HP - (Attack - Defense);}
+    HP = HP - (Attack - Defense);}
 
 void Job:: ReceiveHP (const int& Attack) {
-     HP = HP + (Attack); }  
+    HP = HP + (Attack); }  
 
-void Job::Special (Job &Target) {
+void Job::Special (const string & STR, Job &Target) {
 }
 

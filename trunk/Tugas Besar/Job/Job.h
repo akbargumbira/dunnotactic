@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include <stdlib.h>
 //Job, merupakan penambahan attribut untuk suatu Job yang dipilih
 using namespace std;
 class Job {
@@ -16,6 +15,7 @@ protected :
       
       //attribut
       int       AttackPoint;
+	 
       int       Defense;
       int       Acc;
       int       Evade;
@@ -23,12 +23,15 @@ protected :
       int       RangeMove;
       int       RangeAttack;
       
-      int       HP;
-	  int		HPDefault;
-      int       SP;
-	  int		SPDefault;
+      int       HP;	  
+      int       SP;	 
 	  Job*		Enemy[10];
-      
+	  string 	SpecialArray[10];
+	  
+	  //Attribut Default
+      int		HPDefault;
+	  int		SPDefault;
+	  int 		AttackPointDefault;
       //Kordinat karakter
       int       X;
       int       Y; 	        
@@ -37,9 +40,7 @@ protected :
       //METHOD
       //Constructor dan destructor
       Job ();
-      Job (const string&);
-      Job (const Job& J);
-      Job& operator=(const Job& J);
+	  Job (const string&);
       virtual ~Job ();
       
       //Attribute
@@ -56,12 +57,13 @@ protected :
 	  int GetSPDefault();
 	  string GetName();
 	  string GetJobName();
+	  string GetSpecialArray(int &);
 	  void SetName(const string&);
 	  
 	  //Method Lain	  
 	  int RangeCostAxis(const int &);
 	  int RangeCostOrdinat (const int &);
-	  void SetEnemy (Job &);	
+	  void SetEnemy (Job &);
       
       //Posisi
       int GetX ();               //mengembalikan nilai X
@@ -72,7 +74,7 @@ protected :
 	  void Attack (Job &Target);
       void ReceiveAttack (const int& );
       void ReceiveHP (const int& );
-	  virtual void Special (Job &Target);
+	  virtual void Special (const string & STR, Job &Target);
 };      
       
 #endif
