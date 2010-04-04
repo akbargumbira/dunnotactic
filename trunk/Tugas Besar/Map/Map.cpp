@@ -1,8 +1,8 @@
 /* 
  * File:   Map.cpp
- * Author: rezanachmad
+ * Author: Akbar Gumbira
  * 
- * Created on April 4, 2010, 1:43 PM
+ * Created on April 1, 2010, 1:43 PM
  */
 
 #include "Map.h"
@@ -32,15 +32,21 @@ Map::~Map() {
 
 void Map::CreateMap(const int& X, const int& Y)
 {
-    SizeX = X;
-    SizeY = Y;
-
-    for(int i=0;i<SizeX;++i)
+    if (X<=30 && Y<=30 && X>=5 && Y>=5)
     {
-        for (int j=0;j<SizeY;++j)
+        SizeX = X;
+        SizeY = Y;
+        for(int i=0;i<SizeX;++i)
         {
-            Terrain[i][j]=1;
+            for (int j=0;j<SizeY;++j)
+            {
+                Terrain[i][j]=1;
+            }
         }
+    }
+    else
+    {
+        throw "Error. Ukuran Map minimal adalah 5x5, ukuran Map maksimal adalah 30 x 30";
     }
 }
 
@@ -74,8 +80,6 @@ void Map::Load(string sin)
     ExtFile=".map";
     Folder="Data/";
     NameFile = Folder+sin+ExtFile;
-    //NameFile.append(sin,0,sin.length());
-    //NameFile.append(ExtFile,0,ExtFile.length());
     ifstream fin (NameFile.c_str());
     
     string s;
@@ -87,8 +91,6 @@ void Map::Load(string sin)
     SizeX=atoi(vectortemp[0].c_str());
     SizeY=atoi(vectortemp[1].c_str());
 
-    //cout <<vectortemp.size();
-    int e = 0;
     for (int i=3;i<vectortemp.size();i=i+3)
     {
         Terrain[atoi(vectortemp[i].c_str())-1][atoi(vectortemp[i+1].c_str())-1]=atoi(vectortemp[i+2].c_str());
@@ -97,26 +99,116 @@ void Map::Load(string sin)
     fin.close();
 }
 
-void Map::SetTerrainXY(int X, int Y, int GridContent)
+void Map::SetTerrainXY(int X, int Y, string GridContent)
 {
-    if (X<=SizeX && Y<=SizeY)
+    int GridContentConvert;
+    
+    if (GridContent=="rumput")
     {
-        Terrain[X-1][Y-1]=GridContent;
+        GridContentConvert = 1;
+    }
+    else if (GridContent == "air")
+    {
+        GridContentConvert = 2;
+    }
+    else if (GridContent == "lumpur")
+    {
+        GridContentConvert = 3;
+    }
+    else if (GridContent == "pohon")
+    {
+        GridContentConvert = 4;
     }
     else
     {
-        throw "Error dalam mengeset isi terrain";
+        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon";
+    }
+
+
+    if (X<=SizeX && Y<=SizeY && X>=1 && Y>=1)
+    {
+        Terrain[X-1][Y-1]=GridContentConvert;
+    }
+    else  //(X>SizeX || Y>SizeY || X<1 || Y<1 )
+    {
+        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai";
     }
 }
 
-void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, int GridContent)
+void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
 {
-    for (int i=X1;i<=X2;++i)
+    int GridContentConvert;
+    int XTemp1, XTemp2, YTemp1, YTemp2;
+
+    if (GridContent=="rumput")
     {
-        for (int j=Y1;j<=Y2;++j)
+        GridContentConvert = 1;
+    }
+    else if (GridContent == "air")
+    {
+        GridContentConvert = 2;
+    }
+    else if (GridContent == "lumpur")
+    {
+        GridContentConvert = 3;
+    }
+    else if (GridContent == "pohon")
+    {
+        GridContentConvert = 4;
+    }
+    else
+    {
+        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon";
+    }
+
+    if (X1<=X2)
+    {
+        if (Y1<=Y2)
         {
-            Terrain[i-1][j-1]=GridContent;
+            XTemp1=X1;
+            YTemp1=Y1;
+            XTemp2=X2;
+            YTemp2=Y2;
         }
+        else
+        {
+            XTemp1=X1;
+            YTemp1=Y2;
+            XTemp2=X2;
+            YTemp2=Y1;
+        }
+    }
+    else
+    {
+        if (Y1<=Y2)
+        {
+            XTemp1=X2;
+            YTemp1=Y1;
+            XTemp2=X1;
+            YTemp2=Y2;
+        }
+        else
+        {
+            XTemp1=X2;
+            YTemp1=Y2;
+            XTemp2=X1;
+            YTemp2=Y1;
+        }
+    }
+
+    if (XTemp2<=SizeX && YTemp2<=SizeY && XTemp1>=1 && YTemp1>=1)
+    {
+        for (int i=XTemp1;i<=XTemp2;++i)
+        {
+            for (int j=YTemp1;j<=YTemp2;++j)
+            {
+                Terrain[i-1][j-1]=GridContentConvert;
+            }
+        }
+    }
+    else
+    {
+        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai";
     }
 }
 
