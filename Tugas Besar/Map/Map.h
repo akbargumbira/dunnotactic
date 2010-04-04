@@ -16,10 +16,10 @@ class Map
 public :
     static const int default_size = 30;
     Map(); //constructor default
-    Map (int,int); //Constructor dengan ukuran masukan dari user
     Map (const Map&); //Copy Constructor
     virtual ~Map();//Destructor
 
+    void CreateMap(const int&, const int&);
     void Load(string);
     void Save(string);
     void SetTerrainXY(int,int,int);

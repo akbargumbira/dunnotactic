@@ -78,16 +78,12 @@ void DunnoTactic::Build()
                 }
                 else
                 {
-                    cout << "create" << endl;
+                    M.CreateMap(atoi(CommandParse[2].c_str()), atoi(CommandParse[3].c_str()));
                 }
             }
             else if (CommandLength==3 && CommandParse[0]=="load" && CommandParse[1]=="map")
             {
-                for(int i=0;i<CommandLength;++i)
-                {
-                    cout << CommandParse[i] << " ";
-                }
-                cout << endl;
+                M.Load(CommandParse[2]);
             }
             else if (CommandLength==3 && CommandParse[0]=="save" && CommandParse[1]=="map")
             {
@@ -95,11 +91,7 @@ void DunnoTactic::Build()
             }
             else if ((CommandLength==4 || CommandLength==6) && CommandParse[0]=="edit")
             {
-                for(int i=0;i<CommandLength;++i)
-                {
-                    cout << CommandParse[i] << " ";
-                }
-                cout << endl;
+               
             }
             else if ((CommandLength==6 || CommandLength==10) && CommandParse[0]=="edit")
             {

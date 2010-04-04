@@ -24,10 +24,16 @@ Map::Map()
     }
 }
 
-Map::Map(int x, int y)
+Map::Map(const Map& orig) {
+}
+
+Map::~Map() {
+}
+
+void Map::CreateMap(const int& X, const int& Y)
 {
-    SizeX=x;
-    SizeY=y;
+    SizeX = X;
+    SizeY = Y;
 
     for(int i=0;i<SizeX;++i)
     {
@@ -36,13 +42,6 @@ Map::Map(int x, int y)
             Terrain[i][j]=1;
         }
     }
-
-}
-
-Map::Map(const Map& orig) {
-}
-
-Map::~Map() {
 }
 
 void Map::Save(string s)
