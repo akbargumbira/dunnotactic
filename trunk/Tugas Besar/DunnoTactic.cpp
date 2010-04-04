@@ -27,8 +27,6 @@ DunnoTactic::~DunnoTactic() {
 
 void DunnoTactic::Main()
 {
-    
-
     while(true)
     {
         cout << "Menu Utama > ";
@@ -89,28 +87,33 @@ void DunnoTactic::Build()
             {
                 M.Save(CommandParse[2]);
             }
-            else if ((CommandLength==4 || CommandLength==6) && CommandParse[0]=="edit")
+            else if (CommandLength==4 && CommandParse[0]=="edit")
             {
+                if (!IsInteger(CommandParse[1]) || !IsInteger(CommandParse[2]) || !IsInteger(CommandParse[3]))
+                {
+                    throw "Posisi harus dalam integer.";
+                }
                 int x = atoi(CommandParse[1].c_str());
                 int y = atoi(CommandParse[2].c_str());
                 int n = atoi(CommandParse[3].c_str());
                 M.SetTerrainXY(x, y, n);
             }
-            else if ((CommandLength==6 || CommandLength==10) && CommandParse[0]=="edit")
+            else if (CommandLength==6 && CommandParse[0]=="edit")
             {
-                for(int i=0;i<CommandLength;++i)
+                if (!IsInteger(CommandParse[1]) || !IsInteger(CommandParse[2]) || !IsInteger(CommandParse[3]) || !IsInteger(CommandParse[4]))
                 {
-                    cout << CommandParse[i] << " ";
+                    throw "Posisi harus dalam integer.";
                 }
-                cout << endl;
+                int x = atoi(CommandParse[1].c_str());
+                int y = atoi(CommandParse[2].c_str());
+                int x1 = atoi(CommandParse[3].c_str());
+                int y1 = atoi(CommandParse[4].c_str());
+                int n = atoi(CommandParse[5].c_str());
+                M.SetTerrainArea(x,y,x1,y1,n);
             }
             else if (CommandLength==2 && CommandParse[0]=="edit" && CommandParse[1]=="random")
             {
-                for(int i=0;i<CommandLength;++i)
-                {
-                    cout << CommandParse[i] << " ";
-                }
-                cout << endl;
+                M.SetMapRandom();
             }
             else if (CommandLength==1 && CommandParse[0]=="exit")
             {
@@ -256,23 +259,40 @@ void DunnoTactic::ParseCommand()
 {
     int i=0;
     int j=0;
+    int barket=0;
     char take[100];
     CommandLength = 0;
 
     StringToLower(Command);
 
-    while (Command[i]==' ')
+    while (Command[i]==' ' || Command[i]=='(' || Command[i]==')')
     {
+        if (Command[i]=='(')
+        {
+            ++barket;
+        }
+        if (Command[i]==')')
+        {
+            --barket;
+        }
         ++i;
     }
 
     while (Command[i]!='\0' && Command[i]!='#')
     {
-        if (Command[i]==' ')
+        if (Command[i]==' '  || Command[i]=='(' || Command[i]==')')
         {
-            while (Command[i]==' ')
+            while (Command[i]==' ' || Command[i]=='(' || Command[i]==')')
             {
-                ++i;
+                 if (Command[i]=='(')
+                 {
+                     ++barket;
+                 }
+                 if (Command[i]==')')
+                 {
+                     --barket;
+                 }
+                 ++i;
             }
             
             take[j]='\0';
@@ -301,6 +321,11 @@ void DunnoTactic::ParseCommand()
     else
     {
         throw "Perintah tidak diakhiri dengan #.";
+    }
+
+    if (barket!=0)
+    {
+        throw "Jumlah kurung kurang lengkap.";
     }
 }
 

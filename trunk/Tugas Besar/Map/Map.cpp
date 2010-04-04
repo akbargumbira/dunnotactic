@@ -133,7 +133,7 @@ void Map::SetMapRandom()
     }
 }
 
-void Map::GetTerrain(int X, int Y)
+int Map::GetTerrain(int X, int Y)
 {
     if (X>SizeX || Y>SizeY || Y<1 || X<1)
     {
