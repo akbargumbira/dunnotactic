@@ -91,7 +91,10 @@ void DunnoTactic::Build()
             }
             else if ((CommandLength==4 || CommandLength==6) && CommandParse[0]=="edit")
             {
-               
+                int x = atoi(CommandParse[1].c_str());
+                int y = atoi(CommandParse[2].c_str());
+                int n = atoi(CommandParse[3].c_str());
+                M.SetTerrainXY(x, y, n);
             }
             else if ((CommandLength==6 || CommandLength==10) && CommandParse[0]=="edit")
             {
