@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 #include "DunnoTactic.h"
+#include "Display/Display.h"
 
 char DunnoTactic::Command[100];
 string DunnoTactic::CommandParse[10];
@@ -90,14 +91,13 @@ void DunnoTactic::Build()
             }
             else if (CommandLength==4 && CommandParse[0]=="edit")
             {
-                if (!IsInteger(CommandParse[1]) || !IsInteger(CommandParse[2]) || !IsInteger(CommandParse[3]))
+                if (!IsInteger(CommandParse[1]) || !IsInteger(CommandParse[2]))
                 {
                     throw "Posisi harus dalam integer.";
                 }
                 int x = atoi(CommandParse[1].c_str());
-                int y = atoi(CommandParse[2].c_str());
-                int n = atoi(CommandParse[3].c_str());
-                M.SetTerrainXY(x, y, n);
+                int y = atoi(CommandParse[2].c_str());              
+                M.SetTerrainXY(x, y, CommandParse[3]);
             }
             else if (CommandLength==6 && CommandParse[0]=="edit")
             {
@@ -109,8 +109,7 @@ void DunnoTactic::Build()
                 int y = atoi(CommandParse[2].c_str());
                 int x1 = atoi(CommandParse[3].c_str());
                 int y1 = atoi(CommandParse[4].c_str());
-                int n = atoi(CommandParse[5].c_str());
-                M.SetTerrainArea(x,y,x1,y1,n);
+                M.SetTerrainArea(x,y,x1,y1,CommandParse[5]);
             }
             else if (CommandLength==2 && CommandParse[0]=="edit" && CommandParse[1]=="random")
             {
