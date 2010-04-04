@@ -15,6 +15,7 @@ class Archer : public Job {
 	Archer(const Archer&);	
 	~Archer();
 	void Special (Job &Target);
+	
 };
 
 #endif

@@ -52,3 +52,5 @@ Warrior::~Warrior(){
 }
 void Warrior::Special (Job &Target) {
 }
+
+

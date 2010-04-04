@@ -52,3 +52,5 @@ Assassin::~Assassin(){
 
 void Assassin::Special (Job &Target) {
 }
+
+
