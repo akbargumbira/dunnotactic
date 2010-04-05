@@ -205,6 +205,7 @@
 		int i;
 		int j;
 		int lengthBox = 40;
+                int lengthSpace;
 		string Blank = "     ";
 		cout << Blank;
 		for(i=1;i<=lengthBox;++i) {
@@ -213,7 +214,9 @@
 		for(j=1;j<=9;++j) {
 			cout << endl;
 			cout << Blank << "/";
-			for(i=1;i<=lengthBox-2;++i) {
+                        cout << "  " << Info[j-1];
+                        lengthSpace= lengthBox - Info[j-1].length()-4;
+			for(i=1;i<=lengthSpace;++i) {
 				cout << " ";
 			}
 			cout << "/";
