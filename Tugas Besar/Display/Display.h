@@ -22,7 +22,7 @@ class Display {
 		void displayBoxTurn(int);
 		void displayBoxTurnWithName(string);
 		void displayBoxMap(int P, int L); // P = X, L = Y
-		void displayBoxInfo();
+		void displayBoxInfo(string* Info);
 		void setArea(int, int, int);
 		void MoveAnimated(int, int, int, int);
 		

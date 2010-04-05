@@ -201,7 +201,7 @@
 	}
 
 // Display box Info
-	void Display::displayBoxInfo() {
+	void Display::displayBoxInfo(string* Info) {
 		int i;
 		int j;
 		int lengthBox = 40;
@@ -249,15 +249,19 @@
 				// kuadran 1
 				x = initX+factorX-1;
 				y = initY+factorY-1;
-				if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-					MapArea[x][y]=i;
-				}
+                                if(x>=0 && y>=0) {
+                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                            MapArea[x][y]=i;
+                                    }
+                                }
 				// kuadran 3
 				x = initX-factorX-1;
 				y = initY-factorY-1;
-				if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-					MapArea[x][y]=i;
-				}
+				if(x>=0 && y>=0) {
+                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                            MapArea[x][y]=i;
+                                    }
+                                }
 				++factorY;
 			}
 			// Kuadran 2 dan 4
@@ -266,15 +270,19 @@
 				// kuadran 4
 				x = initX+factorX-1;
 				y = initY+factorY-1;
-				if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
-					MapArea[x][y]=i;
-				}
+				if(x>=0 && y>=0) {
+                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                            MapArea[x][y]=i;
+                                    }
+                                }
 				// kuadran 2
 				x = initX-factorX-1;
 				y = initY-factorY-1;
-				if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
-					MapArea[x][y]=i;
-				}
+				if(x>=0 && y>=0) {
+                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                            MapArea[x][y]=i;
+                                    }
+                                }
 				--factorX;
 			}
 		}
@@ -287,35 +295,39 @@
 				// kuadran 1
 				x = initX+factorX-1;
 				y = initY+factorY-1;
-				if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-					if(IsLumpur(x,y)) {
-						if(MinAround(x,y)==range-1) {
-							MapArea[x][y]=99;
-						} else {
-							MapArea[x][y]=MinAround(x,y) + 2;
-						}
-					} else {
-						MapArea[x][y]=MinAround(x,y) + 1;
-					}
-				} else {
-					MapArea[x][y]=99;
-				}
+                                if(x>=0 && y>=0) {
+                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+                                            if(IsLumpur(x,y)) {
+                                                    if(MinAround(x,y)==range-1) {
+                                                            MapArea[x][y]=99;
+                                                    } else {
+                                                            MapArea[x][y]=MinAround(x,y) + 2;
+                                                    }
+                                            } else {
+                                                    MapArea[x][y]=MinAround(x,y) + 1;
+                                            }
+                                    } else {
+                                            MapArea[x][y]=99;
+                                    }
+                                }
 				// kuadran 3
 				x = initX-factorX-1;
 				y = initY-factorY-1;
-				if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-					if(IsLumpur(x,y)) {
-						if(MinAround(x,y)==range-1) {
-							MapArea[x][y]=99;
-						} else {
-							MapArea[x][y]=MinAround(x,y) + 2;
-						}
-					} else {
-						MapArea[x][y]=MinAround(x,y) + 1;
-					}
-				} else {
-					MapArea[x][y]=99;
-				}
+                                if(x>=0 && y>=0) {
+                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+                                            if(IsLumpur(x,y)) {
+                                                    if(MinAround(x,y)==range-1) {
+                                                            MapArea[x][y]=99;
+                                                    } else {
+                                                            MapArea[x][y]=MinAround(x,y) + 2;
+                                                    }
+                                            } else {
+                                                    MapArea[x][y]=MinAround(x,y) + 1;
+                                            }
+                                    } else {
+                                            MapArea[x][y]=99;
+                                    }
+                                }
 				++factorY;
 			}
 			// Kuadran 2 dan 4
@@ -324,35 +336,39 @@
 				// kuadran 4
 				x = initX+factorX-1;
 				y = initY+factorY-1;
-				if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-					if(IsLumpur(x,y)) {
-						if(MinAround(x,y)==range-1) {
-							MapArea[x][y]=99;
-						} else {
-							MapArea[x][y]=MinAround(x,y) + 2;
-						}
-					} else {
-						MapArea[x][y]=MinAround(x,y) + 1;
-					}
-				} else {
-					MapArea[x][y]=99;
-				}
+				if(x>=0 && y>=0) {
+                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+                                            if(IsLumpur(x,y)) {
+                                                    if(MinAround(x,y)==range-1) {
+                                                            MapArea[x][y]=99;
+                                                    } else {
+                                                            MapArea[x][y]=MinAround(x,y) + 2;
+                                                    }
+                                            } else {
+                                                    MapArea[x][y]=MinAround(x,y) + 1;
+                                            }
+                                    } else {
+                                            MapArea[x][y]=99;
+                                    }
+                                }
 				// kuadran 2
 				x = initX-factorX-1;
 				y = initY-factorY-1;
-				if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-					if(IsLumpur(x,y)) {
-						if(MinAround(x,y)==range-1) {
-							MapArea[x][y]=99;
-						} else {
-							MapArea[x][y]=MinAround(x,y) + 2;
-						}
-					} else {
-						MapArea[x][y]=MinAround(x,y) + 1;
-					}
-				} else {
-					MapArea[x][y]=99;
-				}
+                                if(x>=0 && y>=0) {
+                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+                                            if(IsLumpur(x,y)) {
+                                                    if(MinAround(x,y)==range-1) {
+                                                            MapArea[x][y]=99;
+                                                    } else {
+                                                            MapArea[x][y]=MinAround(x,y) + 2;
+                                                    }
+                                            } else {
+                                                    MapArea[x][y]=MinAround(x,y) + 1;
+                                            }
+                                    } else {
+                                            MapArea[x][y]=99;
+                                    }
+                                }
 				--factorX;
 			}
 		}
