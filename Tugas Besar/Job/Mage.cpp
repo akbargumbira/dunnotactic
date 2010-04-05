@@ -60,9 +60,9 @@ if (STR == "Hell Fire") {
 	Attack(Target);
 	AttackPoint = AttackPointDefault;
 	SP	-= 30;}
-	else {cout<<"SP tidak mencukupi";system("pause");}
+	else {cout<<"SP tidak mencukupi";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
+else {cout<<"Tidak ada Skill yang dimaksud!";}
 }
 
 

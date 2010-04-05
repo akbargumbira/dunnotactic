@@ -60,15 +60,15 @@ if (STR == "Heal") {
 	if (SP>20) {
 	Target.ReceiveHP(int (300*SpecialBonus));
 	SP	-= 20;}
-	else {cout<<"SP tidak mencukupi";system("pause");}
+	else {cout<<"SP tidak mencukupi";}
 	}
 if (STR == "Circle Heal") {
 	if (SP>50) {
 	Target.ReceiveHP(int (300*SpecialBonus));
 	SP	-= 50;}
-	else {cout<<"SP tidak mencukupi";system("pause");}
+	else {cout<<"SP tidak mencukupi";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
+else {cout<<"Tidak ada Skill yang dimaksud!";}
 
 }
 
