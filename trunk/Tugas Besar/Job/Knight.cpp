@@ -20,7 +20,9 @@ Knight::Knight(const string& RaceName) : Job(RaceName){
 	HPDefault  = HP;
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
+	RangeAttackDefault = RangeAttack;	
 	SpecialArray[0] = "Sword of Fury         30";
+	Death 	   = false;
 
 }
 Knight::Knight(const Knight& k){
@@ -54,14 +56,14 @@ Knight::~Knight(){
 
 
 void Knight::Special (const string & STR, Job &Target) {
-if (STR == "Sword of Fury") {
-	if (SP<30) {
+if (STR == "Sword Of Fury") {
+	if (SP>30) {
 	AttackPoint = int(AttackPoint*2*SpecialBonus) ; 
 	Attack(Target);
 	AttackPoint = AttackPointDefault;
 	SP	-= 30;}
-	else {cout<<"SP tidak mencukupi"<<endl;}
+	else {cout<<"SP tidak mencukupi";system("pause");}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;}
-}
+else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
+	}
 

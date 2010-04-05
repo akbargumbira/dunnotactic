@@ -19,6 +19,10 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	SP         = int(SP*1);
 	HPDefault  = HP;
 	SPDefault  = SP;
+	AttackPointDefault = AttackPoint;
+	RangeAttackDefault = RangeAttack;	
+	SpecialArray[0] = "Hell Chain            30";
+	Death	   = false;
 
 }
 Assassin::Assassin(const Assassin& k){
@@ -50,7 +54,18 @@ Assassin::~Assassin(){
 	
 }
 
-void Assassin::Special (Job &Target) {
+void Assassin::Special (const string & STR, Job &Target) {
+if (STR == "Hell Chain") {
+	if (SP>40) {
+	AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
+	RangeAttack += 2;
+	Attack(Target);
+	AttackPoint = AttackPointDefault;
+	RangeAttack = RangeAttackDefault;
+	SP	-= 40;}
+	else {cout<<"SP tidak mencukupi";system("pause");}
+	}
+else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
 }
 
 
