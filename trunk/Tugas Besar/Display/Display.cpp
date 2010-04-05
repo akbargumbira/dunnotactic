@@ -245,7 +245,7 @@
 		int i;
 		int j;
 		
-		if(IsLumpur(initX-1,initY-1)) {
+		if(IsLumpur(initX,initY)) {
 			MapArea[initX-1][initY-1]=1;
 		} else {
 			MapArea[initX-1][initY-1]=0;
@@ -259,7 +259,7 @@
 				x = initX+factorX-1;
 				y = initY+factorY-1;
                                 if(x>=0 && y>=0) {
-                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
                                             MapArea[x][y]=i;
                                     }
                                 }
@@ -267,7 +267,7 @@
 				x = initX-factorX-1;
 				y = initY-factorY-1;
 				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
                                             MapArea[x][y]=i;
                                     }
                                 }
@@ -280,7 +280,7 @@
 				x = initX+factorX-1;
 				y = initY+factorY-1;
 				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
                                             MapArea[x][y]=i;
                                     }
                                 }
@@ -288,7 +288,7 @@
 				x = initX-factorX-1;
 				y = initY-factorY-1;
 				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x,y) && PassPlayer(initX-1,initY-1,x,y)) {
+                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
                                             MapArea[x][y]=i;
                                     }
                                 }
@@ -306,7 +306,7 @@
 				y = initY+factorY-1;
                                 if(x>=0 && y>=0) {
                                     if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x,y)) {
+                                            if(IsLumpur(x+1,y+1)) {
                                                     if(MinAround(x,y)==range-1) {
                                                             MapArea[x][y]=99;
                                                     } else {
@@ -324,7 +324,7 @@
 				y = initY-factorY-1;
                                 if(x>=0 && y>=0) {
                                     if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x,y)) {
+                                            if(IsLumpur(x+1,y+1)) {
                                                     if(MinAround(x,y)==range-1) {
                                                             MapArea[x][y]=99;
                                                     } else {
@@ -347,7 +347,7 @@
 				y = initY+factorY-1;
 				if(x>=0 && y>=0) {
                                     if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x,y)) {
+                                            if(IsLumpur(x+1,y+1)) {
                                                     if(MinAround(x,y)==range-1) {
                                                             MapArea[x][y]=99;
                                                     } else {
@@ -365,7 +365,7 @@
 				y = initY-factorY-1;
                                 if(x>=0 && y>=0) {
                                     if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x,y)) {
+                                            if(IsLumpur(x+1,y+1)) {
                                                     if(MinAround(x,y)==range-1) {
                                                             MapArea[x][y]=99;
                                                     } else {
