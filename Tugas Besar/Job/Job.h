@@ -12,10 +12,10 @@ protected :
       string    Name;
 	  string 	JobName;
 	  string 	RaceName;
+	  bool		Death;
       
       //attribut
       int       AttackPoint;
-	 
       int       Defense;
       int       Acc;
       int       Evade;
@@ -32,9 +32,10 @@ protected :
       int		HPDefault;
 	  int		SPDefault;
 	  int 		AttackPointDefault;
+	  int		RangeAttackDefault;
       //Kordinat karakter
       int       X;
-      int       Y; 	        
+      int       Y; 	
  
  public :
       //METHOD
@@ -59,6 +60,8 @@ protected :
 	  string GetJobName();
 	  string GetSpecialArray(int &);
 	  void SetName(const string&);
+	  void SetDeath(bool &);
+	  bool GetDeath();
 	  
 	  //Method Lain	  
 	  int RangeCostAxis(const int &);

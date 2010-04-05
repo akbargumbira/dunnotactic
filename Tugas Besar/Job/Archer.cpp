@@ -19,6 +19,11 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 	SP         = int(SP*1.2);
 	HPDefault  = HP;
 	SPDefault  = SP;
+	AttackPointDefault = AttackPoint;
+	RangeAttackDefault = RangeAttack;	
+	SpecialArray[0] = "Meteor Shower         30";
+	Death	   = false;
+
 
 }
 Archer::Archer(const Archer& k){
@@ -49,7 +54,33 @@ Archer::~Archer(){
 	Evade		 = 0;
 	
 }
-void Archer::Special (Job &Target) {
+void Archer::Special (const string & STR, Job &Target) {
+if (STR == "Meteor Shower") {
+	if (SP>25) {
+	AttackPoint = int(AttackPoint*1.4*SpecialBonus) ;
+	RangeAttack	+= -1;
+	Attack(Target);
+	AttackPoint = AttackPointDefault;
+	RangeAttack = RangeAttackDefault;
+	SP	-= 25;}
+	else {cout<<"SP tidak mencukupi";system("pause");}
+	}
+else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

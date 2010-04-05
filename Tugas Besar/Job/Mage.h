@@ -14,7 +14,7 @@ class Mage : public Job {
 	Mage(const string&);
 	Mage(const Mage&);	
 	~Mage();
-	void Special (Job &Target);
+	void Special (const string & STR, Job &Target);
 };
 
 #endif

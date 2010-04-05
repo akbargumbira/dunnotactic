@@ -137,10 +137,6 @@ cout<<">> Defend    "<<endl; }
 
 
 int main (){
-
-int d=getche();
-cout<<d;
-system ("pause");
 system ("cls");
 cout << "------------------------------------------------"<<endl;	
 cout << "DUNNO Tactics "<<endl;
@@ -279,21 +275,27 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 2) {
 				i = Enemy.begin()+1;
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
 				i = Enemy.begin()+2;
 				obj_job  = *i;
+				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				
 			}
@@ -304,21 +306,21 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 2) {
 				i = Enemy.begin()+1;
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+			    obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
 				i = Enemy.begin()+2;
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				
 			}
@@ -329,21 +331,21 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 2) {
 				i = Enemy.begin()+1;
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
 				i = Enemy.begin()+2;
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Attack(*obj_job);
 				c=27;}
 				
 			}			
@@ -353,87 +355,47 @@ while (c!=65) {
 	if (RS == 2) {
 		y = 1;	
 		DisplayCommand(x,y,RS);
+		if (x==1){
+		i = Player.begin();		
+		obj_job2  = *i;  }
+		if (x==2){
+		i = Player.begin();		
+		obj_job2  = *i+1; }
+		if (x==3){
+		i = Player.begin();		
+		obj_job2  = *i+2; }
+		int t = 0;
+		while (obj_job2->GetSpecialArray(t) != "none"){
+		cout<<obj_job2->GetSpecialArray(t)<<endl;
+		t++;}
+		cout<<"-----------"<<endl;
+		cout<<"Choose Special = "<<endl;
+		cin>>special;
+		cout<<endl;
+		c=12;
 		while (c!=27) {
 		c=getch();
 		if (c ==120)  {			
 			y = y +1;
-			DisplayCommand(x,y,RS);}
+			DisplayCommand(x,y,RS);
+			cout<<"-----------"<<endl;
+			cout<<special;}
 		if (c ==13) {
-			if ( x == 1 )
-			{
 				if ( y == 1) {
 				i = Enemy.begin();
 				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Special(special, *obj_job);
 				c=27;}
 				else if ( y == 2) {
 				i = Enemy.begin()+1;
 				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Special(special, *obj_job);
 				c=27;}
 				else if ( y == 0) {
 				i = Enemy.begin()+2;
 				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
+				obj_job2->Special(special, *obj_job);
 				c=27;}
-				
-			}
-			if ( x == 2 )
-			{
-				if ( y == 1) {
-				i = Enemy.begin();
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				else if ( y == 2) {
-				i = Enemy.begin()+1;
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				else if ( y == 0) {
-				i = Enemy.begin()+2;
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				
-			}
-			if ( x == 3 )
-			{
-				if ( y == 1) {
-				i = Enemy.begin();
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				else if ( y == 2) {
-				i = Enemy.begin()+1;
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				else if ( y == 0) {
-				i = Enemy.begin()+2;
-				obj_job  = *i;
-				i = Player.begin();
-				obj_job2  = *i;
-				obj_job->ReceiveAttack(obj_job2->GetAttackPoint());
-				c=27;}
-				
-			}			
 			}	
 		}
 		}

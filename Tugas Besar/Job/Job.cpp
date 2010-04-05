@@ -13,7 +13,7 @@ RaceName = "Human";
 AttackPoint    = 300;
 Defense        = 100;
 Acc            =  30;
-Evade          =  15;
+Evade          =  25;
 SpecialBonus   =   1.2;
 RangeMove      =   4;
 RangeAttack    =   1;
@@ -28,8 +28,8 @@ if (Race == "elf") {
 RaceName = "Elf";
 AttackPoint    = 200;
 Defense        =  60;
-Acc            =  60;
-Evade          =  50;
+Acc            =  40;
+Evade          =  35;
 SpecialBonus   =   1.5;
 RangeMove      =   5;
 RangeAttack    =   1;
@@ -44,9 +44,9 @@ if (Race == "fairy") {
 RaceName = "Fairy";
 AttackPoint    = 140;
 Defense        =  40;
-Acc            =  40;
+Acc            =  35;
 Evade          =  30;
-SpecialBonus   =   2.0;
+SpecialBonus   =   1.7;
 RangeMove      =   6;
 RangeAttack    =   1;
       
@@ -60,8 +60,8 @@ if (Race == "orc") {
 RaceName = "Orc";
 AttackPoint    = 240;
 Defense        = 140;
-Acc            =  20;
-Evade          =   5;
+Acc            =  25;
+Evade          =  20;
 SpecialBonus   =   1.3;
 RangeMove      =   3;
 RangeAttack    =   1;
@@ -123,6 +123,12 @@ void Job::SetName(const string& str){
 
 string Job::GetSpecialArray(int &j) {
 	return SpecialArray[j]; }
+	
+void Job::SetDeath(bool &D) {
+	Death = D; }
+	
+bool Job::GetDeath() {
+	return Death; }
 
 //posisi
 int Job::GetX (){
@@ -147,12 +153,68 @@ void Job::Move (const int &x, const int &y) {
 	Y = y;}
 
 void Job::Attack (Job &Target) {
+	int i = Acc - Target.GetEvade();
+	int z ;
 	srand(time(NULL));
-	Target.ReceiveAttack(int(float(AttackPoint) * (0.01 * float(rand()%21 + 90))));	  
+	if (i==0)
+	{
+		z = rand()%10 + 1;
+	}	
+	if ((i>0) && (i<=5))
+	{
+		z = rand()%8 + 1;
+	}
+	
+	if ((i>5) && (i<=10))
+	{
+		z = rand()%7 + 1;
+	}
+	
+	if ((i>15) && (i<=20))
+	{
+		z = rand()%6 + 1;
+	}
+	if (i>20) 
+	{
+		z = rand()%5 + 1;
+	}
+	if ((i>-10) && (i<0))
+	{
+		z = rand()%12 + 1;
+	}
+	
+	if ((i>-20) && (i<=-10))
+	{
+		z = rand()%16 + 1;
+	}
+	
+	if ((i>-30) && (i<=-20))
+	{
+		z = rand()%25 + 1;
+	}
+	if (i>-30) 
+	{
+		z = rand()%50 + 1;
+	}
+	system("pause");
+	
+	if((z>=1) && (z<=5)) {
+	int Damage = int(float(AttackPoint) * (0.01 * float(rand()%21 + 90)));
+	Target.ReceiveAttack(Damage);
+	}
+	else  {
+	cout<<"Miss"<<endl;
+	system("pause");}
 }
 
 void Job:: ReceiveAttack (const int& Attack) {
-    HP = HP - (Attack - Defense);}
+	int i = (Attack - Defense);
+	if (i<0){ i = 1; }
+    HP = HP - i;
+	if (HP<=0){
+	HP = 0;
+	Death = true;}
+}
 
 void Job:: ReceiveHP (const int& Attack) {
     HP = HP + (Attack); }  

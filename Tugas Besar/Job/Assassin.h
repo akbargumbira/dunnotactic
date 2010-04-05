@@ -14,7 +14,7 @@ class Assassin : public Job {
 	Assassin(const string&);
 	Assassin(const Assassin&);	
 	~Assassin();
-	void Special (Job &Target);
+	void Special (const string & STR, Job &Target);
 };
 
 #endif
