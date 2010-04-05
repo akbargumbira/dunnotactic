@@ -7,8 +7,8 @@ int main() {
         try{
 	d.displayBoxTurn(1);
 	d.displayBoxTurnWithName("Mukhammad Ifanto");
-	// d.setArea(5,5,4);
-	// d.displayBoxMap(15,15);
+	d.setArea(5,5,4);
+	d.displayBoxMap(9,9);
 	cout << endl << endl;
         Info[0]="Ifan ganteng";
         Info[1]="banget";
@@ -16,7 +16,7 @@ int main() {
         }
         catch (const char* e)
         {
-            //cout << e << endl;
+            cout << e << endl;
 
         }
 	return 0;
