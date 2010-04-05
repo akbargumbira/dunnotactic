@@ -197,6 +197,7 @@
 		for(i=1;i<=P;++i) {
 			cout << H2;
 		}
+                cout << endl;
 	}
 
 // Display box Info

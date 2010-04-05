@@ -24,10 +24,14 @@ Map::Map()
     }
 }
 
-Map::Map(const Map& orig) {
+Map::Map(const Map& orig)
+{
+
 }
 
-Map::~Map() {
+Map::~Map()
+{
+
 }
 
 void Map::CreateMap(const int& X, const int& Y)
@@ -81,7 +85,11 @@ void Map::Load(string sin)
     Folder="Data/";
     NameFile = Folder+sin+ExtFile;
     ifstream fin (NameFile.c_str());
-    
+    if (fin==false)
+    {
+      throw "Nama File tidak ditemukan.";
+
+    }
     string s;
     while (fin >> s)
     {
@@ -235,4 +243,14 @@ int Map::GetTerrain(int X, int Y)
     {
         return Terrain[X-1][Y-1];
     }
+}
+
+int Map::GetSizeX()
+{
+    return SizeX;
+}
+
+int Map::GetSizeY()
+{
+    return SizeY;
 }

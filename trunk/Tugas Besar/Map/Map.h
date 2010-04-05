@@ -19,13 +19,15 @@ public :
     Map (const Map&); //Copy Constructor
     virtual ~Map();//Destructor
 
-    void CreateMap(const int&, const int&);
-    void Load(string);
-    void Save(string);
+    void CreateMap(const int&, const int&); //udah pake throw
+    void Load(string sin);
+    void Save(string s);
     void SetTerrainXY(int X,int Y, string GridContent); //udah pake throw
     void SetTerrainArea(int X1,int Y1,int X2,int Y2, string GridContent); //udah pake throw
     void SetMapRandom();
     int GetTerrain(int X, int Y);
+    int GetSizeX();
+    int GetSizeY();
 
 private :
     int SizeX;
