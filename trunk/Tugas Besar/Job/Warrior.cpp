@@ -61,9 +61,9 @@ if (STR == "Slash") {
 	Attack(Target);
 	AttackPoint = AttackPointDefault;
 	SP	-= 25;}
-	else {cout<<"SP tidak mencukupi";system("pause");}
+	else {cout<<"SP tidak mencukupi";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
+else {cout<<"Tidak ada Skill yang dimaksud!";}
 }
 
 

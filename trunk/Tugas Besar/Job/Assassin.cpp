@@ -63,9 +63,9 @@ if (STR == "Hell Chain") {
 	AttackPoint = AttackPointDefault;
 	RangeAttack = RangeAttackDefault;
 	SP	-= 40;}
-	else {cout<<"SP tidak mencukupi";system("pause");}
+	else {cout<<"SP tidak mencukupi";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";system("pause");}
+else {cout<<"Tidak ada Skill yang dimaksud!";}
 }
 
 
