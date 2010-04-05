@@ -261,12 +261,13 @@ void DunnoTactic::ParseCommand()
     int i=0;
     int j=0;
     int barket=0;
+    int petik=0;
     char take[100];
     CommandLength = 0;
 
     StringToLower(Command);
 
-    while (Command[i]==' ' || Command[i]=='(' || Command[i]==')')
+    while (Command[i]==' ' || Command[i]=='(' || Command[i]==')' || Command[i]=='\"')
     {
         if (Command[i]=='(')
         {
@@ -276,14 +277,18 @@ void DunnoTactic::ParseCommand()
         {
             --barket;
         }
+        if (Command[i]=='\"')
+        {
+            ++petik;
+        }
         ++i;
     }
 
     while (Command[i]!='\0' && Command[i]!='#')
     {
-        if (Command[i]==' '  || Command[i]=='(' || Command[i]==')')
+        if (Command[i]==' '  || Command[i]=='(' || Command[i]==')' || Command[i]=='\"')
         {
-            while (Command[i]==' ' || Command[i]=='(' || Command[i]==')')
+            while (Command[i]==' ' || Command[i]=='(' || Command[i]==')' || Command[i]=='\"')
             {
                  if (Command[i]=='(')
                  {
@@ -292,6 +297,10 @@ void DunnoTactic::ParseCommand()
                  if (Command[i]==')')
                  {
                      --barket;
+                 }
+                 if (Command[i]=='\"')
+                 {
+                     ++petik;
                  }
                  ++i;
             }
@@ -327,6 +336,11 @@ void DunnoTactic::ParseCommand()
     if (barket!=0)
     {
         throw "Jumlah kurung kurang lengkap.";
+    }
+
+    if (petik%2!=0)
+    {
+        throw "Jumlah petik kurang lengkap.";
     }
 }
 
