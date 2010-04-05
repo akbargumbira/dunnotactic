@@ -21,7 +21,7 @@ class Display {
 		// menampilkan BOX TURN ke layar
 		void displayBoxTurn(int);
 		void displayBoxTurnWithName(string);
-		void displayBoxMap(int P, int L);
+		void displayBoxMap(int P, int L); // P = X, L = Y
 		void displayBoxInfo();
 		void setArea(int, int, int);
 		void MoveAnimated(int, int, int, int);
