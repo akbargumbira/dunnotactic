@@ -48,6 +48,15 @@ void DunnoTactic::Main()
             {
                 break;
             }
+            else if (CommandLength==1 && CommandParse[0]=="help")
+            {
+                cout << "build mode     membangun peta" << endl;
+                cout << "play mode      mulai bermain" << endl;
+            }
+            else if (CommandLength==1 && CommandParse[0]=="clear")
+            {
+                system(CommandParse[0].c_str());
+            }
             else
             {
                 throw "Perintah tidak ditemukan.";
@@ -120,6 +129,20 @@ void DunnoTactic::Build()
                 D.displayBoxMap(M.GetSizeX(), M.GetSizeY());
                 break;
             }
+            else if (CommandLength==1 && CommandParse[0]=="clear")
+            {
+                system(CommandParse[0].c_str());
+            }
+            else if (CommandLength==1 && CommandParse[0]=="help")
+            {
+                cout << "create map size_x size_y                   untuk membuat map baru" << endl;
+                cout << "load map \"file\"                            untuk memakai map yang telah ada" << endl;
+                cout << "save map \"file\"                            untuk membuat map baru" << endl;
+                cout << "edit map [x y] nama_terrain                untuk mengedit isi map pada posisi x y" << endl;
+                cout << "edit map [x1 y1] [x2 y2] nama_terrain      untuk mengedit isi map pada area x1,y1 sampau x2,y2"<< endl;
+                cout << "edit random                                untuk mengedit isi map secara random" << endl;
+                cout << "exit                                       untuk keluar dari menu ini" << endl;
+            }
             else
             {
                 throw "Perintah tidak ditemukan.";
@@ -184,6 +207,14 @@ void DunnoTactic::Play()
                 {
                     cout << CommandParse[i] << " ";
                 }
+                cout << endl;
+            }
+            else if (CommandLength==1 && CommandParse[0]=="clear")
+            {
+                system(CommandParse[0].c_str());
+            }
+            else if (CommandLength==1 && CommandParse[0]=="help")
+            {
                 cout << endl;
             }
             else
