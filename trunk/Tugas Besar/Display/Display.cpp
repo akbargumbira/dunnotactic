@@ -207,15 +207,21 @@
 		int lengthBox = 40;
                 int lengthSpace;
 		string Blank = "     ";
+
 		cout << Blank;
-		for(i=1;i<=lengthBox;++i) {
+		for(i=0;i<lengthBox;++i) {
 			cout << "/";
 		}
-		for(j=1;j<=9;++j) {
+                
+		for(j=0;j<9;++j) {
 			cout << endl;
 			cout << Blank << "/";
-                        cout << "  " << Info[j-1];
-                        lengthSpace= lengthBox - Info[j-1].length()-4;
+                        if(Info[j]!="") {
+                            cout << "  " << Info[j];
+                            lengthSpace= lengthBox - Info[j].length()-4;
+                        } else {
+                            lengthSpace=lengthBox-2;
+                        }
 			for(i=1;i<=lengthSpace;++i) {
 				cout << " ";
 			}
