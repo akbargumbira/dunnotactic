@@ -14,7 +14,9 @@ CCADMIN=CCadmin
 RANLIB=ranlib
 CC=gcc
 CCC=g++
+
 CXX=g++
+
 FC=
 AS=as
 
@@ -32,11 +34,13 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Job/Assassin.o \
-	${OBJECTDIR}/Job/Mage.o \
+	${OBJECTDIR}/Map/Map.o \
+	${OBJECTDIR}/Display/Display.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/Job/Mage.o \
 	${OBJECTDIR}/DunnoTactic.o \
-	${OBJECTDIR}/Job/Sage.o \
 	${OBJECTDIR}/Job/Archer.o \
+	${OBJECTDIR}/Job/Sage.o \
 	${OBJECTDIR}/Job/Warrior.o \
 	${OBJECTDIR}/Job/Knight.o \
 	${OBJECTDIR}/Job/Job.o
@@ -70,30 +74,40 @@ ${OBJECTDIR}/Job/Assassin.o: nbproject/Makefile-${CND_CONF}.mk Job/Assassin.cpp
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Assassin.o Job/Assassin.cpp
 
-${OBJECTDIR}/Job/Mage.o: nbproject/Makefile-${CND_CONF}.mk Job/Mage.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Job
+${OBJECTDIR}/Map/Map.o: nbproject/Makefile-${CND_CONF}.mk Map/Map.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Map
 	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Mage.o Job/Mage.cpp
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Map/Map.o Map/Map.cpp
+
+${OBJECTDIR}/Display/Display.o: nbproject/Makefile-${CND_CONF}.mk Display/Display.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Display
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Display/Display.o Display/Display.cpp
 
 ${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
+${OBJECTDIR}/Job/Mage.o: nbproject/Makefile-${CND_CONF}.mk Job/Mage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Job
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Mage.o Job/Mage.cpp
+
 ${OBJECTDIR}/DunnoTactic.o: nbproject/Makefile-${CND_CONF}.mk DunnoTactic.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/DunnoTactic.o DunnoTactic.cpp
 
-${OBJECTDIR}/Job/Sage.o: nbproject/Makefile-${CND_CONF}.mk Job/Sage.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Job
-	${RM} $@.d
-	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Sage.o Job/Sage.cpp
-
 ${OBJECTDIR}/Job/Archer.o: nbproject/Makefile-${CND_CONF}.mk Job/Archer.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Job
 	${RM} $@.d
 	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Archer.o Job/Archer.cpp
+
+${OBJECTDIR}/Job/Sage.o: nbproject/Makefile-${CND_CONF}.mk Job/Sage.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Job
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/Job/Sage.o Job/Sage.cpp
 
 ${OBJECTDIR}/Job/Warrior.o: nbproject/Makefile-${CND_CONF}.mk Job/Warrior.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Job
