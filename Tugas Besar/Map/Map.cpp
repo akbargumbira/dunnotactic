@@ -122,7 +122,14 @@ void Map::Load(string sin)
     {
         for (int i=3;i<vectortemp.size();i=i+3)
         {
-            Terrain[atoi(vectortemp[i].c_str())-1][atoi(vectortemp[i+1].c_str())-1]=atoi(vectortemp[i+2].c_str());
+            if (atoi(vectortemp[i+2].c_str())==1 || atoi(vectortemp[i+2].c_str())==2 || atoi(vectortemp[i+2].c_str())==3 || atoi(vectortemp[i+2].c_str())==4)
+            {
+                Terrain[atoi(vectortemp[i].c_str())-1][atoi(vectortemp[i+1].c_str())-1]=atoi(vectortemp[i+2].c_str());
+            }
+            else
+            {
+                throw "Error : File yang Anda load sudah rusak.";
+            }
         }
     }
     fin.close();
