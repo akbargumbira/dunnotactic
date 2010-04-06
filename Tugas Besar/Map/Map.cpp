@@ -9,7 +9,7 @@
 #include <fstream>
 #include <vector>
 #include <stdlib.h>
-
+#include "../DunnoTactic.h"
 Map::Map()
 {
     SizeX=default_size;
@@ -31,7 +31,8 @@ Map::Map(const Map& orig)
 
 Map::~Map()
 {
-
+    SizeX=0;
+    SizeY=0;
 }
 
 void Map::CreateMap(const int& X, const int& Y)
@@ -50,7 +51,7 @@ void Map::CreateMap(const int& X, const int& Y)
     }
     else
     {
-        throw "Error. Ukuran Map minimal adalah 5x5, ukuran Map maksimal adalah 30 x 30";
+        throw "Error : Ukuran Map minimal adalah 5x5, ukuran Map maksimal adalah 30 x 30.";
     }
 }
 
@@ -63,7 +64,7 @@ void Map::Save(string s)
     NameFile = Folder+s+ExtFile;
     ofstream outputfile(NameFile.c_str());
 
-    outputfile << SizeX << " " << SizeY<< " #"<<endl;
+    outputfile << SizeX << " " << SizeY<< " " << SizeX*SizeY<<endl;
     for(int i=0;i<SizeX;++i)
     {
         for (int j=0;j<SizeY;++j)
@@ -85,25 +86,45 @@ void Map::Load(string sin)
     Folder="Data/";
     NameFile = Folder+sin+ExtFile;
     ifstream fin (NameFile.c_str());
+
     if (fin==false)
     {
-      throw "Nama File tidak ditemukan.";
+      throw "Error : Nama File tidak ditemukan.";
 
     }
+
     string s;
     while (fin >> s)
     {
-        vectortemp.push_back(s);
+        if (DunnoTactic::IsInteger(s))
+        {
+            vectortemp.push_back(s);
+        }
+        else
+        {
+            throw "Error : File yang Anda load sudah rusak.";
+        }
+        
     }
 
+    int TotalGrid;
     SizeX=atoi(vectortemp[0].c_str());
     SizeY=atoi(vectortemp[1].c_str());
+    TotalGrid = atoi(vectortemp[2].c_str());
 
-    for (int i=3;i<vectortemp.size();i=i+3)
+    if ((vectortemp.size()!=3*(TotalGrid+1)) || (SizeX*SizeY!= TotalGrid))
     {
-        Terrain[atoi(vectortemp[i].c_str())-1][atoi(vectortemp[i+1].c_str())-1]=atoi(vectortemp[i+2].c_str());
+        SizeX=default_size;
+        SizeY=default_size;
+        throw "Error : File yang Anda load sudah rusak.";
     }
-
+    else
+    {
+        for (int i=3;i<vectortemp.size();i=i+3)
+        {
+            Terrain[atoi(vectortemp[i].c_str())-1][atoi(vectortemp[i+1].c_str())-1]=atoi(vectortemp[i+2].c_str());
+        }
+    }
     fin.close();
 }
 
@@ -129,7 +150,7 @@ void Map::SetTerrainXY(int X, int Y, string GridContent)
     }
     else
     {
-        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon";
+        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon.";
     }
 
 
@@ -139,7 +160,7 @@ void Map::SetTerrainXY(int X, int Y, string GridContent)
     }
     else  //(X>SizeX || Y>SizeY || X<1 || Y<1 )
     {
-        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai";
+        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai.";
     }
 }
 
@@ -166,7 +187,7 @@ void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
     }
     else
     {
-        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon";
+        throw "Error : Daerah Terrain yang tersedia adalah rumput, air, lumpur, dan pohon.";
     }
 
     if (X1<=X2)
@@ -216,7 +237,7 @@ void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
     }
     else
     {
-        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai";
+        throw "Error : Koordinat Map yang Anda masukkan tidak sesuai.";
     }
 }
 
@@ -237,7 +258,7 @@ int Map::GetTerrain(int X, int Y)
 {
     if (X>SizeX || Y>SizeY || Y<1 || X<1)
     {
-        throw "X Y nya salah oi, diluar jangkauan tau!";
+        throw "Error : Koordinat yang Anda masukkan tidak sesuai.";
     }
     else
     {
