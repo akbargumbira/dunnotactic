@@ -29,6 +29,7 @@ public:
 
     static void Main();
     static void Play();
+    static void SelectCharacter();
     static void Build();
     static void Select(const int &id);
     static void Action(const int &id, string s);
@@ -44,6 +45,7 @@ public:
     static vector<Job*> P2;
 
     static int NumberChar;
+    static int PlayerTurn;
     static Map M;
     static Display D;
     

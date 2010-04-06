@@ -18,6 +18,7 @@ vector<Job*> DunnoTactic::P2;
 Map DunnoTactic::M;
 Display DunnoTactic::D;
 int DunnoTactic::NumberChar;
+int DunnoTactic::PlayerTurn;
 
 DunnoTactic::DunnoTactic() {
 }
@@ -156,11 +157,43 @@ void DunnoTactic::Build()
     }
 }
 
+void DunnoTactic::SelectCharacter()
+{
+    string P1Race;
+    vector<string> P1Job;
+    string P2Race;
+    vector<string> P2Job;
+    string temp;
+
+    cout << "Jumlah Character : " << endl;
+    cin >> NumberChar;
+    cout << "Player1 Race : " << endl;
+    cin >> P1Race;
+    for (int i=0;i<NumberChar;++i)
+    {
+        cout << "Character " << i+1 <<" job : "<<endl;
+        cin >> temp;
+        P1Job.push_back(temp);
+    }
+
+    cout << "Player2 Race : " << endl;
+    cin >> P2Race;
+    for (int i=0;i<NumberChar;++i)
+    {
+        cout << "Character " << i+1 <<" job : "<<endl;
+        cin >> temp;
+        P2Job.push_back(temp);
+    }
+
+    PlayerTurn = 1;
+}
+
 void DunnoTactic::Play()
 {
+    SelectCharacter();
     while(true)
     {
-        cout << "play > ";
+        cout << "play Player"<<PlayerTurn<<" > ";
         cin.getline(Command, 99);
         try
         {
@@ -168,17 +201,6 @@ void DunnoTactic::Play()
             if (CommandLength==1 && CommandParse[0]=="exit")
             {
                 break;
-            }
-            else if (CommandLength==3 && CommandParse[0]=="number" && CommandParse[1]=="character")
-            {
-                if (!IsInteger(CommandParse[2]))
-                {
-                    throw "Jumlah character harus dalam integer.";
-                }
-                else
-                {
-                    NumberChar = atoi(CommandParse[2].c_str());
-                }
             }
             else if (CommandLength==2 && CommandParse[0]=="list")
             {
