@@ -17,6 +17,7 @@ vector<Job*> DunnoTactic::P1;
 vector<Job*> DunnoTactic::P2;
 Map DunnoTactic::M;
 Display DunnoTactic::D;
+int DunnoTactic::NumberChar;
 
 DunnoTactic::DunnoTactic() {
 }
@@ -167,6 +168,17 @@ void DunnoTactic::Play()
             if (CommandLength==1 && CommandParse[0]=="exit")
             {
                 break;
+            }
+            else if (CommandLength==3 && CommandParse[0]=="number" && CommandParse[1]=="character")
+            {
+                if (!IsInteger(CommandParse[2]))
+                {
+                    throw "Jumlah character harus dalam integer.";
+                }
+                else
+                {
+                    NumberChar = atoi(CommandParse[2].c_str());
+                }
             }
             else if (CommandLength==2 && CommandParse[0]=="list")
             {

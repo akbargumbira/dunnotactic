@@ -43,6 +43,7 @@ public:
     static vector<Job*> P1;
     static vector<Job*> P2;
 
+    static int NumberChar;
     static Map M;
     static Display D;
     
