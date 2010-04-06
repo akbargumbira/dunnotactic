@@ -164,7 +164,7 @@
 							break;
 						}
 						case 2: {
-							cout << Pohon;
+							cout << Air;
 							break;
 						}
 						case 3: {
@@ -172,7 +172,7 @@
 							break;
 						}
 						case 4: {
-							cout << Air;
+							cout << Pohon;
 							break;
 						}
 						default: {
@@ -440,7 +440,11 @@
 		MapPlayer[preX][preY]=0;
 		displayBoxMap(9,9);
 	}
-	
+
+        void Display::SelectGrid(int x, int y) {
+            switch(DunnoTactic::M.GetTerrain(x,y);
+        }
+
 // method-method yang private
 	int Display::Min2(int a, int b) {
 		int min;

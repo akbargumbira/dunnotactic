@@ -25,6 +25,7 @@ class Display {
 		void displayBoxInfo(string* Info);
 		void setArea(int, int, int);
 		void MoveAnimated(int, int, int, int);
+                void SelectGrid(int x, int y);
 		
 	private:
 		// data member
