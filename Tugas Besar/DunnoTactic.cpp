@@ -9,6 +9,12 @@
 
 #include "DunnoTactic.h"
 #include "Display/Display.h"
+#include "Job/Knight.h"
+#include "Job/Archer.h"
+#include "Job/Assassin.h"
+#include "Job/Mage.h"
+#include "Job/Sage.h"
+#include "Job/Warrior.h"
 
 char DunnoTactic::Command[100];
 string DunnoTactic::CommandParse[10];
@@ -157,6 +163,169 @@ void DunnoTactic::Build()
     }
 }
 
+void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race)
+{
+    for (int i=0;i<NumberChar;++i)
+    {
+        if (Job[i]=="knight") {
+            P.push_back(new Knight(Race));
+        }
+        if (Job[i]=="archer") {
+            P.push_back(new Archer(Race));
+        }
+        if (Job[i]=="assassin") {
+            P.push_back(new Assassin(Race));
+        }
+        if (Job[i]=="mage") {
+            P.push_back(new Mage(Race));
+        }
+        if (Job[i]=="sage") {
+            P.push_back(new Sage(Race));
+        }
+        if (Job[i]=="warrior") {
+            P.push_back(new Warrior(Race));
+        }
+    }
+}
+
+void DunnoTactic::SelectNumCharacter()
+{
+    while (true)
+    {
+        cout << "Jumlah Character : ";
+        cin.getline(Command, 99);
+        try
+        {
+            ParseCommand();
+            if (CommandLength==1)
+            {
+                if (IsInteger(CommandParse[0]))
+                {
+                    NumberChar = atoi(CommandParse[0].c_str());
+                    break;
+                }
+                else
+                {
+                    throw "Masukan harus dalam integer.";
+                }
+            }
+            else
+            {
+                throw "Jumlah parameter harus satu.";
+            }
+        }
+        catch (const char* e)
+        {
+            cout << e << endl;
+        }
+    }
+}
+
+void DunnoTactic::SelectRace(string& Race, const string& Player)
+{
+    int length = 4;
+    string race[length];
+    
+    race[0] = "Human";
+    race[1] = "Elf";
+    race[2] = "Fairy";
+    race[3] = "Orc";
+    
+    while(true)
+    {
+        //system("clear");
+        cout << endl;
+        for (int i = 0 ;i< length;++i)
+        {
+            cout << i+1 << ". " << race[i] << endl;
+        }
+
+        cout << endl << Player<< endl << "Select Race : ";
+        cin.getline(Command, 99);
+        try
+        {
+            ParseCommand();
+            if (CommandLength==1 && IsInteger(CommandParse[0]))
+            {
+                int temp;
+                temp = atoi(CommandParse[0].c_str());
+                if (temp>=1 && temp<=4)
+                {
+                    Race = race[temp-1];
+                    break;
+                }
+                else
+                {
+                    throw "Masukan dari 1 sampai 4";
+                }
+            }
+            else
+            {
+                throw "Masukan harus integer.";
+            }
+        }
+        catch (const char* e)
+        {
+            cout << e << endl;
+        }
+    }
+}
+
+void DunnoTactic::SelectJob(vector<string>& Job, const string& Player)
+{
+    int length=6;
+    string job[length];
+    int num = 1;
+
+    job[0] = "archer";
+    job[1] = "assassin";
+    job[2] = "knight";
+    job[3] = "mage";
+    job[4] = "sage";
+    job[5] = "warrior";
+
+    while (num<=NumberChar)
+    {
+        while(true)
+        {
+            //system("clear");
+            cout << endl;
+            for (int i=0;i<length;++i)
+            {
+                cout << i+1 << ". " << job[i] << endl;
+            }
+            cout << endl << Player << endl << "Select Caharacter " << num << " Job : ";
+            cin.getline(Command, 99);
+            try
+            {
+                ParseCommand();
+                if (CommandLength==1 && IsInteger(CommandParse[0]))
+                {
+                    int temp = atoi(CommandParse[0].c_str());
+                    if (temp>=1 && temp<=length)
+                    {
+                        Job.push_back(job[temp-1]);
+                        break;
+                    }
+                    else
+                    {
+                        throw "Masukan harus 1 s.d. 6";
+                    }
+                }
+                else
+                {
+                    throw "Masukan harus dalam integer.";
+                }
+            }
+            catch(const char* e)
+            {
+                cout << e << endl;
+            }
+        }
+        ++num;
+    }
+}
+
 void DunnoTactic::SelectCharacter()
 {
     string P1Race;
@@ -165,25 +334,12 @@ void DunnoTactic::SelectCharacter()
     vector<string> P2Job;
     string temp;
 
-    cout << "Jumlah Character : " << endl;
-    cin >> NumberChar;
-    cout << "Player1 Race : " << endl;
-    cin >> P1Race;
-    for (int i=0;i<NumberChar;++i)
-    {
-        cout << "Character " << i+1 <<" job : "<<endl;
-        cin >> temp;
-        P1Job.push_back(temp);
-    }
-
-    cout << "Player2 Race : " << endl;
-    cin >> P2Race;
-    for (int i=0;i<NumberChar;++i)
-    {
-        cout << "Character " << i+1 <<" job : "<<endl;
-        cin >> temp;
-        P2Job.push_back(temp);
-    }
+    SelectNumCharacter();
+    SelectRace(P1Race, "Player1");
+    SelectJob(P1Job, "Player1");
+    ConstructCharacter(P1, P1Job, P1Race);
+    cout << P1[0]->GetJobName() << endl;
+    //ConstructCharacter(P2, P2Job, P2Race);
 
     PlayerTurn = 1;
 }
@@ -193,7 +349,7 @@ void DunnoTactic::Play()
     SelectCharacter();
     while(true)
     {
-        cout << "play Player"<<PlayerTurn<<" > ";
+        cout << "play - Player"<<PlayerTurn<<" > ";
         cin.getline(Command, 99);
         try
         {

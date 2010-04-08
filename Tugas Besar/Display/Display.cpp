@@ -442,7 +442,7 @@
 	}
 
         void Display::SelectGrid(int x, int y) {
-            switch(DunnoTactic::M.GetTerrain(x,y);
+            switch(DunnoTactic::M.GetTerrain(x,y));
         }
 
 // method-method yang private
