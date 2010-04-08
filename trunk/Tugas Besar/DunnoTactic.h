@@ -29,7 +29,11 @@ public:
 
     static void Main();
     static void Play();
+    static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race);
+    static void SelectNumCharacter();
     static void SelectCharacter();
+    static void SelectJob(vector<string> &Job, const string& Player);
+    static void SelectRace(string& Race, const string& Player);
     static void Build();
     static void Select(const int &id);
     static void Action(const int &id, string s);
