@@ -14,8 +14,31 @@
  * 
  */
 int main(int argc, char** argv) {
+
     DunnoTactic::Main();
-    cout << DunnoTactic::GetCharacter(4,2)->GetRangeMove() << endl;
+    /*
+    vector<int> available;
+
+    available.push_back(1);
+    available.push_back(5);
+    available.push_back(7);
+    available.push_back(9);
+
+    for (int i=0;i<available.size();++i)
+    {
+        cout << i << " " << available[i] << endl;
+    }
+
+    vector<int>::iterator begin = available.begin();
+    begin = begin + 2;
+
+    available.erase(begin);
+
+    for (int i=0;i<available.size();++i)
+    {
+        cout << i << " " << available[i] << endl;
+    }*/
+
 /*
     DunnoTactic::P1.push_back(new Knight("human"));
     DunnoTactic::P2.push_back(new Assassin("elf"));
