@@ -570,6 +570,7 @@
         }
 
         void Display::printPlayer(int x, int y, int line) {
+            Job* Player = DunnoTactic::GetCharacter(x,y);
             switch(line) {
                 case 1 : {
                     if(IdPlayer(x,y)==1) {
@@ -580,7 +581,34 @@
                     break;
                 }
                 case 2 : {
-                    cout << " H-M ";
+                    string race = Player->GetRaceName();
+                    string job = Player->GetJobName();
+                    if(race=="Human") {
+                        cout << "H-";
+                    } else if(race=="Elf") {
+                        cout << "E-";
+                    } else if(race=="Fairy") {
+                        cout << "F-";
+                    } else if(race=="Orc") {
+                        cout << "O-";
+                    } else {
+                        cout << "U-";
+                    }
+                    if(job=="Archer") {
+                        cout << "A";
+                    } else if(job=="Assassin") {
+                        cout << "N";
+                    } else if(job=="Knight") {
+                        cout << "K";
+                    } else if(job=="Mage") {
+                        cout << "M";
+                    } else if(job=="Sage") {
+                        cout << "S";
+                    } else if(job=="Warrior") {
+                        cout << "W";
+                    } else {
+                        cout << "U";
+                    }
                     break;
                 }
                 case 3 : {
