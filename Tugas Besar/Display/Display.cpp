@@ -39,6 +39,12 @@
 	}
 	
 // Deklarasi method
+        void Display::displayGame() {
+            int turn = DunnoTactic::PlayerTurn;
+            displayBoxTurn(turn);
+            displayBoxMap();
+            displayBoxInfo();
+        }
 	void Display::displayBoxTurn(int Turn) {
 		string Blank = "     ";
 		cout << endl;
@@ -353,7 +359,8 @@
 		int NbStep;
 		int x;
 		int y;
-		setAreaMove(initX,initY,4);
+                Job* Player = DunnoTactic::GetCharacter(x,y);
+		setAreaMove(initX,initY,Player->GetRangeMove());
 		x = targetX-1;
 		y = targetY-1;
 		NbStep = MapArea[x][y];
@@ -398,7 +405,7 @@
                 int tempPlayer;
                 pointerX=initX;
                 pointerY=initY;
-		displayBoxMap();
+		displayGame();
 		for(i=NbStep-2;i>=0;--i) {
 			x=xSaved[i];
 			y=ySaved[i];
@@ -426,7 +433,7 @@
 			system("clear");
                         pointerX=x+1;
                         pointerY=y+1;
-			displayBoxMap();
+			displayGame();
 		}
 		sleep(1);
 		system("clear");
@@ -434,16 +441,17 @@
 		MapPlayer[preX][preY]=0;
                 pointerX=targetX;
                 pointerY=targetY;
-		displayBoxMap();
+		displayGame();
 	}
 
-//        void Display::SelectGrid(int x, int y) {
-//            setAreaMove(x,y,4);
-//            pointerX=x;
-//            pointerY=y;
-//            system("clear");
-//            displayBoxMap();
-//        }
+        void Display::SelectMove(int x, int y) {
+            Job* Player = DunnoTactic::GetCharacter(x,y);
+            setAreaMove(x,y,Player->GetRangeMove());
+            pointerX=x;
+            pointerY=y;
+            system("clear");
+            displayGame();
+        }
 
         void Display::HighlightGrid(int x, int y) {
             pointerX=x;
@@ -476,6 +484,7 @@
                     break;
                 }
             }
+            displayGame();
         }
         // method get dan set
         void Display::SetInfo(string Infox, int id) {

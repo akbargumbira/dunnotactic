@@ -19,6 +19,7 @@ class Display {
 		~Display();
 		
 		// method
+                void displayGame();
 		void displayBoxTurn(int Turn);
 		void displayBoxTurnWithName(string Name);
 		void displayBoxMap();
@@ -26,7 +27,7 @@ class Display {
 		void setAreaMove(int initX, int initY, int range);
                 void setAreaAttack(int x, int y, int range);
 		void MoveAnimated(int initX, int initY, int targetX, int targetY);
-//                void SelectGrid(int x, int y);
+                void SelectMove(int x, int y);
                 void HighlightGrid(int x, int y);
                 // method get dan set
                 void SetInfo(string Infox, int id);
