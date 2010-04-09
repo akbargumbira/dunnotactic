@@ -464,6 +464,7 @@ void DunnoTactic::SelectCharacter()
 
     SelectNumCharacter();
     SelectRace(P1Race, "Player1");
+    cout << P1Race;
     SelectJob(P1Job, "Player1");
 
     SelectRace(P1Race, "Player2");
