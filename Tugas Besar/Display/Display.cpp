@@ -24,9 +24,6 @@
 
                 pointerX = 1;
                 pointerY = 1;
-		MapPlayer[1][1]=12;
-		MapPlayer[4][4]=25;
-                MapPlayer[4][3]=21;
 	}
 
 // Display copy constructor
