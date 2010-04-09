@@ -26,7 +26,7 @@ class Display {
 		void setAreaMove(int initX, int initY, int range);
                 void setAreaAttack(int x, int y, int range);
 		void MoveAnimated(int initX, int initY, int targetX, int targetY);
-                void SelectGrid(int x, int y);
+//                void SelectGrid(int x, int y);
                 void HighlightGrid(int x, int y);
                 // method get dan set
                 void SetInfo(string Infox, int id);
