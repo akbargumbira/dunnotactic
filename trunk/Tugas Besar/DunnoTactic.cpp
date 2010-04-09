@@ -481,6 +481,7 @@ void DunnoTactic::SelectCharacter()
 void DunnoTactic::Play()
 {
     SelectCharacter();
+    D.displayBoxMap();
     while(true)
     {
         cout << "play - Player"<<PlayerTurn<<" > ";
