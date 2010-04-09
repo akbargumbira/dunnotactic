@@ -594,7 +594,6 @@
                     } else {
                         cout << " U-";
                     }
-                    cout <<"tes"<< race;
                     if(job=="Archer") {
                         cout << "A ";
                     } else if(job=="Assassin") {
