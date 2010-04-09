@@ -308,7 +308,7 @@
             for(i=initX-range;i<=initX+range;++i) {
                 factor=range-abs(initX-i);
                 for(j=initY-factor;j<=initY+factor;++j) {
-                    if(i>0 && j>0) {
+                    if(i>0 && j>0 && i<=DunnoTactic::M.GetSizeX() && j<=DunnoTactic::M.GetSizeY()) {
                         if(PassTerrain(i,j) && PassPlayer(initX-1,initY-1,i-1,j-1)) {
                             MapArea[i-1][j-1]=abs(initX-i)+abs(initY-j);
                         }
