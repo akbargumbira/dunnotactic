@@ -226,7 +226,7 @@
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
                             color("yellow","green");
-                            printPlayer(i,j,1);
+                            printPlayer(i,j,3);
                             color("default","default");
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor();
@@ -724,7 +724,7 @@
 	
 	int Display::IdPlayer(int x, int y) {
 		int id;
-		if(MapPlayer[x][y]>=100 && MapPlayer[x][y]<=500) {
+		if(MapPlayer[x][y]>100 && MapPlayer[x][y]<=500) {
 			id=1;
 		} else if(MapPlayer[x][y]>500) {
 			id=2;
