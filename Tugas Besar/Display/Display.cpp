@@ -437,13 +437,13 @@
 		displayBoxMap();
 	}
 
-        void Display::SelectGrid(int x, int y) {
-            setAreaMove(x,y,4);
-            pointerX=x;
-            pointerY=y;
-            system("clear");
-            displayBoxMap();
-        }
+//        void Display::SelectGrid(int x, int y) {
+//            setAreaMove(x,y,4);
+//            pointerX=x;
+//            pointerY=y;
+//            system("clear");
+//            displayBoxMap();
+//        }
 
         void Display::HighlightGrid(int x, int y) {
             pointerX=x;
