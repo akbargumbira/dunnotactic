@@ -87,13 +87,12 @@
 	}
 	
 // Display box Map
-	void Display::displayBoxMap(int P, int L) {
-		string Area = " aaa |";
-		string Player1 = " -1- |";
-		string Player2 = " P-2 $";
+	void Display::displayBoxMap() {
 		int i;
 		int j;
 		int k;
+                int P = DunnoTactic::M.GetSizeX();
+                int L = DunnoTactic::M.GetSizeY();
 		
 		// menampilkan indeks atas (koordinat x)
 		// menampilkan garis horizontal
@@ -402,7 +401,7 @@
                 int tempPlayer;
                 pointerX=initX;
                 pointerY=initY;
-		displayBoxMap(9,9);
+		displayBoxMap();
 		for(i=NbStep-2;i>=0;--i) {
 			x=xSaved[i];
 			y=ySaved[i];
@@ -430,7 +429,7 @@
 			system("clear");
                         pointerX=x+1;
                         pointerY=y+1;
-			displayBoxMap(9,9);
+			displayBoxMap();
 		}
 		sleep(1);
 		system("clear");
@@ -438,7 +437,7 @@
 		MapPlayer[preX][preY]=0;
                 pointerX=targetX;
                 pointerY=targetY;
-		displayBoxMap(9,9);
+		displayBoxMap();
 	}
 
         void Display::SelectGrid(int x, int y) {
@@ -446,7 +445,7 @@
             pointerX=x;
             pointerY=y;
             system("clear");
-            displayBoxMap(9,9);
+            displayBoxMap();
         }
 
         void Display::HighlightGrid(int x, int y) {
@@ -588,7 +587,7 @@
                     break;
                 }
                 case 3 : {
-                    cout << " (" << MapPlayer[x-1][y-1] << ")";
+                    cout << "(" << MapPlayer[x-1][y-1] << ")";
                     break;
                 }
                 default : {
@@ -654,9 +653,9 @@
 	
 	int Display::IdPlayer(int x, int y) {
 		int id;
-		if(MapPlayer[x][y]<20 && MapPlayer[x][y]!=0) {
+		if(MapPlayer[x][y]>=100 && MapPlayer[x][y]<=500) {
 			id=1;
-		} else if(MapPlayer[x][y]>=20) {
+		} else if(MapPlayer[x][y]>500) {
 			id=2;
 		} else {
 			id=0;

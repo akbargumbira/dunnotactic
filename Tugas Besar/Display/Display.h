@@ -21,7 +21,7 @@ class Display {
 		// method
 		void displayBoxTurn(int Turn);
 		void displayBoxTurnWithName(string Name);
-		void displayBoxMap(int P, int L);
+		void displayBoxMap();
                 void displayBoxInfo();
 		void setAreaMove(int initX, int initY, int range);
                 void setAreaAttack(int x, int y, int range);
