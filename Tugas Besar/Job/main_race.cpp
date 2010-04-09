@@ -14,7 +14,7 @@ using namespace std;
 string race;
 string job;
 string name;
-string special;
+int special;
 vector<Job *> Player;
 vector<Job *> Enemy;
 vector<Job *>::iterator i;
@@ -60,7 +60,6 @@ void Display(int &x, int &y) {
 	cout<<"-  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }
 	cout<<"-  "<<obj_job->GetHP()<<" / "<<obj_job->GetHPDefault()<<endl;	
 	cout<<"-  "<<obj_job->GetSP()<<" / "<<obj_job->GetSPDefault()<<endl<<endl;	
-	cout<<"------------------------"<<endl;
 	
 	
 	cout<<"------------------------"<<endl;
@@ -308,11 +307,11 @@ while (c!=65) {
 		i = Player.begin();		
 		obj_job2  = *i;  }
 		if (x==2){
-		i = Player.begin();		
-		obj_job2  = *i+1; }
+		i = Player.begin()+1;		
+		obj_job2  = *i; }
 		if (x==3){
-		i = Player.begin();		
-		obj_job2  = *i+2; }
+		i = Player.begin()+2;		
+		obj_job2  = *i; }
 		obj_job2->GetSpecialArray();
 		cout<<"-----------"<<endl;
 		cout<<"Choose Special = "<<endl;

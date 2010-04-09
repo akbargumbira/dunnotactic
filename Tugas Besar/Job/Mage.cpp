@@ -21,7 +21,12 @@ Mage::Mage(const string& RaceName) : Job(RaceName){
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
+	AccDefault = Acc;
 	SpecialArray[0] = "1.Hell Fire            30";
+	AttackTurn = false;
+	Enable   = false;
+	MoveTurn   = false;
+	Death	   = false;
 
 }
 Mage::Mage(const Mage& k){
@@ -37,34 +42,36 @@ Mage::Mage(const Mage& k){
 	Evade	    = k.Evade;
 	HPDefault   = k.HP;
 	SPDefault   = k.SP;
+	AttackPointDefault = k.AttackPointDefault;
+	RangeAttackDefault = k.RangeAttackDefault;	
+	AccDefault = Acc;
+	SpecialArray[0] = k.SpecialArray[0];
+	AttackTurn = k.AttackTurn;
+	Enable   = k.Enable;
+	MoveTurn   = k.MoveTurn;
+	Death	   = k.Death;
 	
 }
 Mage::~Mage(){
-		
-    Name		="";
-	AttackPoint = 0;
-	Defense 	= 0;
-	RangeMove 	= 0;
-	RangeAttack = 0;
-	HP 			= 0;
-	SP 			= 0;
-	Acc			= 0;
-	Evade		 = 0;
 	
 }
-void Mage::SpecialArea (const string & STR){
+void Mage::SpecialArea (const int & SPC){
 }
-void Mage::Special (const string & STR, Job &Target) {
-if (STR == "Hell Fire") {
-	if (SP>30) {
-	AttackPoint = int(AttackPoint*2.2*SpecialBonus) ; ;
-	Attack(Target);
-	AttackPoint = AttackPointDefault;
-	SP	-= 30;
-	AttackTurn = true;}
-	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+void Mage::Special (const int & SPC, Job &Target) {
+if (AttackTurn == false) {
+	if (SPC == 1) {
+		if (SP>30) {
+		AttackPoint = int(AttackPoint*2.2*SpecialBonus) ; 
+		Acc *= 3;
+		Attack(Target);
+		AttackPoint = AttackPointDefault;
+		Acc = AccDefault;
+		SP	-= 30;
+		AttackTurn = true;}
+		else {throw "SP tidak mencukupi.";}
+		}
+	else {throw "Tidak ada Skill yang dimaksud!.";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
 }
 
 

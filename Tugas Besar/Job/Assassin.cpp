@@ -21,9 +21,10 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
-	SpecialArray[0] = "Hell Chain            30";
+	AccDefault = Acc;
+	SpecialArray[0] = "1.Hell Chain            30";
 	AttackTurn = false;
-	WaitTurn   = false;
+	Enable     = false;
 	MoveTurn   = false;
 	Death	   = false;
 
@@ -41,37 +42,37 @@ Assassin::Assassin(const Assassin& k){
 	Evade	    = k.Evade;
 	HPDefault   = k.HP;
 	SPDefault   = k.SP;
+	AttackPointDefault = k.AttackPointDefault;
+	RangeAttackDefault = k.RangeAttackDefault;	
+	AccDefault = Acc;
+	SpecialArray[0] = k.SpecialArray[0];
+	AttackTurn = k.AttackTurn;
+	Enable   = k.Enable;
+	MoveTurn   = k.MoveTurn;
+	Death	   = k.Death;
 	
 }
 Assassin::~Assassin(){
 		
-    Name		="";
-	AttackPoint = 0;
-	Defense 	= 0;
-	RangeMove 	= 0;
-	RangeAttack = 0;
-	HP 			= 0;
-	SP 			= 0;
-	Acc			= 0;
-	Evade		 = 0;
-	
 }
-void Assassin::SpecialArea (const string & STR){
+void Assassin::SpecialArea (const int & SPC){
 }
 
-void Assassin::Special (const string & STR, Job &Target) {
-if (STR == "Hell Chain") {
-	if (SP>40) {
-	AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
-	RangeAttack += 2;
-	Attack(Target);
-	AttackPoint = AttackPointDefault;
-	RangeAttack = RangeAttackDefault;
-	SP	-= 40;
-	AttackTurn = true;}
-	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+void Assassin::Special (const int & SPC, Job &Target) {
+if (AttackTurn == false) {
+	if (SPC == 1) {
+		if (SP>40) {
+		AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
+		RangeAttack += 2;
+		Acc =int (Acc*2.3);
+		Attack(Target);
+		AttackPoint = AttackPointDefault;
+		RangeAttack = RangeAttackDefault;
+		Acc = AccDefault;
+		SP	-= 40;
+		AttackTurn = true;}
+		else {throw "SP tidak mencukupi.";}
+		}
+	else {throw "Tidak ada Skill yang dimaksud!.";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
 }
-
-

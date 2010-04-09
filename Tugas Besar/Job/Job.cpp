@@ -3,17 +3,21 @@
 #include "Job.h"
 
 using namespace std;
-
-Job::Job(){}
+//METHOD
+//Constructor dan destructor
+Job::Job(){} //Constructor Default
 
 Job::Job (const string& Race) {
+//Construstor dengan parameter string
+//I.S : Karakter belum diinstansi
+//F.S : Karakter telah diinstansi dengan race string	  
 //Race Human
 if (Race == "human") {
 RaceName = "Human";
 AttackPoint    = 300;
 Defense        = 100;
-Acc            =  30;
-Evade          =  10;
+Acc            =  40;
+Evade          =  20;
 SpecialBonus   =   1.2;
 RangeMove      =   4;
 RangeAttack    =   1;
@@ -28,8 +32,8 @@ if (Race == "elf") {
 RaceName = "Elf";
 AttackPoint    = 200;
 Defense        =  60;
-Acc            =  40;
-Evade          =  15;
+Acc            =  50;
+Evade          =  25;
 SpecialBonus   =   1.5;
 RangeMove      =   5;
 RangeAttack    =   1;
@@ -43,9 +47,9 @@ Y              =    0; }
 if (Race == "fairy") {
 RaceName = "Fairy";
 AttackPoint    = 140;
-Defense        =  40;
+Defense        =  45;
 Acc            =  35;
-Evade          =  13;
+Evade          =  25;
 SpecialBonus   =   1.7;
 RangeMove      =   6;
 RangeAttack    =   1;
@@ -60,7 +64,7 @@ if (Race == "orc") {
 RaceName = "Orc";
 AttackPoint    = 240;
 Defense        = 140;
-Acc            =  25;
+Acc            =  15;
 Evade          =   7;
 SpecialBonus   =   1.3;
 RangeMove      =   3;
@@ -70,167 +74,187 @@ HP             = 1400;
 SP             =   80;
 X              =    0;
 Y              =    0; }
+
 for (int w = 0; w<10;w++) {
 SpecialArray[w] = "none";  }
 }
 
-
+//Destructor virtual  
 Job::~Job () {}
+
 //Attribut
-int Job::GetAttackPoint (){
-      return AttackPoint;}
-
-int Job::GetDefensePoint (){
-      return Defense;}     
-
-int Job::GetAcc (){
-      return Acc;}      
-
-int Job::GetEvade (){
-      return Evade;}  
-
-float Job::GetSpecialBonus (){
-      return SpecialBonus;} 
-
-int Job::GetRangeMove (){
-      return RangeMove;}        
-
-int Job::GetRangeAttack (){
-      return RangeAttack;}
-
-int Job::GetHP (){
-    if (HP <= 0)
-       {cout<<"HP habis, Karakter mati = ";}
-    return HP;}
-
-int Job::GetSP (){
-    return SP;}
-	
-int Job::GetHPDefault() {
-	return HPDefault;}
-	
-int Job::GetSPDefault() {
-	return SPDefault; }
-	
+//Mengembalikan ID
+int Job::GetID() {
+	return ID;}
+//mengembalikan nilai Name Karakter	
 string Job::GetName() {
 	return Name; }
-	
+//mengembalikan nilai JobName Karakter	
 string Job::GetJobName(){
 	return JobName;}
-
+//mengembalikan nilai RaceName Karakter
 string Job::GetRaceName() {
 	return RaceName; }
-
-void Job::SetName(const string& str){
-	Name = str;}
-
+//mengembalikan nilai attack_point
+int Job::GetAttackPoint (){
+    return AttackPoint;}
+//mengembalikan nilai defense_point
+int Job::GetDefensePoint (){
+    return Defense;}     
+//mengembalikan nilai acc
+int Job::GetAcc (){
+    return Acc;}      
+//mengembalikan nilai evade
+int Job::GetEvade (){
+    return Evade;}  
+//mengembalikan nilai spsial_bonus
+float Job::GetSpecialBonus (){
+    return SpecialBonus;} 
+//mengembalikan nilai range_move
+int Job::GetRangeMove (){
+    return RangeMove;}        
+//mengembalikan nilai range_attack
+int Job::GetRangeAttack (){
+    return RangeAttack;}
+//mengembalikan nilai HP
+int Job::GetHP (){
+    if (HP <= 0)
+       {HP = 0;}
+    return HP;}
+//mengembalikan nilai SP
+int Job::GetSP (){
+    return SP;}
+//mengembalikan nilai HPDefault	
+int Job::GetHPDefault() {
+	return HPDefault;}
+//mengembalikan nilai SPDefault	
+int Job::GetSPDefault() {
+	return SPDefault; }
+//mengembalikan isi list SpesialArray
 void Job::GetSpecialArray (){
 	int i = 0;
 	while (SpecialArray[i] != "none") {
 	cout<<SpecialArray[i]<<endl;
 	i++; }
 }
-	
+//Mengeset ID
+void Job::SetID(const int &i) {
+	ID = i;}
+//Mengeset Name
+void Job::SetName(const string& str){
+	Name = str;}
+//Mengeset status death
 void Job::SetDeath(bool &D) {
 	Death = D; }
-
+//Mengeset status  Attack
 void Job::SetAttackTurn(bool &D) {
 	AttackTurn = D; }
-	
-void Job::SetWaitTurn(bool &D) {
-	WaitTurn = D; }
-
+//Mengeset status  enable	
+void Job::SetEnable(bool &D) {
+	Enable = D; }
+//Mengeset status Move
 void Job::SetMoveTurn(bool &D) {
 	MoveTurn = D; }
-	
+//Mengembalikan status Death	
 bool Job::GetDeath() {
 	return Death; }
-	
+//Mengembalikan status Attack	
 bool Job::GetAttackTurn() {
 	return AttackTurn; }
-
-bool Job::GetWaitTurn() {
-	return WaitTurn; }
-
+//Mengembalikan status Enable
+bool Job::GetEnable() {
+	return Enable; }
+//Mengembalikan status Turn
 bool Job::GetMoveTurn() {
 	return MoveTurn; }
 
 //Method lain
+//Mengembalikan status Status Semuanya
 void Job::Status() {
-	cout<<"MoveTurn   = "<< MoveTurn <<endl;
+	cout<<"MoveTurn   = "<<MoveTurn <<endl;
 	cout<<"AttackTurn = "<<AttackTurn<<endl;
-	cout<<"WaitTurn   = "<<WaitTurn<<endl;
+	cout<<"Enable   = "<<Enable<<endl;
 	cout<<"Death      = "<<Death<<endl; }
 
 //posisi
+//mengembalikan nilai X
 int Job::GetX (){
-      return X; }
-
+    return X; }
+//mengembalikan nilai Y
 int Job::GetY (){
-      return Y; }
+    return Y; }
 
 
 //Method Karakter
+//I.S : Posisi suatu karakter original
+//F.S : Posisi suatu karakter berubah menjadi x, y
 void Job::Move (const int &x, const int &y) {
 	X = x; 
 	Y = y;
 	MoveTurn = true;}
-
+	
+//Fungsi Wait
+//I.S : Fungsi masih dalam keadaan Enable = true
+//F.S : Enable = false	
+void Job::Wait () {
+	Enable = true; }
+	
+//Fungsi menyerang karakter lain
+//I.S : Target.HP masih yang lama
+//F.S : Target.HP telah dikurangi Attack this
 void Job::Attack (Job &Target) {
 	int i = Acc - Target.GetEvade();
 	int z ;
-	srand(time(NULL));
+	
 	if (i==0)
 	{
-		z = rand()%10 + 1;
+		z = rand()%7 ;
 	}	
-	if ((i>0) && (i<=8))
+	else if ((i>0) && (i<=8))
 	{
-		z = rand()%8 + 1;
+		z = rand()%6 ;
 	}
 	
-	if ((i>8) && (i<=15))
+	else if ((i>8) && (i<=16))
 	{
-		z = rand()%7 + 1;
+		z = rand()%5 ;
 	}
 	
-	if ((i>15) && (i<=25))
+	else if (i>16)
 	{
-		z = rand()%6 + 1;
-	}
-	if (i>25) 
-	{
-		z = rand()%5 + 1;
-	}
-	if ((i>-10) && (i<0))
-	{
-		z = rand()%12 + 1;
+		z = rand()%4;
 	}
 	
-	if ((i>-20) && (i<=-10))
+	else if ((i>(-5)) && (i<0))
 	{
-		z = rand()%13 + 1;
+		z = rand()%8 ;
 	}
 	
-	if ((i>-30) && (i<=-20))
+	else if ((i>(-10)) && (i<=(-5)))
 	{
-		z = rand()%14 + 1;
+		z = rand()%9 ;
 	}
-	if (i>-30) 
-	{
-		z = rand()%15 + 1;
-	}
-	system ("pause");
 	
-	if((z>=1) && (z<=5)) {
+	else if ((i>(-15)) && (i<=(-10)))
+	{
+		z = rand()%10 ;
+	}
+	else if (i<(-15)) 
+	{
+		z = rand()%11 ;
+	}
+	
+	if (z<=4) {
 	int Damage = int(float(AttackPoint) * (0.01 * float(rand()%21 + 90)));
-	Target.ReceiveAttack(Damage);	
-	}
+	Target.ReceiveAttack(Damage);	}
 	else  {
 	cout<<"Miss"<<endl;}
 	AttackTurn = true;
 }
 
+//Fungsi menerima serangan
+//I.S : HP masih yang lama
+//F.S : HP telah berkurang sesuai Attack
 void Job:: ReceiveAttack (const int& Attack) {
 	int i = (Attack - Defense);
 	if (i<0){ i = 1; }
@@ -240,12 +264,21 @@ void Job:: ReceiveAttack (const int& Attack) {
 	Death = true;}
 }
 
+//Fungsi menerima HP
+//I.S : HP masih yang lama
+//F.S : HP telah Bertambah sesuai dengan spesial
 void Job:: ReceiveHP (const int& Attack) {
     HP = HP + (Attack); }  
-
-void Job::SpecialArea (const string & STR){
+	
+//Fungsi serangan tambahan
+//I.S : ~~
+//F.S : Target.HP dalam suatu area berkurang (jika spesial heal, maka Target.HP bertambah)
+void Job::SpecialArea (const int & SPC){
 }
 
-void Job::Special (const string & STR, Job &Target) {
+//Fungsi serangan tambahan
+//I.S : ~~
+//F.S : Target.HP berkurang
+void Job::Special (const int & SPC, Job &Target) {
 }
 
