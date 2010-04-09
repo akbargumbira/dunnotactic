@@ -30,6 +30,8 @@ public:
     static void Main();
     static void Play();
     static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race);
+    static int  Random(const int& Begin, const int& End);
+    static void RandomChacracterPosition(int kuadran, vector<Job*> &P);
     static void SelectNumCharacter();
     static void SelectCharacter();
     static void SelectJob(vector<string> &Job, const string& Player);
