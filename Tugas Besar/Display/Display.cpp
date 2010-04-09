@@ -315,6 +315,7 @@
                     }
                 }
             }
+            cout <<"lanjutttt gan" ;
 
             // penghapusan daerah-daerah yang melebihi dari range move
             if(IsLumpur(initX,initY)) {
@@ -332,12 +333,14 @@
                     if(x>=0 && y>=0) {
                         setDistanceMove(x,y,range);
                     }
+                    cout <<"lanjutttt gan 2" ;
                     // kuadran 3
                     x = initX-factorX-1;
                     y = initY-factorY-1;
                     if(x>=0 && y>=0) {
                         setDistanceMove(x,y,range);
                     }
+                    cout <<"lanjutttt gan 3" ;
                     ++factorY;
                 }
                 // Kuadran 2 dan 4
