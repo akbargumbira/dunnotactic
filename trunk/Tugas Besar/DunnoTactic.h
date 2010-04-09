@@ -44,6 +44,7 @@ public:
     static bool IsInteger(string &s);
     static string ToString(const int& n);
     static Job* GetCharacter(int X, int Y);
+    static Job* GetCharacter(int id);
     struct Point {
         int X;
         int Y;
