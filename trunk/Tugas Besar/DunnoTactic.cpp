@@ -306,10 +306,10 @@ void DunnoTactic::SelectRace(string& Race, const string& Player)
     int length = 4;
     string race[length];
     
-    race[0] = "Human";
-    race[1] = "Elf";
-    race[2] = "Fairy";
-    race[3] = "Orc";
+    race[0] = "human";
+    race[1] = "elf";
+    race[2] = "fairy";
+    race[3] = "orc";
     
     while(true)
     {
