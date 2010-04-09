@@ -21,12 +21,12 @@
 				MapPlayer[i][j]=0;
 			}
 		}
+
+                pointerX = 1;
+                pointerY = 1;
 		MapPlayer[1][1]=12;
-		MapPlayer[0][0]=23;
 		MapPlayer[4][4]=25;
-		MapPlayer[4][5]=28;
-		MapPlayer[1][4]=15;
-		MapPlayer[7][4]=17;
+                MapPlayer[4][3]=21;
 	}
 
 // Display copy constructor
@@ -42,7 +42,6 @@
 	}
 	
 // Deklarasi method
-// Display Box Turn
 	void Display::displayBoxTurn(int Turn) {
 		string Blank = "     ";
 		cout << endl;
@@ -89,25 +88,18 @@
 	
 // Display box Map
 	void Display::displayBoxMap(int P, int L) {
-		string H1 = "+===+";
-		string H2 = "=====+";
-		string V1 = "     |";
-		string Rumput = "     |";
-		string Pohon = " ??? |";
-		string Lumpur = " ... |";
-		string Air = " ~~~ |";
 		string Area = " aaa |";
 		string Player1 = " -1- |";
-		string Player2 = " P-2 |";
+		string Player2 = " P-2 $";
 		int i;
 		int j;
 		int k;
 		
-		// menampilkan indeks teratas
-		// menampilkan garis horizontal teratas
+		// menampilkan indeks atas (koordinat x)
+		// menampilkan garis horizontal
 		cout << "     +";
 		for(i=0;i<P;++i) {
-			cout << H2;
+                    cout << "=====+";
 		}
 		cout << endl;
 		// menampilkan indeks
@@ -122,271 +114,250 @@
 		}
 		cout << endl;
 		
-		// menampilkan box di bawah indeks teratas
+		// menampilkan box di bawah indeks atas
 		for(j=1;j<=L;++j) {
-			// menampilkan garis horizontal
-			cout << "+====+";
-			for(i=1;i<=P;++i) {
-				cout << H2;
-			}
-			cout << endl;
-			
-			// menampilkan garis vertikal 1 (atas)
-			cout << "|    |";
-			for(i=1;i<=P;++i) {
-				cout << V1;
-			}
-			cout << endl;
-			
-			// menampilkan garis vertikal 2 (tengah)
-			if(j<10) {
-				cout << "| " << j << "  |";
-			}
-			else {
-				cout << "| " << j << " |";
-			}
-			for(i=1;i<=P;++i) {
-				if(MapPlayer[i-1][j-1]!=0) {
-					if(IdPlayer(i-1,j-1)==1) {
-						cout << Player1;
-					} else {
-						cout << Player2;
-					}
-				}
-				// else 
-				// if(MapArea[i-1][j-1]!=99) {
-					// cout << Area;
-				// }
-				else {
-					switch(DunnoTactic::M.GetTerrain(i,j)) {
-						case 1: {
-							cout << Rumput;
-							break;
-						}
-						case 2: {
-							cout << Air;
-							break;
-						}
-						case 3: {
-							cout << Lumpur;
-							break;
-						}
-						case 4: {
-							cout << Pohon;
-							break;
-						}
-						default: {
-							cout << V1;
-							break;
-						}
-					}
-				}
-			}
-			cout << endl;
-			
-			// menampilkan garis vertikal 3 (bawah)
-			cout << "|    |";
-			for(i=1;i<=P;++i) {
-				cout << V1;
-			}
-			cout << endl;
+                    // menampilkan garis horizontal (baris 0)
+                    cout << "+====+";
+                    for(i=1;i<=P;++i) {
+                        if((pointerX==i && pointerY==j) || (pointerX==i && pointerY==j-1)) {
+                            color("white","black");
+                            cout << "$$$$$";
+                            color("default","default");
+                            cout << "+";
+                        } else {
+                            cout << "=====+";
+                        }
+                    }
+                    cout << endl;
+
+                    // menampilkan garis vertikal 1 (baris 1/atas kotak terrain)
+                    cout << "|    ";
+                     if(pointerX==1 && pointerY==j) {
+                        printCursor();
+                     } else {
+                         cout << "|";
+                     }
+                    for(i=1;i<=P;++i) {
+                        if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                            color("yellow","green");
+                            cout << "     ";
+                            color("default","default");
+                        } else {
+                            cout << "     ";
+                        }
+                        if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                            printCursor();
+                        } else {
+                            cout <<  "|";
+                        }
+                    }
+                    cout << endl;
+
+                    // menampilkan garis vertikal 2 (baris 2/tengah kotak terrain)
+                    // menampilkan indeks samping (koordinat y)
+                    if(j<10) {
+                        cout << "| " << j;
+                        if(pointerX==1 && pointerY==j) {
+                            cout << "  ";
+                            printCursor();
+                        } else {
+                            cout << "  |";
+                        }
+
+                    }
+                    else {
+                        cout << "| " << j;
+                        if(pointerX==1 && pointerY==j) {
+                            cout << "  ";
+                            printCursor();
+                        } else {
+                            cout << " |";
+                        }
+                    }
+                    // menampilkan kotak terrain tengah
+                    for(i=1;i<=P;++i) {
+                        if(MapPlayer[i-1][j-1]!=0) {
+                            color("yellow","green");
+                            printPlayer(i,j,2);
+                            color("default","default");
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
+                        }
+                        else {
+                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                                color("yellow","green");
+                                printTerrain(i,j);
+                                color("default","default");
+                            } else {
+                                printTerrain(i,j);
+                            }
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
+                        }
+                    }
+                    cout << endl;
+
+                    // menampilkan garis vertikal 3 (baris 3/bawah kotak terrain)
+                    cout << "|    ";
+                     if(pointerX==1 && pointerY==j) {
+                         printCursor();
+                     } else {
+                         cout << "|";
+                     }
+                    for(i=1;i<=P;++i) {
+                        if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                            color("yellow","green");
+                            cout << "     ";
+                            color("default","default");
+                        } else {
+                            cout << "     ";
+                        }
+                        if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                            printCursor();
+                        } else {
+                            cout <<  "|";
+                        }
+                    }
+                    cout << endl;
 		}
 
 		// menampilkan garis horizontal terbawah (penutup)
 		cout << "+====+";
 		for(i=1;i<=P;++i) {
-			cout << H2;
+			cout << "=====+";
 		}
                 cout << endl;
 	}
 
 // Display box Info
-	void Display::displayBoxInfo(string* Info) {
-		int i;
-		int j;
-		int lengthBox = 40;
-                int lengthSpace;
-		string Blank = "     ";
+	void Display::displayBoxInfo() {
+            int i;
+            int j;
+            int lengthBox = 60;
+            int lengthSpace;
+            string Blank = "     ";
 
-		cout << Blank;
-		for(i=0;i<lengthBox;++i) {
-			cout << "/";
-		}
-                
-		for(j=0;j<9;++j) {
-			cout << endl;
-			cout << Blank << "/";
-                        if(Info[j]!="") {
-                            cout << "  " << Info[j];
-                            lengthSpace= lengthBox - Info[j].length()-4;
-                        } else {
-                            lengthSpace=lengthBox-2;
+            cout << Blank;
+            for(i=0;i<lengthBox;++i) {
+                    cout << "/";
+            }
+
+            for(j=0;j<9;++j) {
+                    cout << endl;
+                    cout << Blank << "/";
+                    if(Info[j]!="") {
+                        cout << "  " << Info[j];
+                        lengthSpace= lengthBox - Info[j].length()-4;
+                    } else {
+                        lengthSpace=lengthBox-2;
+                    }
+                    for(i=1;i<=lengthSpace;++i) {
+                            cout << " ";
+                    }
+                    cout << "/";
+            }
+            cout << endl;
+            cout << Blank;
+            for(i=1;i<=lengthBox;++i) {
+                    cout << "/";
+            }
+	}
+
+	void Display::setAreaMove(int initX, int initY, int range) {
+		
+            int factorX;
+            int factorY;
+            int x;
+            int y;
+
+            int i;
+            int j;
+            int factor;
+
+            // inisialisasi asumsi jarak
+            for(i=initX-range;i<=initX+range;++i) {
+                factor=range-abs(initX-i);
+                for(j=initY-factor;j<=initY+factor;++j) {
+                    if(i>0 && j>0) {
+                        if(PassTerrain(i,j) && PassPlayer(initX-1,initY-1,i-1,j-1)) {
+                            MapArea[i-1][j-1]=abs(initX-i)+abs(initY-j);
                         }
-			for(i=1;i<=lengthSpace;++i) {
-				cout << " ";
-			}
-			cout << "/";
-		}
-		cout << endl;
-		cout << Blank;
-		for(i=1;i<=lengthBox;++i) {
-			cout << "/";
-		}
+                    }
+                }
+            }
+
+            // penghapusan daerah-daerah yang melebihi dari range move
+            if(IsLumpur(initX,initY)) {
+                    MapArea[initX-1][initY-1]=1;
+            } else {
+                    MapArea[initX-1][initY-1]=0;
+            }
+            for(i=1;i<=range;++i) {
+                // Kuadran 1 dan 3
+                factorY=-i;
+                for(factorX=0;factorX<i;++factorX) {
+                    // kuadran 1
+                    x = initX+factorX-1;
+                    y = initY+factorY-1;
+                    if(x>=0 && y>=0) {
+                        setDistanceMove(x,y,range);
+                    }
+                    // kuadran 3
+                    x = initX-factorX-1;
+                    y = initY-factorY-1;
+                    if(x>=0 && y>=0) {
+                        setDistanceMove(x,y,range);
+                    }
+                    ++factorY;
+                }
+                // Kuadran 2 dan 4
+                factorX=i;
+                for(factorY=0;factorY<i;++factorY) {
+                    // kuadran 4
+                    x = initX+factorX-1;
+                    y = initY+factorY-1;
+                    if(x>=0 && y>=0) {
+                        setDistanceMove(x,y,range);
+                    }
+                    // kuadran 2
+                    x = initX-factorX-1;
+                    y = initY-factorY-1;
+                    if(x>=0 && y>=0) {
+                        setDistanceMove(x,y,range);
+                    }
+                    --factorX;
+                }
+            }
 	}
 
-// Set Area
-	void Display::setArea(int initX, int initY, int range) {
-		
-		int factorX;
-		int factorY;
-		int x;
-		int y;
-		
-		int i;
-		int j;
-		
-		if(IsLumpur(initX,initY)) {
-			MapArea[initX-1][initY-1]=1;
-		} else {
-			MapArea[initX-1][initY-1]=0;
-		}
-		// inisialisasi asumsi jarak
-		for(i=1;i<=range;++i) {
-			// Kuadran 1 dan 3
-			factorY=-i;
-			for(factorX=0;factorX<i;++factorX) {
-				// kuadran 1
-				x = initX+factorX-1;
-				y = initY+factorY-1;
-                                if(x>=0 && y>=0) {
-                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-                                            MapArea[x][y]=i;
-                                    }
-                                }
-				// kuadran 3
-				x = initX-factorX-1;
-				y = initY-factorY-1;
-				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-                                            MapArea[x][y]=i;
-                                    }
-                                }
-				++factorY;
-			}
-			// Kuadran 2 dan 4
-			factorX=i;
-			for(factorY=0;factorY<i;++factorY) {
-				// kuadran 4
-				x = initX+factorX-1;
-				y = initY+factorY-1;
-				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-                                            MapArea[x][y]=i;
-                                    }
-                                }
-				// kuadran 2
-				x = initX-factorX-1;
-				y = initY-factorY-1;
-				if(x>=0 && y>=0) {
-                                    if(PassTerrain(x+1,y+1) && PassPlayer(initX-1,initY-1,x,y)) {
-                                            MapArea[x][y]=i;
-                                    }
-                                }
-				--factorX;
-			}
-		}
-		
-		// penghapusan daerah-daerah yang melebihi dari range move
-		for(i=1;i<=range;++i) {
-			// Kuadran 1 dan 3
-			factorY=-i;
-			for(factorX=0;factorX<i;++factorX) {
-				// kuadran 1
-				x = initX+factorX-1;
-				y = initY+factorY-1;
-                                if(x>=0 && y>=0) {
-                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x+1,y+1)) {
-                                                    if(MinAround(x,y)==range-1) {
-                                                            MapArea[x][y]=99;
-                                                    } else {
-                                                            MapArea[x][y]=MinAround(x,y) + 2;
-                                                    }
-                                            } else {
-                                                    MapArea[x][y]=MinAround(x,y) + 1;
-                                            }
-                                    } else {
-                                            MapArea[x][y]=99;
-                                    }
-                                }
-				// kuadran 3
-				x = initX-factorX-1;
-				y = initY-factorY-1;
-                                if(x>=0 && y>=0) {
-                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x+1,y+1)) {
-                                                    if(MinAround(x,y)==range-1) {
-                                                            MapArea[x][y]=99;
-                                                    } else {
-                                                            MapArea[x][y]=MinAround(x,y) + 2;
-                                                    }
-                                            } else {
-                                                    MapArea[x][y]=MinAround(x,y) + 1;
-                                            }
-                                    } else {
-                                            MapArea[x][y]=99;
-                                    }
-                                }
-				++factorY;
-			}
-			// Kuadran 2 dan 4
-			factorX=i;
-			for(factorY=0;factorY<i;++factorY) {
-				// kuadran 4
-				x = initX+factorX-1;
-				y = initY+factorY-1;
-				if(x>=0 && y>=0) {
-                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x+1,y+1)) {
-                                                    if(MinAround(x,y)==range-1) {
-                                                            MapArea[x][y]=99;
-                                                    } else {
-                                                            MapArea[x][y]=MinAround(x,y) + 2;
-                                                    }
-                                            } else {
-                                                    MapArea[x][y]=MinAround(x,y) + 1;
-                                            }
-                                    } else {
-                                            MapArea[x][y]=99;
-                                    }
-                                }
-				// kuadran 2
-				x = initX-factorX-1;
-				y = initY-factorY-1;
-                                if(x>=0 && y>=0) {
-                                    if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
-                                            if(IsLumpur(x+1,y+1)) {
-                                                    if(MinAround(x,y)==range-1) {
-                                                            MapArea[x][y]=99;
-                                                    } else {
-                                                            MapArea[x][y]=MinAround(x,y) + 2;
-                                                    }
-                                            } else {
-                                                    MapArea[x][y]=MinAround(x,y) + 1;
-                                            }
-                                    } else {
-                                            MapArea[x][y]=99;
-                                    }
-                                }
-				--factorX;
-			}
-		}
-	}
-	void Display::MoveAnimated(int initX, int initY, int targetX, int targetY) {
+        void Display::setAreaAttack(int x, int y, int range) {
+            int i;
+            int j;
+            int factor;
+
+            for(i=x-range;i<=x+range;++i) {
+                factor=range-abs(x-i);
+                for(j=y-factor;j<=y+factor;++j) {
+                    if(i>0 && j>0) {
+                        if(PassTerrain(i,j) && PassPlayer(x-1,y-1,i-1,j-1)) {
+                            MapArea[i-1][j-1]=abs(x-i)+abs(y-j);
+                        }
+                    }
+                }
+            }
+        }
+
+        void Display::MoveAnimated(int initX, int initY, int targetX, int targetY) {
 		int NbStep;
 		int x;
 		int y;
-		setArea(initX,initY,4);
+		setAreaMove(initX,initY,4);
 		x = targetX-1;
 		y = targetY-1;
 		NbStep = MapArea[x][y];
@@ -394,8 +365,9 @@
 		int xSaved[NbStep];
 		int ySaved[NbStep];
 		int i;
+                int j;
 		int Minimum;
-		
+
 		for(i=0;i<NbStep;++i) {
 			Minimum = MinAround(x,y);
 			if(MapArea[x][y-1]==Minimum) {
@@ -418,34 +390,229 @@
 				x=x-1;
 			}
 		}
-		int preX;
-		int preY;
-		preX=initX-1;
-		preY=initY-1;
+                for(i=0;i<30;++i) {
+                    for(j=0;j<30;++j) {
+                        MapArea[i][j]=99;
+                    }
+                }
+		int preX = initX-1;
+		int preY = initY-1;
+                bool nextIsPlayer=false;
+                bool crossPlayer=false;
+                int tempPlayer;
+                pointerX=initX;
+                pointerY=initY;
 		displayBoxMap(9,9);
 		for(i=NbStep-2;i>=0;--i) {
 			x=xSaved[i];
 			y=ySaved[i];
-			MapPlayer[x][y]=MapPlayer[preX][preY];
-			MapPlayer[preX][preY]=0;
+                        if(MapPlayer[x][y]!=0) {
+                            nextIsPlayer=true;
+                            tempPlayer=MapPlayer[x][y];
+                        } else {
+                            nextIsPlayer=false;
+                        }
+                        if(crossPlayer) {
+                            MapPlayer[x][y]=MapPlayer[preX][preY];
+                            MapPlayer[preX][preY]=tempPlayer;
+                        } else {
+                            MapPlayer[x][y]=MapPlayer[preX][preY];
+                            MapPlayer[preX][preY]=0;
+                        }
+                        if(nextIsPlayer) {
+                            crossPlayer=true;
+                        } else {
+                            crossPlayer=false;
+                        }
 			preX=x;
 			preY=y;
 			sleep(1);
 			system("clear");
+                        pointerX=x+1;
+                        pointerY=y+1;
 			displayBoxMap(9,9);
 		}
 		sleep(1);
 		system("clear");
 		MapPlayer[targetX-1][targetY-1]=MapPlayer[preX][preY];
 		MapPlayer[preX][preY]=0;
+                pointerX=targetX;
+                pointerY=targetY;
 		displayBoxMap(9,9);
 	}
 
         void Display::SelectGrid(int x, int y) {
-            switch(DunnoTactic::M.GetTerrain(x,y));
+            setAreaMove(x,y,4);
+            pointerX=x;
+            pointerY=y;
+            system("clear");
+            displayBoxMap(9,9);
         }
 
+        void Display::HighlightGrid(int x, int y) {
+            pointerX=x;
+            pointerY=y;
+            Info[0]="Terrain :";
+            switch(DunnoTactic::M.GetTerrain(x,y)) {
+                case 1 : {
+                    Info[1]="Tipe      : Rumput.";
+                    Info[2]="Deskripsi : Tempat berpijak semua makhluk.";
+                    break;
+                }
+                default : {
+                    Info[1]="Tipe      : Unknown";
+                    Info[2]="Deskripsi : Unknown";
+                    break;
+                }
+            }
+        }
+        // method get dan set
+        void Display::SetInfo(string Infox, int id) {
+            Info[id]=Infox;
+        }
+
+        void Display::SetMapPlayer(int x, int y, int id) {
+            MapPlayer[x-1][y-1]=id;
+        }
+
+        string Display::GetInfo(int id) {
+            return Info[id];
+        }
+
+        int Display::GetMapPlayer(int x, int y) {
+            return MapPlayer[x-1][y=1];
+        }
+
+
 // method-method yang private
+        
+        void Display::color(string text, string bg) {
+            if(text=="black") {
+                cout << "\033[0;30m";
+            } else if(text=="red") {
+                cout << "\033[0;31m";
+            } else if (text=="green") {
+                cout << "\033[0;32m";
+            } else if (text=="yellow") {
+                cout << "\033[0;33m";
+            } else if (text=="blue") {
+                cout << "\033[0;34m";
+            } else if(text=="white") {
+                cout << "\033[0;37m";
+            } else {
+                cout << "\033[0m";
+            }
+            if(bg=="black") {
+                cout << "\033[1;40m";
+            } else if(bg=="red") {
+                cout << "\033[1;41m";
+            } else if (bg=="green") {
+                cout << "\033[1;42m";
+            } else if (bg=="yellow") {
+                cout << "\033[1;43m";
+            } else if (bg=="blue") {
+                cout << "\033[1;44m";
+            } else if(bg=="white") {
+                cout << "\033[1;47m";
+            } else {
+                cout << "\033[0m";
+            }
+        }
+
+        void Display::printCursor() {
+            color("white","black");
+            cout << "$";
+            color("default","default");
+        }
+        
+        bool Display::PassTerrain(int x, int y) {
+		bool Pass;
+		if(IsTree(x,y) || IsWater(x,y)) {
+			Pass = false;
+		} else {
+			Pass = true;
+		}
+		return Pass;
+	}
+
+	bool Display::PassPlayer(int x1, int y1, int x2, int y2) {
+		bool Pass;
+		if(IdPlayer(x2,y2)==0) {
+			Pass = true;
+		} else
+		if(IsFriend(x1,y1,x2,y2)) {
+			Pass = true;
+		} else {
+			Pass = false;
+		}
+		return Pass;
+	}
+
+        void Display::printTerrain(int x, int y) {
+            switch(DunnoTactic::M.GetTerrain(x,y)) {
+                case 1: {
+                        cout << "     ";
+                        break;
+                }
+                case 2: {
+                        cout << " ??? ";
+                        break;
+                }
+                case 3: {
+                        cout << " ... ";
+                        break;
+                }
+                case 4: {
+                        cout << " ~~~ ";
+                        break;
+                }
+                default: {
+                        cout << " xxx ";
+                        break;
+                }
+            }
+        }
+
+        void Display::printPlayer(int x, int y, int line) {
+            switch(line) {
+                case 1 : {
+                    if(IdPlayer(x,y)==1) {
+                        cout << " P-1 ";
+                    } else {
+                        cout << "P-2";
+                    }
+                    break;
+                }
+                case 2 : {
+                    cout << " H-M ";
+                    break;
+                }
+                case 3 : {
+                    cout << " (" << MapPlayer[x-1][y-1] << ")";
+                    break;
+                }
+                default : {
+                    
+                }
+            }
+        }
+
+        void Display::setDistanceMove(int x, int y, int range) {
+            if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+                if(IsLumpur(x+1,y+1)) {
+                    if(MinAround(x,y)==range-1) {
+                        MapArea[x][y]=99;
+                    } else {
+                        MapArea[x][y]=MinAround(x,y) + 2;
+                    }
+                } else {
+                    MapArea[x][y]=MinAround(x,y) + 1;
+                }
+            } else {
+                MapArea[x][y]=99;
+            }
+        }
+        
 	int Display::Min2(int a, int b) {
 		int min;
 		if(a<=b) {
@@ -471,29 +638,6 @@
 			Minimum = Min2(Min2(MapArea[x][y-1],MapArea[x][y+1]), Min2(MapArea[x-1][y],MapArea[x+1][y]));
 		}
 		return Minimum;
-	}
-	
-	bool Display::PassTerrain(int x, int y) {
-		bool Pass;
-		if(IsTree(x,y) || IsWater(x,y)) {
-			Pass = false;
-		} else {
-			Pass = true;
-		}
-		return Pass;
-	}
-	
-	bool Display::PassPlayer(int x1, int y1, int x2, int y2) {
-		bool Pass;
-		if(IdPlayer(x2,y2)==0) {
-			Pass = true;
-		} else 
-		if(IsFriend(x1,y1,x2,y2)) {
-			Pass = true;
-		} else {
-			Pass = false;
-		}
-		return Pass;
 	}
 	
 	bool Display::IsTree(int x, int y) {
@@ -523,3 +667,5 @@
 	bool Display::IsFriend(int x1, int y1, int x2, int y2) {
 		return (IdPlayer(x1,y1)==IdPlayer(x2,y2));
 	}
+
+        
