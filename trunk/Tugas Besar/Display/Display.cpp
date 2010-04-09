@@ -619,10 +619,10 @@
             Job* Player = DunnoTactic::GetCharacter(x,y);
             switch(line) {
                 case 1 : {
-                    if(IdPlayer(x,y)==1) {
+                    if(IdPlayer(x-1,y-1)==1) {
                         cout << " P-1 ";
                     } else {
-                        cout << "P-2";
+                        cout << " P-2 ";
                     }
                     break;
                 }
