@@ -29,7 +29,7 @@ public:
 
     static void Main();
     static void Play();
-    static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race);
+    static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player);
     static int  Random(const int& Begin, const int& End);
     static void RandomChacracterPosition(int kuadran, vector<Job*> &P);
     static void SelectNumCharacter();
@@ -42,6 +42,7 @@ public:
     static void ParseCommand();
     static void StringToLower(char* s);
     static bool IsInteger(string &s);
+    static Job* GetCharacter(int X, int Y);
 
     static char Command[100];
     static string CommandParse[10];

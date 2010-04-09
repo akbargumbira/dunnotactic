@@ -184,6 +184,11 @@ int Job::GetX (){
 int Job::GetY (){
     return Y; }
 
+void Job::SetXY(int X, int Y)
+{
+    this->X = X;
+    this->Y = Y;
+}
 
 //Method Karakter
 //I.S : Posisi suatu karakter original

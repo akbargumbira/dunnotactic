@@ -89,6 +89,7 @@ protected :
     //Posisi
     int GetX (); //mengembalikan nilai X
     int GetY (); //mengembalikan nilai Y
+    void SetXY(int X, int Y);
 	  
     //Method Karakter
 	void Move (const int &, const int &); 	 

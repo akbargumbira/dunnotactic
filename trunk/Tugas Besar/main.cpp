@@ -15,6 +15,7 @@
  */
 int main(int argc, char** argv) {
     DunnoTactic::Main();
+    cout << DunnoTactic::GetCharacter(4,2)->GetRangeMove() << endl;
 /*
     DunnoTactic::P1.push_back(new Knight("human"));
     DunnoTactic::P2.push_back(new Assassin("elf"));
