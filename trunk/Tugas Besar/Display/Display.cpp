@@ -452,7 +452,22 @@
             switch(DunnoTactic::M.GetTerrain(x,y)) {
                 case 1 : {
                     Info[1]="Tipe      : Rumput.";
-                    Info[2]="Deskripsi : Tempat berpijak semua makhluk.";
+                    Info[2]="Deskripsi : Ijooooo..segerrrrr.";
+                    break;
+                }
+                case 2 : {
+                    Info[1]="Tipe      : Pohon.";
+                    Info[2]="Deskripsi : Tinggi menjulang, wooooo.";
+                    break;
+                }
+                case 3 : {
+                    Info[1]="Tipe      : Air.";
+                    Info[2]="Deskripsi : Dinginnnn, brrrrrrr.";
+                    break;
+                }
+                case 4 : {
+                    Info[1]="Tipe      : Lumpur.";
+                    Info[2]="Deskripsi : Lengket lengket gitu, ihhhh.";
                     break;
                 }
                 default : {
