@@ -177,6 +177,10 @@ void Job::Status() {
 	cout<<"Death      = "<<Death<<endl; }
 
 //posisi
+//Mengeset nilai x, y
+void Job::SetXY (const int &x, const int &y) {
+	X = x;
+	Y = y; }
 //mengembalikan nilai X
 int Job::GetX (){
     return X; }
