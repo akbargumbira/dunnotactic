@@ -22,6 +22,9 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
 	SpecialArray[0] = "Hell Chain            30";
+	AttackTurn = false;
+	WaitTurn   = false;
+	MoveTurn   = false;
 	Death	   = false;
 
 }
@@ -53,6 +56,8 @@ Assassin::~Assassin(){
 	Evade		 = 0;
 	
 }
+void Assassin::SpecialArea (const string & STR){
+}
 
 void Assassin::Special (const string & STR, Job &Target) {
 if (STR == "Hell Chain") {
@@ -62,10 +67,11 @@ if (STR == "Hell Chain") {
 	Attack(Target);
 	AttackPoint = AttackPointDefault;
 	RangeAttack = RangeAttackDefault;
-	SP	-= 40;}
-	else {cout<<"SP tidak mencukupi";}
+	SP	-= 40;
+	AttackTurn = true;}
+	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";}
+else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
 }
 
 

@@ -14,6 +14,7 @@ class Warrior : public Job {
 	Warrior(const string&);
 	Warrior(const Warrior&);	
 	~Warrior();
+	void SpecialArea (const string & STR);
 	void Special (const string & STR, Job &Target);
 };
 

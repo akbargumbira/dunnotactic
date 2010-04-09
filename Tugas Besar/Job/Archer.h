@@ -14,6 +14,7 @@ class Archer : public Job {
 	Archer(const string&);
 	Archer(const Archer&);	
 	~Archer();
+	void SpecialArea (const string & STR);
 	void Special (const string & STR, Job &Target);
 	
 };

@@ -21,8 +21,8 @@ Sage::Sage(const string& RaceName) : Job(RaceName){
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
-	SpecialArray[0] = "Heal                  30";
-	SpecialArray[1] = "Circle Heal           50";
+	SpecialArray[0] = "1.Heal                  30";
+	SpecialArray[1] = "2.Circle Heal           50";
 	Death	   = false;
 
 }
@@ -54,22 +54,24 @@ Sage::~Sage(){
 	Evade		 = 0;
 	
 }
+void Sage::SpecialArea (const string & STR){
+if (STR == "Circle Heal") {
+	if (SP>50) {
+	}
+	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+	}
+else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
+}
+
 
 void Sage::Special (const string & STR, Job &Target){
 if (STR == "Heal") {
 	if (SP>20) {
 	Target.ReceiveHP(int (300*SpecialBonus));
-	SP	-= 20;}
-	else {cout<<"SP tidak mencukupi";}
+	SP	-= 20;
+	AttackTurn = true;}
+	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
 	}
-if (STR == "Circle Heal") {
-	if (SP>50) {
-	Target.ReceiveHP(int (300*SpecialBonus));
-	SP	-= 50;}
-	else {cout<<"SP tidak mencukupi";}
-	}
-else {cout<<"Tidak ada Skill yang dimaksud!";}
-
 }
 
 
