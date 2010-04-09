@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <math.h>
 
 using namespace std;
 
@@ -18,34 +19,45 @@ class Display {
 		~Display();
 		
 		// method
-		// menampilkan BOX TURN ke layar
-		void displayBoxTurn(int);
-		void displayBoxTurnWithName(string);
-		void displayBoxMap(int P, int L); // P = X, L = Y
-		void displayBoxInfo(string* Info);
-		void setArea(int, int, int);
-		void MoveAnimated(int, int, int, int);
+		void displayBoxTurn(int Turn);
+		void displayBoxTurnWithName(string Name);
+		void displayBoxMap(int P, int L);
+                void displayBoxInfo();
+		void setAreaMove(int initX, int initY, int range);
+                void setAreaAttack(int x, int y, int range);
+		void MoveAnimated(int initX, int initY, int targetX, int targetY);
                 void SelectGrid(int x, int y);
+                void HighlightGrid(int x, int y);
+                // method get dan set
+                void SetInfo(string Infox, int id);
+                void SetMapPlayer(int x,int y,int id);
+                string GetInfo(int id);
+                int GetMapPlayer(int x, int y);
+                
 		
 	private:
 		// data member
 		int MapPlayer[30][30];
 		int MapArea[30][30];
+                string Info[9];
+                int pointerX;
+                int pointerY;
 		
 		// private method
-		// mencari nilai minimum antara 2 nilai
-		int Min2(int, int);
-		// mencari nilai yang paling kecil di sekitar koordinat
-		int MinAround(int, int);
-		// mengembalikan apakah petak x,y dapat di tembus
-		bool PassTerrain(int, int);
-		bool PassPlayer(int, int, int, int);
-		bool IsTree(int, int);
-		bool IsWater(int,int);
-		bool IsLumpur(int, int);
-		int IdPlayer(int, int);
-		bool IsFriend(int, int, int, int);
-		
+                void color(string text, string bg);
+                void printCursor();
+                bool PassTerrain(int x, int y);
+		bool PassPlayer(int x1, int y1, int x2, int y2);
+                void printTerrain(int x, int y);
+                void printPlayer(int x, int y, int line);
+                void setDistanceMove(int x, int y, int range);
+		int Min2(int a, int b);
+		int MinAround(int x, int y);
+		bool IsTree(int x, int y);
+		bool IsWater(int x, int y);
+		bool IsLumpur(int x, int y);
+		int IdPlayer(int x, int y);
+		bool IsFriend(int x1, int y1, int x2, int y2);
 		
 };
 
