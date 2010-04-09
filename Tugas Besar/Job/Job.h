@@ -87,6 +87,7 @@ protected :
 	void Status(); //Mengembalikan status Status Semuanya
       
     //Posisi
+	void SetXY (const int &, const int &); //Mengeset nilai x, y
     int GetX (); //mengembalikan nilai X
     int GetY (); //mengembalikan nilai Y
 	  
