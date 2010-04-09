@@ -163,7 +163,7 @@ void DunnoTactic::Build()
     }
 }
 
-void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race)
+void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player)
 {
     for (int i=0;i<NumberChar;++i)
     {
@@ -186,6 +186,17 @@ void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string
             P.push_back(new Warrior(Race));
         }
     }
+
+    int A;
+    if (Player==1)
+        A = 1;
+    else
+        A = 501;
+
+    for (int i=0;i<NumberChar;++i)
+    {
+        P[i]->SetID(A+i);
+    }
 }
 
 int DunnoTactic::Random(const int& Begin, const int& End)
@@ -200,37 +211,43 @@ void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
     int SizeY = M.GetSizeY();
     int X;
     int Y;
-    int i=1;
-    while (i<=NumberChar)
+    int i=0;
+    while (i<NumberChar)
     {
-    if (kuadran==1)
-    {
-        X = Random(SizeX - SizeX/2 + 1, SizeX);
-        Y = Random(1, SizeY/2);
-    }
-    else if (kuadran==2)
-    {
-        X = Random(1, SizeX/2);
-        Y = Random(1, SizeY/2);
-    }
-    else if (kuadran==3)
-    {
-        X = Random(1, SizeX/2);
-        Y = Random(SizeY - SizeY/2 + 1, SizeY);
-    }
-    else if (kuadran==4)
-    {
-        X = Random(SizeX - SizeX/2 + 1, SizeX);
-        Y = Random(SizeY - SizeY/2 + 1, SizeY);
-    }
-    else
-    {
-        throw "Kuadran tidak valid. Pilihan dari 1 s.d. 4.";
-    }
-
-    
-    ++i;
-    
+        if (kuadran==1)
+        {
+            X = Random(SizeX - SizeX/2 + 1, SizeX);
+            Y = Random(1, SizeY/2);
+        }
+        else if (kuadran==2)
+        {
+            X = Random(1, SizeX/2);
+            Y = Random(1, SizeY/2);
+        }
+        else if (kuadran==3)
+        {
+            X = Random(1, SizeX/2);
+            Y = Random(SizeY - SizeY/2 + 1, SizeY);
+        }
+        else if (kuadran==4)
+        {
+            X = Random(SizeX - SizeX/2 + 1, SizeX);
+            Y = Random(SizeY - SizeY/2 + 1, SizeY);
+        }
+        else
+        {
+            throw "Kuadran tidak valid. Pilihan dari 1 s.d. 4.";
+        }
+        if (D.GetMapPlayer(X, Y)==0)
+        {
+            P[i]->SetXY(X, Y);
+            D.SetMapPlayer(X, Y, P[i]->GetID());
+        }
+        else
+        {
+            --i;
+        }
+        ++i;
     }
 
     cout << X << " " << Y << endl;
@@ -437,12 +454,12 @@ void DunnoTactic::SelectCharacter()
     SelectRace(P1Race, "Player2");
     SelectJob(P2Job, "Player2");
 
-    ConstructCharacter(P1, P1Job, P1Race);
+    ConstructCharacter(P1, P1Job, P1Race, 1);
     //cout << P1[0]->GetJobName() << endl;
-    
-    ConstructCharacter(P2, P2Job, P2Race);
+    RandomChacracterPosition(1, P1);
+    ConstructCharacter(P2, P2Job, P2Race, 2);
     //cout << P2[1]->GetJobName() << endl;
-
+    RandomChacracterPosition(3, P2);
     PlayerTurn = 1;
 }
 
@@ -702,4 +719,31 @@ bool DunnoTactic::IsInteger(string &s)
     }
 
     return true;
+}
+
+Job* DunnoTactic::GetCharacter(int X, int Y)
+{
+    vector<Job*>::iterator i;
+    vector<Job*>::iterator end;
+    end = P1.end();
+
+    for (i = P1.begin();i!=end;++i)
+    {
+        if ((*i)->GetX()==X && (*i)->GetY()==Y)
+        {
+            return *i;
+        }
+    }
+
+    end = P2.end();
+    for (i = P2.begin();i!=end;++i)
+    {
+        if ((*i)->GetX()==X && (*i)->GetY()==Y)
+        {
+            return *i;
+        }
+    }
+    
+    return NULL;
+
 }
