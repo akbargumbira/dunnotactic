@@ -14,8 +14,8 @@ class Sage : public Job {
 	Sage(const string&);
 	Sage(const Sage&);	
 	~Sage();
-	void SpecialArea (const string & STR);
-	void Special (const string & STR, Job &Target);
+	void SpecialArea (const int & SPC);
+	void Special (const int & SPC, Job &Target);
 };
 
 #endif

@@ -19,11 +19,15 @@ Sage::Sage(const string& RaceName) : Job(RaceName){
 	SP         = int(SP*1.4);
 	HPDefault  = HP;
 	SPDefault  = SP;
+	AccDefault = Acc;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
 	SpecialArray[0] = "1.Heal                  30";
 	SpecialArray[1] = "2.Circle Heal           50";
 	Death	   = false;
+	AttackTurn = false;
+	Enable   = false;
+	MoveTurn   = false;
 
 }
 Sage::Sage(const Sage& k){
@@ -39,38 +43,40 @@ Sage::Sage(const Sage& k){
 	Evade	    = k.Evade;
 	HPDefault   = k.HP;
 	SPDefault   = k.SP;
+	AttackPointDefault = k.AttackPointDefault;
+	RangeAttackDefault = k.RangeAttackDefault;	
+	AccDefault = Acc;
+	SpecialArray[0] = k.SpecialArray[0];
+	SpecialArray[1] = k.SpecialArray[1];
+	AttackTurn = k.AttackTurn;
+	Enable   = k.Enable;
+	MoveTurn   = k.MoveTurn;
+	Death	   = k.Death;
 	
 }
 Sage::~Sage(){
-		
-    Name		="";
-	AttackPoint = 0;
-	Defense 	= 0;
-	RangeMove 	= 0;
-	RangeAttack = 0;
-	HP 			= 0;
-	SP 			= 0;
-	Acc			= 0;
-	Evade		 = 0;
-	
+
 }
-void Sage::SpecialArea (const string & STR){
-if (STR == "Circle Heal") {
+void Sage::SpecialArea (const int & SPC){
+if (SPC == 2) {
 	if (SP>50) {
 	}
-	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+	else {throw "SP tidak mencukupi.";}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
+else {throw "Tidak ada Skill yang dimaksud!.";}
 }
 
 
-void Sage::Special (const string & STR, Job &Target){
-if (STR == "Heal") {
-	if (SP>20) {
-	Target.ReceiveHP(int (300*SpecialBonus));
-	SP	-= 20;
-	AttackTurn = true;}
-	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+void Sage::Special (const int & SPC, Job &Target){
+if (AttackTurn == false) {
+	if (SPC == 1) {
+		if (SP>20) {
+		Target.ReceiveHP(int (300*SpecialBonus));
+		SP	-= 20;
+		AttackTurn = true;}
+		else {throw "SP tidak mencukupi.";}
+		}
+	else {throw "Tidak ada Skill yang dimaksud!.";}	
 	}
 }
 

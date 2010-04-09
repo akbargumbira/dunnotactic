@@ -21,7 +21,11 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;	
+	AccDefault = Acc;
 	SpecialArray[0] = "1.Meteor Shower         30";
+	AttackTurn = false;
+	Enable   = false;
+	MoveTurn   = false;
 	Death	   = false;
 
 
@@ -39,38 +43,39 @@ Archer::Archer(const Archer& k){
 	Evade	    = k.Evade;
 	HPDefault   = k.HP;
 	SPDefault   = k.SP;
+	AttackPointDefault = k.AttackPointDefault;
+	RangeAttackDefault = k.RangeAttackDefault;	
+	AccDefault = Acc;
+	SpecialArray[0] = k.SpecialArray[0];
+	AttackTurn = k.AttackTurn;
+	Enable   = k.Enable;
+	MoveTurn   = k.MoveTurn;
+	Death	   = k.Death;
 	
 }
 Archer::~Archer(){
-		
-    Name		="";
-	AttackPoint = 0;
-	Defense 	= 0;
-	RangeMove 	= 0;
-	RangeAttack = 0;
-	HP 			= 0;
-	SP 			= 0;
-	Acc			= 0;
-	Evade		 = 0;
 	
 }
 
-void Archer::SpecialArea (const string & STR){
+void Archer::SpecialArea (const int & SPC){
 }
-void Archer::Special (const string & STR, Job &Target) {
-if (STR == "Meteor Shower") {
-	if (SP>25) {
-	AttackPoint = int(AttackPoint*1.4*SpecialBonus) ;
-	RangeAttack	+= -1;
-	Attack(Target);
-	AttackPoint = AttackPointDefault;
-	RangeAttack = RangeAttackDefault;
-	SP	-= 25;
-	AttackTurn = true;}
-	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
+void Archer::Special (const int & SPC, Job &Target) {
+if (AttackTurn == false) {
+	if (SPC == 1) {
+		if (SP>25) {
+		AttackPoint = int(AttackPoint*1.4*SpecialBonus) ;
+		Acc *2.2;
+		RangeAttack	+= -1;
+		Attack(Target);
+		AttackPoint = AttackPointDefault;
+		RangeAttack = RangeAttackDefault;
+		Acc = AccDefault;
+		SP	-= 25;
+		AttackTurn = true;}
+		else {throw "SP tidak mencukupi.";}
+		}
+	else {throw "Tidak ada Skill yang dimaksud!.";}	
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
-	
 }
 
 
