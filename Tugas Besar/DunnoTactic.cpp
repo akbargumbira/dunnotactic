@@ -134,7 +134,7 @@ void DunnoTactic::Build()
             }
             else if (CommandLength==1 && CommandParse[0]=="exit")
             {
-                D.displayBoxMap(M.GetSizeX(), M.GetSizeY());
+                D.displayBoxMap();
                 break;
             }
             else if (CommandLength==1 && CommandParse[0]=="clear")
