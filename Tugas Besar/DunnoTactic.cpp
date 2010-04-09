@@ -244,8 +244,10 @@ void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
     {
         for (int j=1;j<=M.GetSizeY();++j)
         {
-            if (M.GetTerrain(i,j)!=2 && M.GetTerrain(i,j)!=4)
+            if (M.GetTerrain(i,j)!=2 && M.GetTerrain(i,j)!=4 && D.GetMapPlayer(i,j)==0)
+            {
                 Available.push_back({i, j});
+            }
         }
     }
 
@@ -483,6 +485,14 @@ void DunnoTactic::SelectCharacter()
 void DunnoTactic::Play()
 {
     SelectCharacter();
+    for (int i=0;i<P1.size();++i)
+    {
+        cout <<i+1<<". " << P1[i]->GetX() << " " << P1[i]->GetY() << endl;
+    }
+    for (int i=0;i<P2.size();++i)
+    {
+        cout <<i+1<<". " << P2[i]->GetX() << " " << P2[i]->GetY() << endl;
+    }
     D.displayBoxMap();
     while(true)
     {
@@ -529,12 +539,18 @@ void DunnoTactic::Play()
             }
             else if ((CommandLength==2 || CommandLength==3) && CommandParse[0]=="select")
             {
-                for(int i=0;i<CommandLength;++i)
+                if (CommandLength==1 && IsInteger(CommandParse[1]))
                 {
-                    cout << CommandParse[i] << " ";
+                    Select(atoi(CommandParse[1].c_str()));
                 }
-                cout << endl;
-                Select(atoi(CommandParse[1].c_str()));
+                else if (CommandLength==2 && IsInteger(CommandParse[1]) && IsInteger(CommandParse[2]))
+                {
+                    
+                }
+                else
+                {
+                    throw "Parameter harus integer.";
+                }
             }
             else if (CommandLength==3 && CommandParse[0]=="highlight")
             {
@@ -599,6 +615,7 @@ void DunnoTactic::Select(const int &id)
 
 void DunnoTactic::Action(const int& id, string s)
 {
+    Job* C = GetCharacter(id);
     while(true)
     {
         cout << id << " - " << s << " > ";
@@ -769,6 +786,33 @@ Job* DunnoTactic::GetCharacter(int X, int Y)
         }
     }
     
+    return NULL;
+
+}
+
+Job* DunnoTactic::GetCharacter(int id)
+{
+    vector<Job*>::iterator i;
+    vector<Job*>::iterator end;
+    end = P1.end();
+
+    for (i = P1.begin();i!=end;++i)
+    {
+        if ((*i)->GetID()==id)
+        {
+            return *i;
+        }
+    }
+
+    end = P2.end();
+    for (i = P2.begin();i!=end;++i)
+    {
+        if ((*i)->GetID()==id)
+        {
+            return *i;
+        }
+    }
+
     return NULL;
 
 }
