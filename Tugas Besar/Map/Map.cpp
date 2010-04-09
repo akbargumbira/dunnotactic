@@ -10,6 +10,8 @@
 #include <vector>
 #include <stdlib.h>
 #include "../DunnoTactic.h"
+
+//Constructor Map :
 Map::Map()
 {
     SizeX=default_size;
@@ -19,7 +21,7 @@ Map::Map()
     {
         for (int j=0;j<SizeY;++j)
         {
-            Terrain[i][j]=1;
+            Terrain[i][j]=1; //Isi Terrain diisi default yaitu rumput
         }
     }
 }
@@ -29,15 +31,17 @@ Map::Map(const Map& orig)
 
 }
 
+//Destructor Map :
 Map::~Map()
 {
     SizeX=0;
     SizeY=0;
 }
 
+
 void Map::CreateMap(const int& X, const int& Y)
 {
-    if (X<=30 && Y<=30 && X>=5 && Y>=5)
+    if (X<=30 && Y<=30 && X>=5 && Y>=5) //Pengecekan kevalidan ukuran Map
     {
         SizeX = X;
         SizeY = Y;
@@ -45,7 +49,7 @@ void Map::CreateMap(const int& X, const int& Y)
         {
             for (int j=0;j<SizeY;++j)
             {
-                Terrain[i][j]=1;
+                Terrain[i][j]=1; //Pengisian terrain dengan rumput
             }
         }
     }
@@ -69,16 +73,17 @@ void Map::Save(string s)
     {
         for (int j=0;j<SizeY;++j)
         {
-            outputfile<<i+1<<" "<<j+1 <<" "<< Terrain[i][j]<<endl;
+            outputfile<<i+1<<" "<<j+1 <<" "<< Terrain[i][j]<<endl; //Penulisan indeks dan isi terrain pada file eksternal
         }
     }
 
     outputfile.close();
 }
 
+
 void Map::Load(string sin)
 {
-    vector<string> vectortemp;
+    vector<string> vectortemp; //vector digunakan sebagai tempat penyimpanan sementara dari isi file eksternal
     int j;
 
     string NameFile,ExtFile,Folder;
@@ -108,8 +113,8 @@ void Map::Load(string sin)
     }
 
     int TotalGrid;
-    SizeX=atoi(vectortemp[0].c_str());
-    SizeY=atoi(vectortemp[1].c_str());
+    SizeX=atoi(vectortemp[0].c_str()); //SizeX diubah dari string ke integer
+    SizeY=atoi(vectortemp[1].c_str()); //SIzeY diubah dari string ke integer
     TotalGrid = atoi(vectortemp[2].c_str());
 
     if ((vectortemp.size()!=3*(TotalGrid+1)) || (SizeX*SizeY!= TotalGrid))
@@ -135,7 +140,9 @@ void Map::Load(string sin)
     fin.close();
 }
 
+
 void Map::SetTerrainXY(int X, int Y, string GridContent)
+//Method yang digunakan untuk mengeset isi dari terrain sesuai koordinat masukan
 {
     int GridContentConvert;
     
@@ -172,6 +179,7 @@ void Map::SetTerrainXY(int X, int Y, string GridContent)
 }
 
 void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
+//Method yang digunakan untuk mengeset terrain dari suatu area masukan
 {
     int GridContentConvert;
     int XTemp1, XTemp2, YTemp1, YTemp2;
@@ -249,8 +257,8 @@ void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
 }
 
 void Map::SetMapRandom()
+//Method yang digunakan untuk mengeset terrain secara random
 {
-    srand(time(NULL));
     for(int i = 0; i < SizeX; ++i )
     {
         for (int j=0; j< SizeY; ++j)
@@ -261,7 +269,9 @@ void Map::SetMapRandom()
     }
 }
 
+
 int Map::GetTerrain(int X, int Y)
+//Method yang digunakan untuk mendapatkan isi terrain dari suatu koordinat
 {
     if (X>SizeX || Y>SizeY || Y<1 || X<1)
     {
@@ -274,11 +284,14 @@ int Map::GetTerrain(int X, int Y)
 }
 
 int Map::GetSizeX()
+//Method yang digunakan untuk mendapatkan ukuran X dari Map
 {
     return SizeX;
 }
 
+
 int Map::GetSizeY()
+//Method yang digunakan untuk mendapatkan ukuran Y dari Map
 {
     return SizeY;
 }
