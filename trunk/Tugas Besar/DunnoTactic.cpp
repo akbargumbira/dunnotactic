@@ -191,7 +191,7 @@ void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string
 
     int A;
     if (Player==1)
-        A = 1;
+        A = 101;
     else
         A = 501;
 
@@ -539,13 +539,13 @@ void DunnoTactic::Play()
             }
             else if ((CommandLength==2 || CommandLength==3) && CommandParse[0]=="select")
             {
-                if (CommandLength==1 && IsInteger(CommandParse[1]))
+                if (CommandLength==2 && IsInteger(CommandParse[1]))
                 {
                     Select(atoi(CommandParse[1].c_str()));
                 }
-                else if (CommandLength==2 && IsInteger(CommandParse[1]) && IsInteger(CommandParse[2]))
+                else if (CommandLength==3 && IsInteger(CommandParse[1]) && IsInteger(CommandParse[2]))
                 {
-                    
+                    Select(atoi(CommandParse[1].c_str()));
                 }
                 else
                 {
@@ -582,6 +582,7 @@ void DunnoTactic::Play()
 
 void DunnoTactic::Select(const int &id)
 {
+    Job* C = GetCharacter(id);
     while (true)
     {
         cout << id << " > ";
@@ -598,12 +599,16 @@ void DunnoTactic::Select(const int &id)
                 cout << "Wait" << endl;
                 break;
             }
+            else if(CommandLength==1 && CommandParse[0]=="move")
+            {
+                D.SelectMove(C->GetX(), C->GetY());
+            }
             else if (!(CommandLength==1 && (CommandParse[0]=="move" || CommandParse[0]=="attack" || CommandParse[0]=="special")))
             {
                 throw "Perintah tidak ditemukan.";
             }
 
-            Action(id, CommandParse[0]);
+            //Action(id, CommandParse[0]);
             
         }
         catch(const char* e)
