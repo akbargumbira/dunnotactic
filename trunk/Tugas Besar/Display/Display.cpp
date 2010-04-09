@@ -140,17 +140,28 @@
                          cout << "|";
                      }
                     for(i=1;i<=P;++i) {
-                        if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                        if(MapPlayer[i-1][j-1]!=0) {
                             color("yellow","green");
-                            cout << "     ";
+                            printPlayer(i,j,1);
                             color("default","default");
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
                         } else {
-                            cout << "     ";
-                        }
-                        if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                            printCursor();
-                        } else {
-                            cout <<  "|";
+                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                                color("yellow","green");
+                                cout << "     ";
+                                color("default","default");
+                            } else {
+                                cout << "     ";
+                            }
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
                         }
                     }
                     cout << endl;
@@ -213,17 +224,28 @@
                          cout << "|";
                      }
                     for(i=1;i<=P;++i) {
-                        if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                        if(MapPlayer[i-1][j-1]!=0) {
                             color("yellow","green");
-                            cout << "     ";
+                            printPlayer(i,j,1);
                             color("default","default");
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
                         } else {
-                            cout << "     ";
-                        }
-                        if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                            printCursor();
-                        } else {
-                            cout <<  "|";
+                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
+                                color("yellow","green");
+                                cout << "     ";
+                                color("default","default");
+                            } else {
+                                cout << "     ";
+                            }
+                            if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
+                                printCursor();
+                            } else {
+                                cout <<  "|";
+                            }
                         }
                     }
                     cout << endl;
