@@ -21,7 +21,7 @@ Warrior::Warrior(const string& RaceName) : Job(RaceName){
 	SPDefault  = SP;
 	AttackPointDefault = AttackPoint;
 	RangeAttackDefault = RangeAttack;
-	SpecialArray[0] = "Slash                 30";
+	SpecialArray[0] = "1.Slash                 30";
 	Death	   = false;
 
 }
@@ -54,16 +54,19 @@ Warrior::~Warrior(){
 	
 	
 }
+void Warrior::SpecialArea (const string & STR) {
+}
 void Warrior::Special (const string & STR, Job &Target) {
 if (STR == "Slash") {
 	if (SP>25) {
 	AttackPoint = int(AttackPoint*1.8*SpecialBonus) ; 
 	Attack(Target);
 	AttackPoint = AttackPointDefault;
-	SP	-= 25;}
-	else {cout<<"SP tidak mencukupi";}
+	SP	-= 25;
+	AttackTurn = true;}
+	else {cout<<"SP tidak mencukupi"<<endl;system("pause");}
 	}
-else {cout<<"Tidak ada Skill yang dimaksud!";}
+else {cout<<"Tidak ada Skill yang dimaksud!"<<endl;system("pause");}
 }
 
 

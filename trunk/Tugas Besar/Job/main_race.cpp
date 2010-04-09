@@ -31,7 +31,9 @@ void Display(int &x, int &y) {
 	obj_job  = *i;
 	
 	if (x == 1){	
-	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }	
+	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; 	
+	cout<<"Status Karakter      :"<<endl;
+	obj_job->Status();}	
 	else {
 	cout<<"-  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }
 	cout<<"-  "<<obj_job->GetHP()<<" / "<<obj_job->GetHPDefault()<<endl;	
@@ -40,7 +42,9 @@ void Display(int &x, int &y) {
 	i++;
 	obj_job  = *i;
 	if (x == 2){	
-	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }	
+	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; 
+	cout<<"Status Karakter      :"<<endl;
+	obj_job->Status();}	
 	else {
 	cout<<"-  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }
 	cout<<"-  "<<obj_job->GetHP()<<" / "<<obj_job->GetHPDefault()<<endl;	
@@ -49,11 +53,15 @@ void Display(int &x, int &y) {
 	i++;
 	obj_job  = *i;
 	if (x == 3){	
-	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }	
+	cout<<">>  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; 
+	cout<<"Status Karakter      :"<<endl;
+	obj_job->Status();}	
 	else {
 	cout<<"-  "<<obj_job->GetName()<<" / "<<obj_job->GetJobName()<<endl; }
 	cout<<"-  "<<obj_job->GetHP()<<" / "<<obj_job->GetHPDefault()<<endl;	
 	cout<<"-  "<<obj_job->GetSP()<<" / "<<obj_job->GetSPDefault()<<endl<<endl;	
+	cout<<"------------------------"<<endl;
+	
 	
 	cout<<"------------------------"<<endl;
 	cout<<endl;	
@@ -137,94 +145,23 @@ cout<<">> Defend    "<<endl; }
 
 
 int main (){
-system ("cls");
-cout << "------------------------------------------------"<<endl;	
-cout << "DUNNO Tactics "<<endl;
-cout << "------------------------------------------------"<<endl;
-cout<<"Pilih dulu race yang anda inginkan"<<endl;
-cout<<"=================================="<<endl;
-cout<<"=  Human                     ====="<<endl;
-cout<<"=  Elf                       ====="<<endl;
-cout<<"=  Fairy                     ====="<<endl;
-cout<<"=  Orc                       ====="<<endl;
-cout<<"=================================="<<endl;
-cin >> race;
-system ("cls");	
-cout << "------------------------------------------------"<<endl;	
-cout << "DUNNO Tactics "<<endl;
-cout << "------------------------------------------------"<<endl;
-cout<<"Pilih ally job  yang anda inginkan"<<endl;
-cout<<"=================================="<<endl;
-cout<<"=  Knight                    ====="<<endl;
-cout<<"=  Archer                    ====="<<endl;
-cout<<"=  Sage                      ====="<<endl;
-cout<<"=  Mage                      ====="<<endl;
-cout<<"=  Assasin                   ====="<<endl;
-cout<<"=  Warrior                   ====="<<endl;
-cout<<"=================================="<<endl;
+Player.push_back(new Knight ("human"));
+Player.push_back(new Archer("human"));
+Player.push_back(new Sage("human"));
 
-for (int z = 1; z<=3; z++) {
-cout<<"Ally  "<<z<<" = ";cin>>job;
-if (job=="knight") {
-Knight *K= new Knight(race);
-Player.push_back(K);}
-if (job=="archer") {
-Archer *K= new Archer(race);
-Player.push_back(K);}
-if (job=="mage") {
-Mage *K= new Mage(race);
-Player.push_back(K);}
-if (job=="sage") {
-Sage *K= new Sage(race);
-Player.push_back(K);}
-if (job=="warrior") {
-Warrior *K= new Warrior(race);
-Player.push_back(K);}
-if (job=="assassin") {
-Assassin *K= new Assassin(race);
-Player.push_back(K);}
-}
-cout<<endl;
-cout<<"Set nama untuk ally"<<endl;
 int z = 1;
 for (i = Player.begin(); i != Player.end(); ++i)
 	{
-		cout<<"ally "<<z<<" = ";cin>>name;
+		name = "Player";
 		obj_job  = *i;				
 		obj_job->SetName(name);	
 		z++;
 	}
 
 //untuk Enemy
-srand(time(NULL));
-int rn = rand()%4;
-if (rn == 0) {race = "human";}
-else if (rn == 1) {race = "elf";}
-else if (rn == 2) {race = "fairy";}
-else if (rn == 3) {race = "orc";}
-
-for (int z = 1; z<=3; z++) {
-int rn = rand()%6;
-if (rn == 0) {
-Knight *K= new Knight(race);
-Enemy.push_back(K);}
-else if (rn == 1) {
-Archer *K= new Archer(race);
-Enemy.push_back(K);}
-else if (rn == 2) {
-Mage *K= new Mage(race);
-Enemy.push_back(K);}
-else if (rn == 3) {
-Sage *K= new Sage(race);
-Enemy.push_back(K);}
-else if (rn == 4) {
-Warrior *K= new Warrior(race);
-Enemy.push_back(K);}
-else if (rn == 5) {
-Assassin *K= new Assassin(race);
-Enemy.push_back(K);}
-}
-cout<<endl;
+Enemy.push_back(new Mage ("human"));
+Enemy.push_back(new Warrior("human"));
+Enemy.push_back(new Assassin("human"));
 
 z = 1;
 for (i = Enemy.begin(); i != Enemy.end(); ++i)	{
@@ -275,7 +212,7 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
 				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
@@ -284,17 +221,17 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
-				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
 				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
 				i = Enemy.begin()+2;
 				obj_job  = *i;
-				cout<<"Accuracy objek lawan = "<<obj_job->GetAcc()<<endl;
-				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				
@@ -306,6 +243,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 2) {
@@ -313,6 +252,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 			    obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
@@ -320,6 +261,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				
@@ -331,6 +274,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 2) {
@@ -338,6 +283,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				else if ( y == 0) {
@@ -345,6 +292,8 @@ while (c!=65) {
 				obj_job  = *i;
 				i = Player.begin();
 				obj_job2  = *i;
+				cout<<"Accuracy = "<<obj_job2->GetAcc()<<endl;
+				cout<<"Evade objek lawan = "<<obj_job->GetEvade()<<endl;
 				obj_job2->Attack(*obj_job);
 				c=27;}
 				
@@ -364,10 +313,7 @@ while (c!=65) {
 		if (x==3){
 		i = Player.begin();		
 		obj_job2  = *i+2; }
-		int t = 0;
-		while (obj_job2->GetSpecialArray(t) != "none"){
-		cout<<obj_job2->GetSpecialArray(t)<<endl;
-		t++;}
+		obj_job2->GetSpecialArray();
 		cout<<"-----------"<<endl;
 		cout<<"Choose Special = "<<endl;
 		cin>>special;
