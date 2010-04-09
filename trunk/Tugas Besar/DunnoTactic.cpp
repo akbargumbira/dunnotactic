@@ -166,6 +166,7 @@ void DunnoTactic::Build()
 
 void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player)
 {
+    cout << Race << endl;
     for (int i=0;i<NumberChar;++i)
     {
         if (Job[i]=="knight") {
@@ -467,7 +468,7 @@ void DunnoTactic::SelectCharacter()
     cout << P1Race;
     SelectJob(P1Job, "Player1");
 
-    SelectRace(P1Race, "Player2");
+    SelectRace(P2Race, "Player2");
     SelectJob(P2Job, "Player2");
 
     ConstructCharacter(P1, P1Job, P1Race, 1);
