@@ -584,28 +584,29 @@
                     string race = Player->GetRaceName();
                     string job = Player->GetJobName();
                     if(race=="Human") {
-                        cout << "H-";
+                        cout << " H-";
                     } else if(race=="Elf") {
-                        cout << "E-";
+                        cout << " E-";
                     } else if(race=="Fairy") {
-                        cout << "F-";
+                        cout << " F-";
                     } else if(race=="Orc") {
-                        cout << "O-";
+                        cout << " O-";
                     } else {
-                        cout << "U-";
+                        cout << " U-";
                     }
+                    cout <<"tes"<< race;
                     if(job=="Archer") {
-                        cout << "A";
+                        cout << "A ";
                     } else if(job=="Assassin") {
-                        cout << "N";
+                        cout << "N ";
                     } else if(job=="Knight") {
-                        cout << "K";
+                        cout << "K ";
                     } else if(job=="Mage") {
-                        cout << "M";
+                        cout << "M ";
                     } else if(job=="Sage") {
-                        cout << "S";
+                        cout << "S ";
                     } else if(job=="Warrior") {
-                        cout << "W";
+                        cout << "W ";
                     } else {
                         cout << "U";
                     }
