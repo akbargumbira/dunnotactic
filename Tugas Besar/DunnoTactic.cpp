@@ -198,6 +198,7 @@ void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string
     for (int i=0;i<NumberChar;++i)
     {
         P[i]->SetID(A+i);
+        cout << "ID " <<P[i]->GetID()<<endl;;
     }
 }
 
