@@ -584,6 +584,7 @@ void DunnoTactic::Play()
 void DunnoTactic::Select(const int &id)
 {
     Job* C = GetCharacter(id);
+    D.HighlightGrid(C->GetX(), C->GetY());
     while (true)
     {
         cout << id << " > ";
