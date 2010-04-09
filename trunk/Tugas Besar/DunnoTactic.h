@@ -42,7 +42,12 @@ public:
     static void ParseCommand();
     static void StringToLower(char* s);
     static bool IsInteger(string &s);
+    static string ToString(const int& n);
     static Job* GetCharacter(int X, int Y);
+    struct Point {
+        int X;
+        int Y;
+    };
 
     static char Command[100];
     static string CommandParse[10];

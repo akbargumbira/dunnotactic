@@ -6,6 +6,7 @@
  */
 
 #include <stdlib.h>
+#include <sstream>
 
 #include "DunnoTactic.h"
 #include "Display/Display.h"
@@ -207,50 +208,57 @@ int DunnoTactic::Random(const int& Begin, const int& End)
 
 void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
 {
-    int SizeX = M.GetSizeX();
-    int SizeY = M.GetSizeY();
-    int X;
-    int Y;
     int i=0;
-    while (i<NumberChar)
+    int temp;
+    Point tempPoint;
+    vector<Point> Available;
+    vector<Point>::iterator iter;
+
+    /*if (kuadran==1)
     {
-        if (kuadran==1)
+        XB = SizeX - SizeX/2 + 1; XE = SizeX;
+        YB = 1; YE = SizeY/2;
+    }
+    else if (kuadran==2)
+    {
+        XB = 1; XE = SizeX/2;
+        YB = 1; YE = SizeY/2;
+    }
+    else if (kuadran==3)
+    {
+        XB = 1; XE = SizeX/2;
+        YB = SizeY - SizeY/2 + 1; YE = SizeY;
+    }
+    else if (kuadran==4)
+    {
+        XB = SizeX - SizeX/2 + 1; XE = SizeX;
+        YB = SizeY - SizeY/2 + 1; YE = SizeY;
+    }
+    else
+    {
+        throw "Kuadran tidak valid. Pilihan dari 1 s.d. 4.";
+    }
+    */
+    for (int i=1;i<=M.GetSizeX();++i)
+    {
+        for (int j=1;j<=M.GetSizeY();++j)
         {
-            X = Random(SizeX - SizeX/2 + 1, SizeX);
-            Y = Random(1, SizeY/2);
+            if (M.GetTerrain(i,j)!=2 && M.GetTerrain(i,j)!=4)
+                Available.push_back({i, j});
         }
-        else if (kuadran==2)
-        {
-            X = Random(1, SizeX/2);
-            Y = Random(1, SizeY/2);
-        }
-        else if (kuadran==3)
-        {
-            X = Random(1, SizeX/2);
-            Y = Random(SizeY - SizeY/2 + 1, SizeY);
-        }
-        else if (kuadran==4)
-        {
-            X = Random(SizeX - SizeX/2 + 1, SizeX);
-            Y = Random(SizeY - SizeY/2 + 1, SizeY);
-        }
-        else
-        {
-            throw "Kuadran tidak valid. Pilihan dari 1 s.d. 4.";
-        }
-        if (D.GetMapPlayer(X, Y)==0)
-        {
-            P[i]->SetXY(X, Y);
-            D.SetMapPlayer(X, Y, P[i]->GetID());
-        }
-        else
-        {
-            --i;
-        }
-        ++i;
     }
 
-    cout << X << " " << Y << endl;
+    iter = Available.begin();
+
+    while (i<NumberChar)
+    {
+        temp = rand()%Available.size();
+        tempPoint = Available[temp];
+        Available.erase(iter+temp);
+        P[i]->SetXY(tempPoint.X, tempPoint.Y);
+        D.SetMapPlayer(tempPoint.X, tempPoint.Y, P[i]->GetID());
+        ++i;
+    }
 }
 
 void DunnoTactic::SelectNumCharacter()
@@ -266,6 +274,13 @@ void DunnoTactic::SelectNumCharacter()
             {
                 if (IsInteger(CommandParse[0]))
                 {
+                    int temp = atoi(CommandParse[0].c_str());
+                    int max = (M.GetSizeX()/2) * (M.GetSizeY()/2);
+                    if (!(temp>0 && temp<=max))
+                    {
+                        string thr = "Jumlah karakter harus dari 1 s.d. "+ ToString(max) + ".";
+                        throw thr.c_str();
+                    }
                     NumberChar = atoi(CommandParse[0].c_str());
                     break;
                 }
@@ -719,6 +734,13 @@ bool DunnoTactic::IsInteger(string &s)
     }
 
     return true;
+}
+
+string DunnoTactic::ToString(const int& n)
+{
+    ostringstream out;
+    out << n;
+    return out.str();
 }
 
 Job* DunnoTactic::GetCharacter(int X, int Y)
