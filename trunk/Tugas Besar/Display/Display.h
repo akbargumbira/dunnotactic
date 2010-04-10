@@ -29,6 +29,8 @@ class Display {
 		void MoveAnimated(int initX, int initY, int targetX, int targetY);
                 void SelectMove(int x, int y);
                 void HighlightGrid(int x, int y);
+                void clearArea();
+                void clearPlayer();
                 // method get dan set
                 void SetInfo(string Infox, int id);
                 void SetMapPlayer(int x,int y,int id);
@@ -51,7 +53,7 @@ class Display {
 		bool PassPlayer(int x1, int y1, int x2, int y2);
                 void printTerrain(int x, int y);
                 void printPlayer(int x, int y, int line);
-                void setDistanceMove(int x, int y, int range);
+                void setDistanceMove(int initx, int inity, int x, int y, int range);
 		int Min2(int a, int b);
 		int MinAround(int x, int y);
 		bool IsTree(int x, int y);

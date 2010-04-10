@@ -141,7 +141,7 @@
                      }
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","green");
+                            color("yellow","blue");
                             printPlayer(i,j,1);
                             color("default","default");
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
@@ -181,7 +181,7 @@
                     else {
                         cout << "| " << j;
                         if(pointerX==1 && pointerY==j) {
-                            cout << "  ";
+                            cout << " ";
                             printCursor();
                         } else {
                             cout << " |";
@@ -190,7 +190,7 @@
                     // menampilkan kotak terrain tengah
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","green");
+                            color("yellow","blue");
                             printPlayer(i,j,2);
                             color("default","default");
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
@@ -225,7 +225,7 @@
                      }
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","green");
+                            color("yellow","blue");
                             printPlayer(i,j,3);
                             color("default","default");
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
@@ -302,20 +302,21 @@
 
             int i;
             int j;
-            int factor;
+            int looping;
 
             // inisialisasi asumsi jarak
-            for(i=initX-range;i<=initX+range;++i) {
-                factor=range-abs(initX-i);
-                for(j=initY-factor;j<=initY+factor;++j) {
-                    if(i>0 && j>0 && i<=DunnoTactic::M.GetSizeX() && j<=DunnoTactic::M.GetSizeY()) {
-                        if(PassTerrain(i,j) && PassPlayer(initX-1,initY-1,i-1,j-1)) {
-                            MapArea[i-1][j-1]=abs(initX-i)+abs(initY-j);
-                        }
-                    }
-                }
-            }
-            cout <<"lanjutttt gan" ;
+//            for(i=initX-range;i<=initX+range;++i) {
+//                factor=range-abs(initX-i);
+//                for(j=initY-factor;j<=initY+factor;++j) {
+//                    if(i>0 && j>0 && i<=DunnoTactic::M.GetSizeX() && j<=DunnoTactic::M.GetSizeY()) {
+//                        if(PassTerrain(i,j) && PassPlayer(initX-1,initY-1,i-1,j-1)) {
+//                            MapArea[i-1][j-1]=abs(initX-i)+abs(initY-j);
+//                        } else {
+//                            MapArea[i-1][j-1]=99;
+//                        }
+//                    }
+//                }
+//            }
 
             // penghapusan daerah-daerah yang melebihi dari range move
             if(IsLumpur(initX,initY)) {
@@ -323,42 +324,42 @@
             } else {
                     MapArea[initX-1][initY-1]=0;
             }
-            for(i=1;i<=range;++i) {
-                // Kuadran 1 dan 3
-                factorY=-i;
-                for(factorX=0;factorX<i;++factorX) {
-                    // kuadran 1
-                    x = initX+factorX-1;
-                    y = initY+factorY-1;
-                    if(x>=0 && y>=0) {
-                        setDistanceMove(x,y,range);
+            for(looping=1;looping<=2;++looping) {
+                for(i=1;i<=range;++i) {
+                    // Kuadran 1 dan 3
+                    factorY=-i;
+                    for(factorX=0;factorX<i;++factorX) {
+                        // kuadran 1
+                        x = initX+factorX-1;
+                        y = initY+factorY-1;
+                        if(x>=0 && y>=0 && x<DunnoTactic::M.GetSizeX() && y<DunnoTactic::M.GetSizeY()) {
+                            setDistanceMove(initX-1,initY-1,x,y,range);
+                        }
+                        // kuadran 3
+                        x = initX-factorX-1;
+                        y = initY-factorY-1;
+                        if(x>=0 && y>=0 && x<DunnoTactic::M.GetSizeX() && y<DunnoTactic::M.GetSizeY()) {
+                            setDistanceMove(initX-1,initY-1,x,y,range);
+                        }
+                        ++factorY;
                     }
-                    cout <<"lanjutttt gan 2" ;
-                    // kuadran 3
-                    x = initX-factorX-1;
-                    y = initY-factorY-1;
-                    if(x>=0 && y>=0) {
-                        setDistanceMove(x,y,range);
+                    // Kuadran 2 dan 4
+                    factorX=i;
+                    for(factorY=0;factorY<i;++factorY) {
+                        // kuadran 4
+                        x = initX+factorX-1;
+                        y = initY+factorY-1;
+                        if(x>=0 && y>=0 && x<DunnoTactic::M.GetSizeX() && y<DunnoTactic::M.GetSizeY()) {
+                            setDistanceMove(initX-1,initY-1,x,y,range);
+                        }
+                        // kuadran 2
+                        x = initX-factorX-1;
+                        y = initY-factorY-1;
+                        if(x>=0 && y>=0 && x<DunnoTactic::M.GetSizeX() && y<DunnoTactic::M.GetSizeY()) {
+                            setDistanceMove(initX-1,initY-1,x,y,range);
+                        }
+                        --factorX;
                     }
-                    cout <<"lanjutttt gan 3" ;
-                    ++factorY;
-                }
-                // Kuadran 2 dan 4
-                factorX=i;
-                for(factorY=0;factorY<i;++factorY) {
-                    // kuadran 4
-                    x = initX+factorX-1;
-                    y = initY+factorY-1;
-                    if(x>=0 && y>=0) {
-                        setDistanceMove(x,y,range);
-                    }
-                    // kuadran 2
-                    x = initX-factorX-1;
-                    y = initY-factorY-1;
-                    if(x>=0 && y>=0) {
-                        setDistanceMove(x,y,range);
-                    }
-                    --factorX;
                 }
             }
 	}
@@ -418,11 +419,7 @@
 				x=x-1;
 			}
 		}
-                for(i=0;i<30;++i) {
-                    for(j=0;j<30;++j) {
-                        MapArea[i][j]=99;
-                    }
-                }
+                clearArea();
 		int preX = initX-1;
 		int preY = initY-1;
                 bool nextIsPlayer=false;
@@ -476,6 +473,7 @@
             pointerY=y;
             system("clear");
             displayGame();
+            clearArea();
         }
 
         void Display::HighlightGrid(int x, int y) {
@@ -511,6 +509,23 @@
             }
             displayGame();
         }
+
+        void Display::clearArea() {
+            for(int i = 0;i<30;++i) {
+                for(int j = 0;j<30;++j) {
+                    MapArea[i][j]=99;
+                }
+            }
+        }
+
+        void Display::clearPlayer() {
+            for(int i = 0;i<30;++i) {
+                for(int j=0;j<30;++j) {
+                    MapPlayer[i][j]=0;
+                }
+            }
+        }
+        
         // method get dan set
         void Display::SetInfo(string Infox, int id) {
             Info[id]=Infox;
@@ -600,7 +615,7 @@
                         break;
                 }
                 case 2: {
-                        cout << " ??? ";
+                        cout << " ~~~ ";
                         break;
                 }
                 case 3: {
@@ -608,7 +623,7 @@
                         break;
                 }
                 case 4: {
-                        cout << " ~~~ ";
+                        cout << " ??? ";
                         break;
                 }
                 default: {
@@ -670,8 +685,8 @@
             }
         }
 
-        void Display::setDistanceMove(int x, int y, int range) {
-            if(MapArea[x][y]!=99 && MinAround(x,y) < range) {
+        void Display::setDistanceMove(int initx, int inity, int x, int y, int range) {
+            if(PassTerrain(x+1,y+1) && PassPlayer(initx,inity,x,y) && MinAround(x,y) < range) {
                 if(IsLumpur(x+1,y+1)) {
                     if(MinAround(x,y)==range-1) {
                         MapArea[x][y]=99;
@@ -707,18 +722,25 @@
 		} else
 		if(y-1<0) {
 			Minimum = Min2(MapArea[x][y+1], Min2(MapArea[x-1][y],MapArea[x+1][y]));
-		} else {
+		} else if(x>=DunnoTactic::M.GetSizeX() && y>=DunnoTactic::M.GetSizeY()) {
+                    Minimum = Min2(MapArea[x-1][y],MapArea[x][y-1]);
+                } else if(x>=DunnoTactic::M.GetSizeX()) {
+                    Minimum = Min2(Min2(MapArea[x][y+1],MapArea[x][y-1]),MapArea[x-1][y]);
+                } else if(y>=DunnoTactic::M.GetSizeY()) {
+                    Minimum = Min2(Min2(MapArea[x-1][y],MapArea[x+1][y]),MapArea[x][y-1]);
+                }
+                else {
 			Minimum = Min2(Min2(MapArea[x][y-1],MapArea[x][y+1]), Min2(MapArea[x-1][y],MapArea[x+1][y]));
 		}
 		return Minimum;
 	}
 	
 	bool Display::IsTree(int x, int y) {
-		return (DunnoTactic::M.GetTerrain(x,y)==2);
+		return (DunnoTactic::M.GetTerrain(x,y)==4);
 	}
 	
 	bool Display::IsWater(int x, int y) {
-		return (DunnoTactic::M.GetTerrain(x,y)==4);
+		return (DunnoTactic::M.GetTerrain(x,y)==2);
 	}
 	
 	bool Display::IsLumpur(int x, int y) {
