@@ -259,12 +259,50 @@ void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
 void Map::SetMapRandom()
 //Method yang digunakan untuk mengeset terrain secara random
 {
-    for(int i = 0; i < SizeX; ++i )
+    int count_airpohonhalf=0; // k adalah counter banyaknya terrain yang berisi air atau pohon
+    int count_airpohonrest=0;
+    int max_airpohon=int(SizeX*SizeY/4);
+    int max_airpohonhalf=int(max_airpohon/2);
+    int SizeX_Half=int(SizeX/2);
+    
+    //cout<<max_airpohon;
+    for(int i = 0; i < SizeX_Half; ++i )
     {
         for (int j=0; j< SizeY; ++j)
         {
             int k = rand()%4 + 1;
-            Terrain[i][j] = k;
+            if (k==1 || k==3)
+            {
+                Terrain[i][j] = k;
+            }
+            else
+            {
+                count_airpohonhalf=count_airpohonhalf+1;
+                if (count_airpohonhalf<=max_airpohonhalf)
+                {
+                    Terrain[i][j]=k;
+                }
+            }
+        }
+    }
+
+    for(int i = SizeX_Half; i < SizeX; ++i )
+    {
+        for (int j=0; j< SizeY; ++j)
+        {
+            int k = rand()%4 + 1;
+            if (k==1 || k==3)
+            {
+                Terrain[i][j] = k;
+            }
+            else
+            {
+                count_airpohonrest=count_airpohonrest+1;
+                if (count_airpohonrest<=max_airpohon-max_airpohonhalf)
+                {
+                    Terrain[i][j]=k;
+                }
+            }
         }
     }
 }
