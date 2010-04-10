@@ -470,6 +470,8 @@ void DunnoTactic::DesructCharacter()
         delete(*i);
     }
     P2.erase(P2.begin(), P2.end());
+
+    D.clearPlayer();
 }
 
 void DunnoTactic::Play()
