@@ -30,7 +30,6 @@ public:
     static void Main();
     static void Play();
     static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player);
-    static int  Random(const int& Begin, const int& End);
     static void RandomChacracterPosition(int kuadran, vector<Job*> &P);
     static void SelectNumCharacter();
     static void SelectCharacter();
@@ -38,13 +37,15 @@ public:
     static void SelectRace(string& Race, const string& Player);
     static void Build();
     static void Select(const int &id);
-    static void Action(const int &id, string s);
     static void ParseCommand();
     static void StringToLower(char* s);
     static bool IsInteger(string &s);
     static string ToString(const int& n);
     static Job* GetCharacter(int X, int Y);
     static Job* GetCharacter(int id);
+    static void ListAll(int Player);
+    static void List(int Player, string option);
+    static void DesructCharacter();
     struct Point {
         int X;
         int Y;

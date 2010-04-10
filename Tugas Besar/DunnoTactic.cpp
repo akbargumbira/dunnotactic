@@ -34,6 +34,7 @@ DunnoTactic::DunnoTactic(const DunnoTactic& orig) {
 }
 
 DunnoTactic::~DunnoTactic() {
+   
 }
 
 void DunnoTactic::Main()
@@ -202,12 +203,6 @@ void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string
     }
 }
 
-int DunnoTactic::Random(const int& Begin, const int& End)
-{
-    //srand(time(NULL));
-    return (rand()%((End-Begin+1))) + Begin;
-}
-
 void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
 {
     int i=0;
@@ -215,32 +210,7 @@ void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
     Point tempPoint;
     vector<Point> Available;
     vector<Point>::iterator iter;
-
-    /*if (kuadran==1)
-    {
-        XB = SizeX - SizeX/2 + 1; XE = SizeX;
-        YB = 1; YE = SizeY/2;
-    }
-    else if (kuadran==2)
-    {
-        XB = 1; XE = SizeX/2;
-        YB = 1; YE = SizeY/2;
-    }
-    else if (kuadran==3)
-    {
-        XB = 1; XE = SizeX/2;
-        YB = SizeY - SizeY/2 + 1; YE = SizeY;
-    }
-    else if (kuadran==4)
-    {
-        XB = SizeX - SizeX/2 + 1; XE = SizeX;
-        YB = SizeY - SizeY/2 + 1; YE = SizeY;
-    }
-    else
-    {
-        throw "Kuadran tidak valid. Pilihan dari 1 s.d. 4.";
-    }
-    */
+    
     for (int i=1;i<=M.GetSizeX();++i)
     {
         for (int j=1;j<=M.GetSizeY();++j)
@@ -314,16 +284,15 @@ void DunnoTactic::SelectRace(string& Race, const string& Player)
     race[1] = "elf";
     race[2] = "fairy";
     race[3] = "orc";
-    
+
+    cout << endl;
+    for (int i = 0 ;i< length;++i)
+    {
+        cout << i+1 << ". " << race[i] << endl;
+    }
+
     while(true)
     {
-        //system("clear");
-        cout << endl;
-        for (int i = 0 ;i< length;++i)
-        {
-            cout << i+1 << ". " << race[i] << endl;
-        }
-
         cout << endl << Player<< endl << "Select Race : ";
         cin.getline(Command, 99);
         try
@@ -340,7 +309,7 @@ void DunnoTactic::SelectRace(string& Race, const string& Player)
                 }
                 else
                 {
-                    throw "Masukan dari 1 sampai 4";
+                    throw "Masukan harus dari 1 sampai 4.";
                 }
             }
             else
@@ -368,12 +337,13 @@ void DunnoTactic::SelectJob(vector<string>& Job, const string& Player)
     job[3] = "mage";
     job[4] = "sage";
     job[5] = "warrior";
-
+    
+    cout << "1. Pilih Manual" << endl;
+    cout << "2. Random" << endl << endl;
+    
     while (true)
     {
-        cout << endl << Player << endl << "Select Caharacter Job : " << endl;
-        cout << "1. Pilih Manual" << endl;
-        cout << "2. Random" << endl << endl;
+        cout << endl << Player << endl;
         cout << "Pilihan Menu : ";
         cin.getline(Command, 99);
         try
@@ -468,32 +438,51 @@ void DunnoTactic::SelectCharacter()
 
     SelectNumCharacter();
     SelectRace(P1Race, "Player1");
-    cout << P1Race;
     SelectJob(P1Job, "Player1");
 
     SelectRace(P2Race, "Player2");
     SelectJob(P2Job, "Player2");
 
     ConstructCharacter(P1, P1Job, P1Race, 1);
-    //cout << P1[0]->GetJobName() << endl;
     RandomChacracterPosition(1, P1);
     ConstructCharacter(P2, P2Job, P2Race, 2);
-    //cout << P2[1]->GetJobName() << endl;
     RandomChacracterPosition(3, P2);
     PlayerTurn = 1;
+}
+
+void DunnoTactic::DesructCharacter()
+{
+    vector<Job*>::const_iterator i;
+    vector<Job*>::const_iterator end;
+
+
+    end = P1.end();
+    for(i=P1.begin();i!=end;++i)
+    {
+        delete(*i);
+    }
+    P1.erase(P1.begin(), P1.end());
+
+
+    end = P2.end();
+    for(i=P2.begin();i!=end;++i)
+    {
+        delete(*i);
+    }
+    P2.erase(P2.begin(), P2.end());
 }
 
 void DunnoTactic::Play()
 {
     SelectCharacter();
-    for (int i=0;i<P1.size();++i)
+    /*for (int i=0;i<P1.size();++i)
     {
         cout <<i+1<<". " << P1[i]->GetX() << " " << P1[i]->GetY() << endl;
     }
     for (int i=0;i<P2.size();++i)
     {
         cout <<i+1<<". " << P2[i]->GetX() << " " << P2[i]->GetY() << endl;
-    }
+    }*/
     D.displayBoxMap();
     while(true)
     {
@@ -504,6 +493,7 @@ void DunnoTactic::Play()
             ParseCommand();
             if (CommandLength==1 && CommandParse[0]=="exit")
             {
+                DesructCharacter();
                 break;
             }
             else if (CommandLength==1 && CommandParse[0]=="endturn")
@@ -518,15 +508,15 @@ void DunnoTactic::Play()
             {
                 if (CommandParse[1]=="all")
                 {
-                    
+                    ListAll(PlayerTurn);
                 }
                 else if (CommandParse[1]=="enemy")
                 {
-
+                    List(PlayerTurn, CommandParse[1]);
                 }
                 else if (CommandParse[1]=="ally")
                 {
-
+                    List(PlayerTurn, CommandParse[1]);
                 }
                 else
                 {
@@ -542,10 +532,32 @@ void DunnoTactic::Play()
             {
                 if (CommandLength==2 && IsInteger(CommandParse[1]))
                 {
-                    Select(atoi(CommandParse[1].c_str()));
+                    int tempID = atoi(CommandParse[1].c_str());
+                    Job* tempJ = GetCharacter(tempID);
+                    if (tempJ!=NULL)
+                    {
+                        Select(tempJ->GetID());
+                    }
+                    else
+                    {
+                        string err = "Tidak ditemukan karakter dengan id "+ToString(tempID)+".";
+                        throw err.c_str();
+                    }
                 }
                 else if (CommandLength==3 && IsInteger(CommandParse[1]) && IsInteger(CommandParse[2]))
                 {
+                    int tempX = atoi(CommandParse[1].c_str());
+                    int tempY = atoi(CommandParse[2].c_str());;
+                    Job* tempJ = GetCharacter(tempX, tempY);
+                    if (tempJ!=NULL)
+                    {
+                        Select(tempJ->GetID());
+                    }
+                    else
+                    {
+                        string err = "Tidak ditemukan karakter pada posisi ("+ToString(tempX)+","+ToString(tempY)+").";
+                        throw err.c_str();
+                    }
                     Select(atoi(CommandParse[1].c_str()));
                 }
                 else
@@ -587,7 +599,7 @@ void DunnoTactic::Select(const int &id)
     D.HighlightGrid(C->GetX(), C->GetY());
     while (true)
     {
-        cout << id << " > ";
+        cout << "Player" << PlayerTurn << " - " << id << " > ";
         cin.getline(Command, 99);
         try
         {
@@ -605,39 +617,9 @@ void DunnoTactic::Select(const int &id)
             {
                 D.SelectMove(C->GetX(), C->GetY());
             }
-            else if (!(CommandLength==1 && (CommandParse[0]=="move" || CommandParse[0]=="attack" || CommandParse[0]=="special")))
+            else if (CommandLength==1 && CommandParse[0]=="special")
             {
-                throw "Perintah tidak ditemukan.";
-            }
-
-            //Action(id, CommandParse[0]);
-            
-        }
-        catch(const char* e)
-        {
-            cout << e << endl;
-        }
-    }
-}
-
-void DunnoTactic::Action(const int& id, string s)
-{
-    Job* C = GetCharacter(id);
-    while(true)
-    {
-        cout << id << " - " << s << " > ";
-        cin.getline(Command, 99);
-        try
-        {
-            ParseCommand();
-            if(CommandLength==1 && CommandParse[0]=="cancel")
-            {
-                break;
-            }
-            else if (CommandLength==2)
-            {
-                cout << CommandParse[0] << " " << CommandParse[1] << endl;
-                break;
+                cout << "Special" << endl;
             }
             else
             {
@@ -822,4 +804,40 @@ Job* DunnoTactic::GetCharacter(int id)
 
     return NULL;
 
+}
+
+void DunnoTactic::List(int Player, string option)
+{
+    vector<Job*> P;
+    if (Player==1)
+    {
+        P = P1;
+        if (option=="enemy")
+        {
+            P = P2;
+        }
+    }
+    else
+    {
+        P = P2;
+        if (option=="enemy")
+        {
+            P = P1;
+        }
+    }
+
+    cout << "Race : " << P[0]->GetRaceName()<< endl;
+    cout << "Id \\ Job Name \\ Position" << endl;
+    for(int i=0;i<P.size();++i)
+    {
+        cout << P[i]->GetID() << " \\ " << P[i]->GetJobName()<< " \\ (" << P[i]->GetX()<< "," << P[i]->GetY() << ")" << endl;
+    }
+}
+
+void DunnoTactic::ListAll(int Player)
+{
+    cout <<"Ally : "<<endl;
+    List(Player, "ally");
+    cout << endl <<"Enemy"<<endl;
+    List(Player, "enemy");
 }
