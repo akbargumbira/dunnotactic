@@ -291,6 +291,7 @@
             for(i=1;i<=lengthBox;++i) {
                     cout << "/";
             }
+            cout << endl;
 	}
 
 	void Display::setAreaMove(int initX, int initY, int range) {
