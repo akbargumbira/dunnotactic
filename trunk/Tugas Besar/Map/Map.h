@@ -14,7 +14,8 @@ using namespace std;
 class Map
 {
 public :
-    static const int default_size = 30; //Ukuran dari map dibuat default yaitu 30x30
+    static const int default_size = 10; //Ukuran dari map default yaitu 10x10
+    static const int max_size = 30; //Ukuran dari map max yaitu 30x30
     Map(); //constructor default Map
     Map (const Map&); //Copy Constructor Map
     virtual ~Map();//Destructor Map
@@ -32,7 +33,7 @@ public :
 private :
     int SizeX; // Ukuran X dari Map yang efektif terpakai
     int SizeY; // Ukuran Y dari Map yang efektif terpakai
-    int Terrain[default_size][default_size]; // Matriks dari terrain yang digunakan untuk menyimpan isi dari terrain
+    int Terrain[max_size][max_size]; // Matriks dari terrain yang digunakan untuk menyimpan isi dari terrain
 };
 
 #endif	/* _MAP_H */
