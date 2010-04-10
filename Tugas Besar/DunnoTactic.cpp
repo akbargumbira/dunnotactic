@@ -522,11 +522,6 @@ void DunnoTactic::Play()
                 {
                     throw "Perintah tidak ditemukan.";
                 }
-                for(int i=0;i<CommandLength;++i)
-                {
-                    cout << CommandParse[i] << " ";
-                }
-                cout << endl;
             }
             else if ((CommandLength==2 || CommandLength==3) && CommandParse[0]=="select")
             {
@@ -567,11 +562,16 @@ void DunnoTactic::Play()
             }
             else if (CommandLength==3 && CommandParse[0]=="highlight")
             {
-                for(int i=0;i<CommandLength;++i)
+                if (IsInteger(CommandParse[1])&&IsInteger(CommandParse[2]))
                 {
-                    cout << CommandParse[i] << " ";
+                    int tempX = atoi(CommandParse[1].c_str());
+                    int tempY = atoi(CommandParse[2].c_str());
+                    D.HighlightGrid(tempX, tempY);
                 }
-                cout << endl;
+                else
+                {
+                    throw "Masukan harus integer.";
+                }
             }
             else if (CommandLength==1 && CommandParse[0]=="clear")
             {
@@ -775,8 +775,8 @@ Job* DunnoTactic::GetCharacter(int X, int Y)
         }
     }
     
-    return NULL;
-
+    string err = "Tidak ditemukan karakter pada posisi ("+ToString(X)+","+ToString(Y)+").";
+    throw err.c_str();
 }
 
 Job* DunnoTactic::GetCharacter(int id)
@@ -802,7 +802,8 @@ Job* DunnoTactic::GetCharacter(int id)
         }
     }
 
-    return NULL;
+    string temp = "Karakter dengan id "+ToString(id)+" tidak ditemukan.";
+    throw temp.c_str();
 
 }
 
