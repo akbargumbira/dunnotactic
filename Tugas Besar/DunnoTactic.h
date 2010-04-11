@@ -36,7 +36,9 @@ public:
     static void SelectJob(vector<string> &Job, const string& Player);
     static void SelectRace(string& Race, const string& Player);
     static void Build();
-    static void Select(const int &id);
+    static void Select();
+    static void Move();
+    static void Attack();
     static void ParseCommand();
     static void StringToLower(char* s);
     static bool IsInteger(string &s);
@@ -46,6 +48,7 @@ public:
     static void ListAll(int Player);
     static void List(int Player, string option);
     static void DesructCharacter();
+    static bool IsGameOver();
     struct Point {
         int X;
         int Y;
@@ -60,6 +63,9 @@ public:
 
     static int NumberChar;
     static int PlayerTurn;
+    static bool GameOver;
+    static int WinPlayer;
+    static Job* CurrenctChar;
     static Map M;
     static Display D;
     

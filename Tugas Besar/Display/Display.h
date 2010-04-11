@@ -27,7 +27,9 @@ class Display {
 		void setAreaMove(int initX, int initY, int range);
                 void setAreaAttack(int x, int y, int range);
 		void MoveAnimated(int initX, int initY, int targetX, int targetY);
+                void AttackAnimated(int initX,int initY, int targetX, int targetY);
                 void SelectMove(int x, int y);
+                void SelectAttack(int x, int y);
                 void HighlightGrid(int x, int y);
                 void clearArea();
                 void clearPlayer();
@@ -36,6 +38,8 @@ class Display {
                 void SetMapPlayer(int x,int y,int id);
                 string GetInfo(int id);
                 int GetMapPlayer(int x, int y);
+                int GetMapArea(int x, int y);
+                bool IsFriend(int x1, int y1, int x2, int y2);
                 
 		
 	private:
@@ -45,6 +49,7 @@ class Display {
                 string Info[9];
                 int pointerX;
                 int pointerY;
+                bool isAttack;
 		
 		// private method
                 void color(string text, string bg);
@@ -60,7 +65,6 @@ class Display {
 		bool IsWater(int x, int y);
 		bool IsLumpur(int x, int y);
 		int IdPlayer(int x, int y);
-		bool IsFriend(int x1, int y1, int x2, int y2);
 		
 };
 

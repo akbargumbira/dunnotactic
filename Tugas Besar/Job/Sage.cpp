@@ -24,10 +24,6 @@ Sage::Sage(const string& RaceName) : Job(RaceName){
 	RangeAttackDefault 	= RangeAttack;	
 	SpecialArray[0] 	= "1.Heal                  30";
 	SpecialArray[1] 	= "2.Circle Heal           50";
-	Death	   			= false;
-	AttackTurn 			= false;
-	Enable   			= false;
-	MoveTurn   			= false;
 }
 
 Sage::Sage(const Sage& k){

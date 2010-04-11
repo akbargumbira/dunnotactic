@@ -23,10 +23,6 @@ Mage::Mage(const string& RaceName) : Job(RaceName){
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
 	SpecialArray[0] 	= "1.Hell Fire             30";
-	AttackTurn 			= false;
-	Enable   			= false;
-	MoveTurn   			= false;
-	Death	   			= false;
 
 }
 Mage::Mage(const Mage& k){

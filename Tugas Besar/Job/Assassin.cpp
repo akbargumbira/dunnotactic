@@ -23,10 +23,6 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	RangeAttackDefault 	= RangeAttack;	
 	AccDefault 			= Acc;
 	SpecialArray[0] 	= "1.Hell Chain            30";
-	AttackTurn 			= false;
-	Enable     			= false;
-	MoveTurn   			= false;
-	Death	   			= false;
 
 }
 

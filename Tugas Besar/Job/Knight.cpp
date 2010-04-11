@@ -23,10 +23,6 @@ Knight::Knight(const string& RaceName) : Job(RaceName){
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;		
 	SpecialArray[0]		= "1.Sword of Fury         30";
-	AttackTurn 			= false;
-	Enable   			= false;
-	MoveTurn   			= false;
-	Death	   			= false;
 
 }
 Knight::Knight(const Knight& k){

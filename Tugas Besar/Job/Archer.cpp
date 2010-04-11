@@ -23,10 +23,6 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
 	SpecialArray[0] 	= "1.Meteor Shower         30";
-	AttackTurn 			= false;
-	Enable   			= false;
-	MoveTurn   			= false;
-	Death	   			= false;
 }
 Archer::Archer(const Archer& k){
 	

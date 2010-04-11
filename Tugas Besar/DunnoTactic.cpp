@@ -26,6 +26,8 @@ Map DunnoTactic::M;
 Display DunnoTactic::D;
 int DunnoTactic::NumberChar;
 int DunnoTactic::PlayerTurn;
+int DunnoTactic::WinPlayer = 0;
+Job* DunnoTactic::CurrenctChar;
 
 DunnoTactic::DunnoTactic() {
 }
@@ -476,6 +478,7 @@ void DunnoTactic::DesructCharacter()
 
 void DunnoTactic::Play()
 {
+    bool error=false;
     SelectCharacter();
     /*for (int i=0;i<P1.size();++i)
     {
@@ -485,9 +488,18 @@ void DunnoTactic::Play()
     {
         cout <<i+1<<". " << P2[i]->GetX() << " " << P2[i]->GetY() << endl;
     }*/
-    D.displayBoxMap();
     while(true)
     {
+        if(!error) {
+            D.clearArea();
+            D.displayGame();
+        }
+        error=false;
+        if (IsGameOver()) {
+            cout << "GameOver" << endl;
+            cout << "Player " << WinPlayer << " Win." << endl;
+             break;
+        }
         cout << "play - Player"<<PlayerTurn<<" > ";
         cin.getline(Command, 99);
         try
@@ -505,6 +517,24 @@ void DunnoTactic::Play()
                     ++PlayerTurn;
                 else
                     --PlayerTurn;
+
+                if(PlayerTurn==1) {
+                    for(int i=0;i<P1.size();++i) {
+                        P1[i]->SetAttackTurn(false);
+                        P1[i]->SetMoveTurn(false);
+                        if (!P1[i]->GetDeath()) {
+                            P1[i]->SetEnable(true);
+                        }
+                    }
+                } else {
+                    for(int i=0;i<P2.size();++i) {
+                        P2[i]->SetAttackTurn(false);
+                        P2[i]->SetMoveTurn(false);
+                        if (!P2[i]->GetDeath()) {
+                            P2[i]->SetEnable(true);
+                        }
+                    }
+                }
             }
             else if (CommandLength==2 && CommandParse[0]=="list")
             {
@@ -530,32 +560,15 @@ void DunnoTactic::Play()
                 if (CommandLength==2 && IsInteger(CommandParse[1]))
                 {
                     int tempID = atoi(CommandParse[1].c_str());
-                    Job* tempJ = GetCharacter(tempID);
-                    if (tempJ!=NULL)
-                    {
-                        Select(tempJ->GetID());
-                    }
-                    else
-                    {
-                        string err = "Tidak ditemukan karakter dengan id "+ToString(tempID)+".";
-                        throw err.c_str();
-                    }
+                    CurrenctChar = GetCharacter(tempID);
+                    Select();
                 }
                 else if (CommandLength==3 && IsInteger(CommandParse[1]) && IsInteger(CommandParse[2]))
                 {
                     int tempX = atoi(CommandParse[1].c_str());
                     int tempY = atoi(CommandParse[2].c_str());;
-                    Job* tempJ = GetCharacter(tempX, tempY);
-                    if (tempJ!=NULL)
-                    {
-                        Select(tempJ->GetID());
-                    }
-                    else
-                    {
-                        string err = "Tidak ditemukan karakter pada posisi ("+ToString(tempX)+","+ToString(tempY)+").";
-                        throw err.c_str();
-                    }
-                    Select(atoi(CommandParse[1].c_str()));
+                    CurrenctChar = GetCharacter(tempX, tempY);
+                    Select();
                 }
                 else
                 {
@@ -591,37 +604,79 @@ void DunnoTactic::Play()
         catch(const char *e)
         {
             cout << e << endl;
+            error=true;
         }
     }
 }
 
-void DunnoTactic::Select(const int &id)
+void DunnoTactic::Select()
 {
-    Job* C = GetCharacter(id);
-    D.HighlightGrid(C->GetX(), C->GetY());
+    D.HighlightGrid(CurrenctChar->GetX(), CurrenctChar->GetY());
+    int ID = CurrenctChar->GetID();
+    if ((ID>=101 && ID<=500 && PlayerTurn==1) || (ID>=501 && ID<=999 && PlayerTurn==2)) {
+        if (!CurrenctChar->GetEnable())
+        {
+            throw "Karakter tidak bisa dipilih. Tunggu giliran berikutnya.";
+        }
+    } else {
+        throw "Salah pilih. Perhatikan Karakter milik player siapa.";
+    }
+
+    int tempX = CurrenctChar->GetX();
+    int tempY = CurrenctChar->GetY();
+
     while (true)
     {
-        cout << "Player" << PlayerTurn << " - " << id << " > ";
+        if (IsGameOver())
+            break;
+        
+        cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " > ";
         cin.getline(Command, 99);
         try
         {
             ParseCommand();
             if (CommandLength==1 && CommandParse[0]=="cancel")
             {
-                break;
+                if (CurrenctChar->GetAttackTurn()) {
+                    throw "Tidak bisa melakukan cancel, karakter telah menyerang.";
+                } else {
+                    D.SetMapPlayer(CurrenctChar->GetX(), CurrenctChar->GetY(), 0);
+                    CurrenctChar->SetXY(tempX, tempY);
+                    D.SetMapPlayer(CurrenctChar->GetX(), CurrenctChar->GetY(), CurrenctChar->GetID());
+                    CurrenctChar->SetMoveTurn(false);
+                    break;
+                }
             }
             if (CommandLength==1 && CommandParse[0]=="wait")
             {
-                cout << "Wait" << endl;
+                CurrenctChar->Wait();
                 break;
             }
             else if(CommandLength==1 && CommandParse[0]=="move")
             {
-                D.SelectMove(C->GetX(), C->GetY());
+                if (CurrenctChar->GetMoveTurn()) {
+                    throw "Sebelumnya karakter telah bergerak.";
+                } else {
+                    D.SelectMove(CurrenctChar->GetX(), CurrenctChar->GetY());
+                    Move();
+                }
+            }
+            else if (CommandLength==1 && CommandParse[0]=="attack")
+            {
+                if (CurrenctChar->GetAttackTurn()) {
+                    throw "Sebelumnya karakter telah melakukan serangan.";
+                } else {
+                    D.SelectAttack(CurrenctChar->GetX(), CurrenctChar->GetY());
+                    Attack();
+                }
             }
             else if (CommandLength==1 && CommandParse[0]=="special")
             {
-                cout << "Special" << endl;
+                if (CurrenctChar->GetAttackTurn()) {
+                    throw "Sebelumnya karakter telah melakukan seranagan.";
+                } else {
+                    
+                }
             }
             else
             {
@@ -630,6 +685,61 @@ void DunnoTactic::Select(const int &id)
         }
         catch(const char* e)
         {
+            cout << e << endl;
+        }
+    }
+}
+
+void DunnoTactic::Move()
+{
+    while (true) {
+        cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " - Move > ";
+        cin.getline(Command, 99);
+        try {
+            ParseCommand();
+            if (CommandLength==1 && CommandParse[0]=="cancel") {
+                break;
+            } else if (CommandLength==2) {
+                if (IsInteger(CommandParse[0]) && IsInteger(CommandParse[1])) {
+                    int tempX,tempY;
+                    tempX = atoi(CommandParse[0].c_str());
+                    tempY = atoi(CommandParse[1].c_str());
+                    CurrenctChar->Move(tempX, tempY);
+                    break;
+                } else {
+                    throw "Masukan harus integer.";
+                }
+            } else {
+                throw "Perintah tidak ditemukan.";
+            }
+        } catch(const char* e) {
+            cout << e << endl;
+        }
+    }
+}
+
+void DunnoTactic::Attack() {
+    while (true) {
+        cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " - Attack > ";
+        cin.getline(Command, 99);
+        try {
+            ParseCommand();
+            if (CommandLength==1 && CommandParse[0]=="cancel") {
+                break;
+            } else if (CommandLength==2) {
+                if (IsInteger(CommandParse[0]) && IsInteger(CommandParse[1])) {
+                    int tempX,tempY;
+                    tempX = atoi(CommandParse[0].c_str());
+                    tempY = atoi(CommandParse[1].c_str());
+                    CurrenctChar->Attack(tempX, tempY);
+                    break;
+                } else {
+                    throw "Masukan harus integer.";
+                }
+            } else {
+                throw "Perintah tidak ditemukan.";
+            }
+        } catch(const char* e) {
             cout << e << endl;
         }
     }
@@ -777,7 +887,7 @@ Job* DunnoTactic::GetCharacter(int X, int Y)
         }
     }
     
-    string err = "Tidak ditemukan karakter pada posisi ("+ToString(X)+","+ToString(Y)+").";
+    string err = "Error GetCharacter. Tidak ditemukan karakter pada posisi ("+ToString(X)+","+ToString(Y)+").";
     throw err.c_str();
 }
 
@@ -804,9 +914,8 @@ Job* DunnoTactic::GetCharacter(int id)
         }
     }
 
-    string temp = "Karakter dengan id "+ToString(id)+" tidak ditemukan.";
+    string temp = "Error GetCharacter. Karakter dengan id "+ToString(id)+" tidak ditemukan.";
     throw temp.c_str();
-
 }
 
 void DunnoTactic::List(int Player, string option)
@@ -830,10 +939,10 @@ void DunnoTactic::List(int Player, string option)
     }
 
     cout << "Race : " << P[0]->GetRaceName()<< endl;
-    cout << "Id \\ Job Name \\ Position" << endl;
+    cout << "Id \\ Job Name \\ Position \\ HP" << endl;
     for(int i=0;i<P.size();++i)
     {
-        cout << P[i]->GetID() << " \\ " << P[i]->GetJobName()<< " \\ (" << P[i]->GetX()<< "," << P[i]->GetY() << ")" << endl;
+        cout << P[i]->GetID() << " \\ " << P[i]->GetJobName()<< " \\ (" << P[i]->GetX()<< "," << P[i]->GetY() << ") \\ " << P[i]->GetHP()<< endl;
     }
 }
 
@@ -843,4 +952,27 @@ void DunnoTactic::ListAll(int Player)
     List(Player, "ally");
     cout << endl <<"Enemy"<<endl;
     List(Player, "enemy");
+}
+
+bool DunnoTactic::IsGameOver() {
+    int count1 = 0, count2=0;
+    for (int i=0;i<NumberChar;++i)
+    {
+        if (P1[i]->GetDeath()) {
+            ++count1;
+        }
+        if (P2[i]->GetDeath()) {
+            ++count2;
+        }
+    }
+
+    if (count1==NumberChar) {
+        WinPlayer=2;
+        return true;
+    } else if(count2==NumberChar) {
+        WinPlayer=1;
+        return true;
+    }
+
+    return false;
 }
