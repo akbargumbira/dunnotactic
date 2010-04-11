@@ -17,7 +17,8 @@ public :
     static const int default_size = 10; //Ukuran dari map default yaitu 10x10
     static const int max_size = 30; //Ukuran dari map max yaitu 30x30
     Map(); //constructor default Map
-    Map (const Map&); //Copy Constructor Map
+    Map (const Map& aMap); //Copy Constructor Map
+    Map& operator=(const Map& aMap);
     virtual ~Map();//Destructor Map
 
     void CreateMap(const int& X, const int& Y); // Method yang digunakan untuk merekonstruksi ulang Map

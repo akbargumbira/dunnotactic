@@ -26,9 +26,36 @@ Map::Map()
     }
 }
 
-Map::Map(const Map& orig)
+//Copy Constructor
+Map::Map(const Map& aMap)
 {
+    SizeX=aMap.SizeX;
+    SizeY=aMap.SizeY;
 
+    for(int i=0;i<SizeX;++i)
+    {
+        for (int j=0;j<SizeY;++j)
+        {
+            Terrain[i][j]=aMap.Terrain[i][j];
+        }
+    }
+}
+
+//Operator Assignment
+Map& Map::operator=(const Map& aMap)
+{
+    SizeX=aMap.SizeX;
+    SizeY=aMap.SizeY;
+
+    for(int i=0;i<SizeX;++i)
+    {
+        for (int j=0;j<SizeY;++j)
+        {
+            Terrain[i][j]=aMap.Terrain[i][j];
+        }
+    }
+
+    return *this;
 }
 
 //Destructor Map :
@@ -40,6 +67,9 @@ Map::~Map()
 
 
 void Map::CreateMap(const int& X, const int& Y)
+//Method yang digunakan untuk merekonstruksi ulang map dengan ukuran masukan dari user
+//I.S   : Tidak terdefinisi
+//F.S   : Map telah terbuat dengan SizeX=X dan SizeY=Y
 {
     if (X<=30 && Y<=30 && X>=5 && Y>=5) //Pengecekan kevalidan ukuran Map
     {
@@ -60,6 +90,9 @@ void Map::CreateMap(const int& X, const int& Y)
 }
 
 void Map::Save(string s)
+// Method yang digunakan untuk menyimpan map
+//I.S   : Tidak terdefinisi
+//F.S   : File eksternal .map tersimpan dengan nama s (masukan user).
 {
     string NameFile,ExtFile,Folder;
     ExtFile=".map";
@@ -82,6 +115,9 @@ void Map::Save(string s)
 
 
 void Map::Load(string sin)
+//Method yang digunakan untuk meload isi dari file .map
+//I.S   : Tidak terdefinisi
+//F.S   : Isi dari map file eksternal terload.
 {
     vector<string> vectortemp; //vector digunakan sebagai tempat penyimpanan sementara dari isi file eksternal
     int j;
@@ -143,6 +179,8 @@ void Map::Load(string sin)
 
 void Map::SetTerrainXY(int X, int Y, string GridContent)
 //Method yang digunakan untuk mengeset isi dari terrain sesuai koordinat masukan
+//I.S   : Tidak terdefinisi
+//F.S   : Koordinat map masukan dari user yang valid terisi suatu terrain tertentu sesuai masukan user
 {
     int GridContentConvert;
     
@@ -180,6 +218,8 @@ void Map::SetTerrainXY(int X, int Y, string GridContent)
 
 void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
 //Method yang digunakan untuk mengeset terrain dari suatu area masukan
+//I.S   : Tidak terdefinisi
+//F.S   : Area Map sesuai masukan user terisi dengan terrain sesuai masukan dari user juga
 {
     int GridContentConvert;
     int XTemp1, XTemp2, YTemp1, YTemp2;
@@ -258,6 +298,8 @@ void Map::SetTerrainArea(int X1, int Y1,int X2,int Y2, string GridContent)
 
 void Map::SetMapRandom()
 //Method yang digunakan untuk mengeset terrain secara random
+//I.S   : tidak terdefinisi
+//F.S   : Map terisi terain secara random, dengan jumlah terrain pohon dan air yaitu floor(0.25*TotalGrid)
 {
     int count_airpohonhalf=0; // k adalah counter banyaknya terrain yang berisi air atau pohon
     int count_airpohonrest=0;
