@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Job.h"
+#include "../DunnoTactic.h";
 
 using namespace std;
 //METHOD
@@ -82,6 +83,10 @@ Job::Job (const string& Race) {
 	for (int w = 0; w<10;w++) {
 		SpecialArray[w] = "none";  
 	}
+        AttackTurn 			= false;
+	Enable   			= true;
+	MoveTurn   			= false;
+	Death	   			= false;
 }
 
 //Destructor virtual  
@@ -190,17 +195,17 @@ void Job::SetDeath(bool &D) {
 }
 
 //Mengeset status  Attack
-void Job::SetAttackTurn(bool &D) {
+void Job::SetAttackTurn(bool D) {
 	AttackTurn = D; 
 }
 
 //Mengeset status  enable	
-void Job::SetEnable(bool &D) {
+void Job::SetEnable(bool D) {
 	Enable = D; 
 }
 
 //Mengeset status Move
-void Job::SetMoveTurn(bool &D) {
+void Job::SetMoveTurn(bool D) {
 	MoveTurn = D; 
 }
 
@@ -233,6 +238,20 @@ void Job::Status() {
 	cout<<"Death      = "<<Death<<endl; 
 }
 
+bool Job::IsFriend(Job& Target) {
+    return (GetPlayer()==Target.GetPlayer());
+}
+
+int Job::GetPlayer() {
+    if (ID>=101 && ID<=500)
+    {
+        return 1;
+    }
+    else
+    {
+        return 2;
+    }
+}
 //posisi
 //Mengeset nilai x, y
 void Job::SetXY (const int &x, const int &y) {
@@ -255,23 +274,33 @@ int Job::GetY (){
 //I.S : Posisi suatu karakter original
 //F.S : Posisi suatu karakter berubah menjadi x, y
 void Job::Move (const int &x, const int &y) {
-	X = x; 
-	Y = y;
-	MoveTurn = true;
+    DunnoTactic::D.setAreaMove(X,Y,RangeMove);
+    int temp = DunnoTactic::D.GetMapArea(x,y);
+    int temp2 = DunnoTactic::D.GetMapPlayer(x,y);
+    if (temp==99 || temp2>100)
+    {
+        string err = "Karakter tidak bisa menempati petak ("+DunnoTactic::ToString(x)+","+DunnoTactic::ToString(y)+").";
+        throw err.c_str();
+    }
+    else
+    {
+        DunnoTactic::D.MoveAnimated(X,Y,x,y);
+        MoveTurn = true;
+    }
 }
 	
 //Fungsi Wait
 //I.S : Fungsi masih dalam keadaan Enable = true
 //F.S : Enable = false	
 void Job::Wait () {
-	Enable = true; 
+	Enable = false;
 }
 	
 //Fungsi menyerang karakter lain
 //I.S : Target.HP masih yang lama
 //F.S : Target.HP telah dikurangi Attack this
-void Job::Attack (Job &Target) {
-	int i = Acc - Target.GetEvade();
+void Job::Attack (Job& Target) {
+        int i = Acc - Target.GetEvade();
 	int z ;
 	//Mencari perbandingan accuracy dengan Evade Target
 	if (i==0) {
@@ -280,23 +309,18 @@ void Job::Attack (Job &Target) {
 	else if ((i>0) && (i<=8)) {
 		z = rand()%6 ;
 	}
-	
 	else if ((i>8) && (i<=16)) {
 		z = rand()%5 ;
 	}
-	
 	else if (i>16) {
 		z = rand()%4;
 	}
-	
 	else if ((i>(-5)) && (i<0)) {
 		z = rand()%8 ;
 	}
-	
 	else if ((i>(-10)) && (i<=(-5))) {
 		z = rand()%9 ;
 	}
-	
 	else if ((i>(-15)) && (i<=(-10))) {
 		z = rand()%10 ;
 	}
@@ -305,14 +329,44 @@ void Job::Attack (Job &Target) {
 	}
 	
 	if (z<=4) {
+            DunnoTactic::D.AttackAnimated(X,Y,Target.GetX(),Target.GetY());
 		int Damage = int(float(AttackPoint) * (0.01 * float(rand()%21 + 90)));
-		Target.ReceiveAttack(Damage);	
+		Target.ReceiveAttack(Damage);
 	}
 	else  {
-		throw "Miss";
+		cout << "Miss" << endl;
 	}
 	
 	AttackTurn = true;
+        MoveTurn =true;
+}
+
+//Fungsi menyerang karakter lain
+void Job::Attack(const int& x, const int& y) {
+    int range = abs(x-X) + abs(y-Y);
+    if (range<=RangeAttack) {
+        if (DunnoTactic::M.GetTerrain(x,y)==4) {
+            DunnoTactic::D.AttackAnimated(X,Y,x,y);
+            DunnoTactic::M.SetTerrainXY(x, y, "rumput");
+            AttackTurn = true;
+            MoveTurn = true;
+        } else {
+            if(DunnoTactic::D.GetMapPlayer(x,y)>0) {
+                Job* J = DunnoTactic::GetCharacter(x,y);
+                if(!IsFriend(*J)) {
+                    Attack(*J);
+                } else {
+                    throw "Tidak bisa menyerang teman.";
+                }
+
+            } else {
+                throw "Tidak ada target.";
+            }
+        }
+    }
+    else {
+        throw "Serangan diluar jangkuan.";
+    }
 }
 
 //Fungsi menerima serangan
@@ -329,6 +383,9 @@ void Job:: ReceiveAttack (const int& Attack) {
 	if (HP<=0){
 		HP = 0;
 		Death = true;
+                Enable = false;
+                DunnoTactic::D.SetMapPlayer(X,Y,0);
+                X=0;Y=0;
 	}
 }
 

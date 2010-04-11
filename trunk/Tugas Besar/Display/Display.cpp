@@ -41,9 +41,9 @@
 // Deklarasi method
         void Display::displayGame() {
             int turn = DunnoTactic::PlayerTurn;
-            displayBoxTurn(turn);
             displayBoxMap();
             displayBoxInfo();
+            displayBoxTurn(turn);
         }
 	void Display::displayBoxTurn(int Turn) {
 		string Blank = "     ";
@@ -373,44 +373,42 @@
             for(i=x-range;i<=x+range;++i) {
                 factor=range-abs(x-i);
                 for(j=y-factor;j<=y+factor;++j) {
-                    if(i>0 && j>0) {
-                        if(PassTerrain(i,j) && PassPlayer(x-1,y-1,i-1,j-1)) {
-                            MapArea[i-1][j-1]=abs(x-i)+abs(y-j);
-                        }
+                    if(i>0 && j>0 && i<=DunnoTactic::M.GetSizeX() && j<=DunnoTactic::M.GetSizeY()) {
+                        MapArea[i-1][j-1]=abs(x-i)+abs(y-j);
                     }
                 }
             }
         }
 
         void Display::MoveAnimated(int initX, int initY, int targetX, int targetY) {
-		int NbStep;
 		int x;
 		int y;
-                Job* Player = DunnoTactic::GetCharacter(x,y);
+                Job* Player = DunnoTactic::GetCharacter(initX,initY);
 		setAreaMove(initX,initY,Player->GetRangeMove());
-		x = targetX-1;
-		y = targetY-1;
-		NbStep = MapArea[x][y];
-		
-		int xSaved[NbStep];
-		int ySaved[NbStep];
-		int i;
-                int j;
+                cout << "wooooo1" << endl;
+                int xSaved[Player->GetRangeMove()];
+                int ySaved[Player->GetRangeMove()];
+                cout << "wooooo2" << endl;
+                int i=1;
 		int Minimum;
+                x = targetX-1;
+		y = targetY-1;
+                xSaved[0]=targetX-1;
+                ySaved[0]=targetY-1;
 
-		for(i=0;i<NbStep;++i) {
+                while(x!=initX-1 || y!=initY-1) {
 			Minimum = MinAround(x,y);
-			if(MapArea[x][y-1]==Minimum) {
+			if(y>0 && MapArea[x][y-1]==Minimum) {
 				xSaved[i]=x;
 				ySaved[i]=y-1;
 				y=y-1;
 			} else
-			if(MapArea[x+1][y]==Minimum) {
+			if(x<DunnoTactic::M.GetSizeX()-1 && MapArea[x+1][y]==Minimum) {
 				xSaved[i]=x+1;
 				ySaved[i]=y;
 				x=x+1;
 			} else
-			if(MapArea[x][y+1]==Minimum) {
+			if(y<DunnoTactic::M.GetSizeY()-1 && MapArea[x][y+1]==Minimum) {
 				xSaved[i]=x;
 				ySaved[i]=y+1;
 				y=y+1;
@@ -419,37 +417,31 @@
 				ySaved[i]=y;
 				x=x-1;
 			}
+                        ++i;
+                        cout << "wooooo3" <<endl;
 		}
                 clearArea();
 		int preX = initX-1;
 		int preY = initY-1;
                 bool nextIsPlayer=false;
                 bool crossPlayer=false;
-                int tempPlayer;
+                int temp1;
+                int temp2=0;
                 pointerX=initX;
                 pointerY=initY;
 		displayGame();
-		for(i=NbStep-2;i>=0;--i) {
+                x = preX;
+                y = preY;
+                --i;
+                --i;
+		while(x!=targetX-1 || y!=targetY-1) {
 			x=xSaved[i];
 			y=ySaved[i];
-                        if(MapPlayer[x][y]!=0) {
-                            nextIsPlayer=true;
-                            tempPlayer=MapPlayer[x][y];
-                        } else {
-                            nextIsPlayer=false;
-                        }
-                        if(crossPlayer) {
-                            MapPlayer[x][y]=MapPlayer[preX][preY];
-                            MapPlayer[preX][preY]=tempPlayer;
-                        } else {
-                            MapPlayer[x][y]=MapPlayer[preX][preY];
-                            MapPlayer[preX][preY]=0;
-                        }
-                        if(nextIsPlayer) {
-                            crossPlayer=true;
-                        } else {
-                            crossPlayer=false;
-                        }
+                        temp1=temp2;
+                        temp2=MapPlayer[x][y];
+                        MapPlayer[x][y]=MapPlayer[preX][preY];
+                        MapPlayer[preX][preY]=temp1;
+                        Player->SetXY(x+1,y+1);
 			preX=x;
 			preY=y;
 			sleep(1);
@@ -457,24 +449,45 @@
                         pointerX=x+1;
                         pointerY=y+1;
 			displayGame();
+                        --i;
 		}
-		sleep(1);
-		system("clear");
-		MapPlayer[targetX-1][targetY-1]=MapPlayer[preX][preY];
-		MapPlayer[preX][preY]=0;
-                pointerX=targetX;
-                pointerY=targetY;
-		displayGame();
 	}
 
+        void Display::AttackAnimated(int initX, int initY, int targetX, int targetY) {
+            isAttack=true;
+            int modeAttack;
+            for(modeAttack=1;modeAttack<=5;++modeAttack) {
+                if(modeAttack%2==1) {
+                    pointerX=initX;
+                    pointerY=initY;
+                } else {
+                    pointerX=targetX;
+                    pointerY=targetY;
+                }
+                displayGame();
+                sleep(1);
+            }
+            isAttack=false;
+        }
+
         void Display::SelectMove(int x, int y) {
+            clearArea();
             Job* Player = DunnoTactic::GetCharacter(x,y);
             setAreaMove(x,y,Player->GetRangeMove());
             pointerX=x;
             pointerY=y;
             system("clear");
             displayGame();
+        }
+
+        void Display::SelectAttack(int x, int y) {
             clearArea();
+            Job* Player = DunnoTactic::GetCharacter(x,y);
+            setAreaAttack(x,y,Player->GetRangeMove());
+            pointerX=x;
+            pointerY=y;
+            system("clear");
+            displayGame();
         }
 
         void Display::HighlightGrid(int x, int y) {
@@ -488,18 +501,18 @@
                     break;
                 }
                 case 2 : {
-                    Info[1]="Tipe      : Pohon.";
-                    Info[2]="Deskripsi : Tinggi menjulang, wooooo.";
-                    break;
-                }
-                case 3 : {
                     Info[1]="Tipe      : Air.";
                     Info[2]="Deskripsi : Dinginnnn, brrrrrrr.";
                     break;
                 }
-                case 4 : {
+                case 3 : {
                     Info[1]="Tipe      : Lumpur.";
                     Info[2]="Deskripsi : Lengket lengket gitu, ihhhh.";
+                    break;
+                }
+                case 4 : {
+                    Info[1]="Tipe      : Pohon.";
+                    Info[2]="Deskripsi : Tinggi menjulang, wooooo.";
                     break;
                 }
                 default : {
@@ -541,9 +554,19 @@
         }
 
         int Display::GetMapPlayer(int x, int y) {
-            return MapPlayer[x-1][y=1];
+            return MapPlayer[x-1][y-1];
         }
 
+        int Display::GetMapArea(int x, int y) {
+            if((x>DunnoTactic::M.GetSizeX() || x<1) || (y>DunnoTactic::M.GetSizeY() || y<1))
+            {
+                throw "Error GetMapArea. X dan Y diluar jangkuan.";
+            }
+            else
+            {
+                return MapArea[x-1][y-1];
+            }
+        }
 
 // method-method yang private
         

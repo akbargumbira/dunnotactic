@@ -75,9 +75,9 @@ protected :
 	void SetID(const int &); //Mengeset ID
 	void SetName(const string&); //Mengeset Name
 	void SetDeath(bool &); //Mengeset status death
-	void SetAttackTurn (bool &); //Mengeset status  Attack
-	void SetEnable (bool &); //Mengeset status  enable
-	void SetMoveTurn (bool &); //Mengeset status Move
+	void SetAttackTurn (bool ); //Mengeset status  Attack
+	void SetEnable (bool ); //Mengeset status  enable
+	void SetMoveTurn (bool ); //Mengeset status Move
 	bool GetDeath(); //Mengembalikan status Death
 	bool GetAttackTurn(); //Mengembalikan status Attack
 	bool GetEnable(); //Mengembalikan status Enable
@@ -85,6 +85,8 @@ protected :
 	  
 	//Method Lain
 	void Status(); //Mengembalikan status Status Semuanya
+        bool IsFriend(Job& Target);
+        int GetPlayer();
       
     //Posisi
 	void SetXY (const int &, const int &); //Mengeset nilai x, y
@@ -101,10 +103,13 @@ protected :
 	//I.S : Fungsi masih dalam keadaan Enable = true
 	//F.S : Enable = false
 	  
-	void Attack (Job &Target);
+	void Attack (Job& Target);
 	//Fungsi menyerang karakter lain
 	//I.S : Target.HP masih yang lama
 	//F.S : Target.HP telah dikurangi Attack this
+
+        void Attack (const int& x, const int& y);
+        //Fungsi menyerang karakter lain
 	  
     void ReceiveAttack (const int& );
 	//Fungsi menerima serangan
