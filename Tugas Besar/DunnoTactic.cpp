@@ -490,6 +490,7 @@ void DunnoTactic::Play()
     {
         cout <<i+1<<". " << P2[i]->GetX() << " " << P2[i]->GetY() << endl;
     }*/
+    D.HighlightGrid(1,1);
     while(true)
     {
         if(!info) {
@@ -586,6 +587,7 @@ void DunnoTactic::Play()
                 {
                     throw "Parameter harus integer.";
                 }
+                D.HighlightGrid(CurrenctChar->GetX(), CurrenctChar->GetY());
             }
             else if (CommandLength==3 && CommandParse[0]=="highlight")
             {

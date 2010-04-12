@@ -40,6 +40,7 @@ class Display {
                 int GetMapPlayer(int x, int y);
                 int GetMapArea(int x, int y);
                 bool IsFriend(int x1, int y1, int x2, int y2);
+                void setPointerXY(int x, int y);
                 
 		
 	private:
