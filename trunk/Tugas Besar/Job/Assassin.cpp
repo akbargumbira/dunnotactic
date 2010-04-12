@@ -59,7 +59,7 @@ void Assassin::SpecialArea (const int & SPC){
 void Assassin::Special (const int & SPC, Job &Target) {
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>40) {
+			if (SP>=40) {
 				AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
 				//RangeAttack += 2;
 				Acc =int (Acc*2.3);
