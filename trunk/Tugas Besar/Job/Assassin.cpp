@@ -22,7 +22,7 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
 	AccDefault 			= Acc;
-	SpecialArray[0] 	= "1.Hell Chain            30";
+	SpecialArray[0] 	= "1.Hell Chain            30 \n  Description : Menyerang lawan dengan\n                Attack point menjadi 2,3 kali lipat";
 
 }
 
@@ -62,7 +62,7 @@ void Assassin::Special (const int & SPC, Job &Target) {
 			if (SP>=40) {
 				AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
 				//RangeAttack += 2;
-				Acc =int (Acc*2.3);
+				Acc =int (float(Acc)*2.3);
 				Attack(Target);
 				AttackPoint = AttackPointDefault;
 				RangeAttack = RangeAttackDefault;

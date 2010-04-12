@@ -22,7 +22,7 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
-	SpecialArray[0] 	= "1.Meteor Shower         30";
+	SpecialArray[0] 	= "1.Meteor Shower         30 \n  Description : menyerang lawan dengan kekuatan 1.4 kali lipat\n                namun dengan jarak 5(berkurang 1)";
 }
 Archer::Archer(const Archer& k){
 	
@@ -56,10 +56,10 @@ void Archer::SpecialArea (const int & SPC){
 void Archer::Special (const int & SPC, Job &Target) {
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>25) {
+			if (SP>=25) {
 				AttackPoint = int(AttackPoint*1.4*SpecialBonus) ;
-				Acc *2.2;
-				//RangeAttack	+= 1;
+				Acc = int(float(Acc)*2.2);
+				//RangeAttack	-= 1;
 				Attack(Target);
 				AttackPoint = AttackPointDefault;
 				RangeAttack = RangeAttackDefault;
