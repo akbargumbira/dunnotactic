@@ -14,11 +14,11 @@ Mage::Mage(const string& RaceName) : Job(RaceName){
 	Acc	       			= int(Acc*1.2);
 	Evade      			= int(Evade*1);
 	RangeMove  			+= 0;
-	RangeAttack			+= 0;
+	RangeAttack			+= 4;
 	HP         			= int(HP*0.8);
-	SP         			= int(SP*1.6);
+	SPDefault    			= int(SPDefault*1.6);
 	HPDefault  			= HP;
-	SPDefault  			= SP;
+	SP        			= 0;
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	

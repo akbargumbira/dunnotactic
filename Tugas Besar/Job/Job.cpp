@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Job.h"
-#include "../DunnoTactic.h";
+#include "../DunnoTactic.h"
 
 using namespace std;
 //METHOD
@@ -24,7 +24,7 @@ Job::Job (const string& Race) {
 		RangeAttack    =   1;
       
 		HP             = 1000;
-		SP             =  140;
+		SPDefault      =  140;
 		X              =    0;
 		Y              =    0; 
 	}
@@ -41,7 +41,7 @@ Job::Job (const string& Race) {
 		RangeAttack    =   1;
       
 		HP             =  800;
-		SP             =  120;
+		SPDefault      =  120;
 		X              =    0;
 		Y              =    0; 
 	}
@@ -58,7 +58,7 @@ Job::Job (const string& Race) {
 		RangeAttack    =   1;
       
 		HP             =  600;
-		SP             =  200;
+		SPDefault      =  200;
 		X              =    0;
 		Y              =    0; 
 	}
@@ -75,7 +75,7 @@ Job::Job (const string& Race) {
 		RangeAttack    =   1;
       
 		HP             = 1400;
-		SP             =   80;
+		SPDefault      =   80;
 		X              =    0;
 		Y              =    0; 
 	}
@@ -170,13 +170,28 @@ int Job::GetSPDefault() {
 	return SPDefault; 
 }
 
+void Job::SetSP(const int &sp) {
+    SP = sp;
+    if (SP>SPDefault) {
+        SP = SPDefault;
+    }
+}
+
+void Job::SetHP(const int &hp) {
+    HP = hp;
+    if (HP>HPDefault) {
+        HP = HPDefault;
+    }
+}
+
 //mengembalikan isi list SpesialArray
-void Job::GetSpecialArray (){
+int Job::ShowSpecialArray (){
 	int i = 0;
 	while (SpecialArray[i] != "none") {
 		cout<<SpecialArray[i]<<endl;
 		i++; 
 	}
+        return i;
 }
 
 //Mengeset ID
@@ -327,15 +342,21 @@ void Job::Attack (Job& Target) {
 	else if (i<(-15)) {
 		z = rand()%11 ;
 	}
-	
+        DunnoTactic::D.SetInfo("PLAYER ATTACK",0);
+        DunnoTactic::D.SetInfo("",1);
+	DunnoTactic::D.AttackAnimated(X,Y,Target.GetX(),Target.GetY());
 	if (z<=4) {
-            DunnoTactic::D.AttackAnimated(X,Y,Target.GetX(),Target.GetY());
 		int Damage = int(float(AttackPoint) * (0.01 * float(rand()%21 + 90)));
 		Target.ReceiveAttack(Damage);
+                DunnoTactic::D.SetInfo("PLAYER DEAL DAMAGE "+DunnoTactic::ToString(Damage-Target.GetDefensePoint()),0);
+                DunnoTactic::D.SetInfo("PLAYER HP NOW "+DunnoTactic::ToString(Target.GetHP()),1);
+                DunnoTactic::D.SetInfo("",2);
 	}
 	else  {
-		cout << "Miss" << endl;
+            DunnoTactic::D.SetInfo("PLAYER MISS !!!!!",0);
+            DunnoTactic::D.SetInfo("",1);
 	}
+        DunnoTactic::D.displayGame();
 	
 	AttackTurn = true;
         MoveTurn =true;
@@ -393,7 +414,9 @@ void Job:: ReceiveAttack (const int& Attack) {
 //I.S : HP masih yang lama
 //F.S : HP telah Bertambah sesuai dengan spesial
 void Job:: ReceiveHP (const int& Attack) {
-    HP = HP + (Attack); 
+    HP = HP + (Attack);
+    if (HP > HPDefault)
+        HP = HPDefault;
 }  
 	
 //Fungsi serangan tambahan
@@ -406,5 +429,24 @@ void Job::SpecialArea (const int & SPC){
 //I.S : ~~
 //F.S : Target.HP berkurang
 void Job::Special (const int & SPC, Job &Target) {
+}
+
+void Job::Special (const int & x, const int & y, const int & SPC) {
+    int range = abs(x-X) + abs(y-Y);
+    if (range<=RangeAttack) {
+        if(DunnoTactic::D.GetMapPlayer(x,y)>0) {
+            Job* J = DunnoTactic::GetCharacter(x,y);
+            if(!IsFriend(*J) || JobName=="Sage") {
+                Special(SPC, *J);
+            } else {
+                throw "Tidak bisa menyerang teman.";
+            }
+        } else {
+            throw "Tidak ada target.";
+        }
+    }
+    else {
+        throw "Serangan diluar jangkuan.";
+    }
 }
 

@@ -16,10 +16,10 @@ Knight::Knight(const string& RaceName) : Job(RaceName){
 	RangeMove  			-= 1;
 	RangeAttack			+= 0;
 	HP         			= int(HP*1.6);
-	SP         			= int(SP*0.8);
+	SPDefault      			= int(SPDefault*0.8);
 	HPDefault  			= HP;
-	SPDefault  			= SP;
-	AccDefault 			= Acc;
+	SP        			= 0;
+        AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;		
 	SpecialArray[0]		= "1.Sword of Fury         30";
@@ -57,7 +57,7 @@ void Knight::SpecialArea (const int & SPC ){
 void Knight::Special (const int & SPC, Job &Target) {
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>30) {
+			if (SP>=30) {
 				AttackPoint = int(AttackPoint*2*SpecialBonus) ; 
 				Acc *2.6;
 				Attack(Target);

@@ -70,8 +70,10 @@ protected :
     int GetSP(); //mengembalikan nilai SP
 	int GetHPDefault(); //mengembalikan nilai HPDefault
 	int GetSPDefault();	//mengembalikan nilai SPDefault
+        void SetSP(const int &sp);
+        void SetHP(const int &hp);
 	
-	void GetSpecialArray(); //mengembalikan isi list SpesialArray
+	int ShowSpecialArray(); //mengembalikan isi list SpesialArray
 	void SetID(const int &); //Mengeset ID
 	void SetName(const string&); //Mengeset Name
 	void SetDeath(bool &); //Mengeset status death
@@ -130,6 +132,8 @@ protected :
 	//Fungsi serangan tambahan
 	//I.S : ~~
 	//F.S : Target.HP berkurang
+
+        void Special (const int & x, const int & y, const int & SPC);
 };      
       
 #endif

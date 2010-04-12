@@ -16,9 +16,9 @@ Assassin::Assassin(const string& RaceName) : Job(RaceName){
 	RangeMove  			+= 3;
 	RangeAttack			+= 4;
 	HP         			= int(HP*1);
-	SP         			= int(SP*1);
+	SPDefault         		= int(SPDefault*1);
 	HPDefault  			= HP;
-	SPDefault  			= SP;
+	SP                 		= 0;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
 	AccDefault 			= Acc;
@@ -61,7 +61,7 @@ void Assassin::Special (const int & SPC, Job &Target) {
 		if (SPC == 1) {
 			if (SP>40) {
 				AttackPoint = int(AttackPoint*0.8*SpecialBonus) ; 
-				RangeAttack += 2;
+				//RangeAttack += 2;
 				Acc =int (Acc*2.3);
 				Attack(Target);
 				AttackPoint = AttackPointDefault;

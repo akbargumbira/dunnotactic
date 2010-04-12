@@ -8,7 +8,6 @@
 #include "Sage.h"
 #include "Warrior.h"
 #include "Assassin.h"
-#include <conio.h>
 
 using namespace std;
 string race;
@@ -178,7 +177,7 @@ while (c!=65) {
 	y = 0;
 	DisplayCommand(x, y, RS);
 	cout<<RS;
-	c=getch();
+	//c=getch();
 	if(c==115)
 	{	
 		RS = RS -1;
@@ -199,7 +198,7 @@ while (c!=65) {
 		y = 1;	
 		DisplayCommand(x,y,RS);
 		while (c!=27) {
-		c=getch();
+		//c=getch();
 		if (c ==120)  {			
 			y = y +1;
 			DisplayCommand(x,y,RS);}
@@ -312,14 +311,14 @@ while (c!=65) {
 		if (x==3){
 		i = Player.begin()+2;		
 		obj_job2  = *i; }
-		obj_job2->GetSpecialArray();
+		obj_job2->ShowSpecialArray();
 		cout<<"-----------"<<endl;
 		cout<<"Choose Special = "<<endl;
 		cin>>special;
 		cout<<endl;
 		c=12;
 		while (c!=27) {
-		c=getch();
+		//c=getch();
 		if (c ==120)  {			
 			y = y +1;
 			DisplayCommand(x,y,RS);

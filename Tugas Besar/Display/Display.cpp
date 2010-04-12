@@ -122,9 +122,9 @@
                     cout << "+====+";
                     for(i=1;i<=P;++i) {
                         if((pointerX==i && pointerY==j) || (pointerX==i && pointerY==j-1)) {
-                            color("white","black");
-                            cout << "$$$$$";
-                            color("default","default");
+                            for(int n=1;n<=5;++n) {
+                                printCursor(0);
+                            }
                             cout << "+";
                         } else {
                             cout << "=====+";
@@ -135,30 +135,30 @@
                     // menampilkan garis vertikal 1 (baris 1/atas kotak terrain)
                     cout << "|    ";
                      if(pointerX==1 && pointerY==j) {
-                        printCursor();
+                        printCursor(0);
                      } else {
                          cout << "|";
                      }
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","blue");
-                            printPlayer(i,j,1);
-                            color("default","default");
+                            if(pointerX==i && pointerY==j) {
+                                printPlayer(i,j,1,true);
+                            } else {
+                                printPlayer(i,j,1,false);
+                            }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
                         } else {
                             if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                color("yellow","green");
-                                cout << "     ";
-                                color("default","default");
+                                printTerrain(i,j,true);
                             } else {
-                                cout << "     ";
+                                printTerrain(i,j,false);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
@@ -172,7 +172,7 @@
                         cout << "| " << j;
                         if(pointerX==1 && pointerY==j) {
                             cout << "  ";
-                            printCursor();
+                            printCursor(0);
                         } else {
                             cout << "  |";
                         }
@@ -182,7 +182,7 @@
                         cout << "| " << j;
                         if(pointerX==1 && pointerY==j) {
                             cout << " ";
-                            printCursor();
+                            printCursor(0);
                         } else {
                             cout << " |";
                         }
@@ -190,25 +190,25 @@
                     // menampilkan kotak terrain tengah
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","blue");
-                            printPlayer(i,j,2);
-                            color("default","default");
+                            if(pointerX==i && pointerY==j) {
+                                printPlayer(i,j,2,true);
+                            } else {
+                                printPlayer(i,j,2,false);
+                            }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
                         }
                         else {
                             if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                color("yellow","green");
-                                printTerrain(i,j);
-                                color("default","default");
+                                printTerrain(i,j,true);
                             } else {
-                                printTerrain(i,j);
+                                printTerrain(i,j,false);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
@@ -219,30 +219,30 @@
                     // menampilkan garis vertikal 3 (baris 3/bawah kotak terrain)
                     cout << "|    ";
                      if(pointerX==1 && pointerY==j) {
-                         printCursor();
+                         printCursor(0);
                      } else {
                          cout << "|";
                      }
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
-                            color("yellow","blue");
-                            printPlayer(i,j,3);
-                            color("default","default");
+                            if(pointerX==i && pointerY==j) {
+                                printPlayer(i,j,3,true);
+                            } else {
+                                printPlayer(i,j,3,false);
+                            }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
                         } else {
                             if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                color("yellow","green");
-                                cout << "     ";
-                                color("default","default");
+                                printTerrain(i,j,true);
                             } else {
-                                cout << "     ";
+                                printTerrain(i,j,false);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
-                                printCursor();
+                                printCursor(0);
                             } else {
                                 cout <<  "|";
                             }
@@ -254,9 +254,16 @@
 		// menampilkan garis horizontal terbawah (penutup)
 		cout << "+====+";
 		for(i=1;i<=P;++i) {
-			cout << "=====+";
+			if((pointerX==i && pointerY==j) || (pointerX==i && pointerY==j-1)) {
+                            for(int n=1;n<=5;++n) {
+                                printCursor(0);
+                            }
+                            cout << "+";
+                        } else {
+                            cout << "=====+";
+                        }
 		}
-                cout << endl;
+                cout << endl << endl;
 	}
 
 // Display box Info
@@ -271,8 +278,14 @@
             for(i=0;i<lengthBox;++i) {
                     cout << "/";
             }
+            cout << endl << Blank << "/";
+            for(i=0;i<lengthBox-2;++i) {
+                    cout << " ";
+            }
+            cout << "/";
 
-            for(j=0;j<9;++j) {
+            j=0;
+            while(j < 9 && Info[j].length()!=0) {
                     cout << endl;
                     cout << Blank << "/";
                     if(Info[j]!="") {
@@ -285,9 +298,9 @@
                             cout << " ";
                     }
                     cout << "/";
+                    ++j;
             }
-            cout << endl;
-            cout << Blank;
+            cout << endl << Blank;
             for(i=1;i<=lengthBox;++i) {
                     cout << "/";
             }
@@ -305,21 +318,6 @@
             int j;
             int looping;
 
-            // inisialisasi asumsi jarak
-//            for(i=initX-range;i<=initX+range;++i) {
-//                factor=range-abs(initX-i);
-//                for(j=initY-factor;j<=initY+factor;++j) {
-//                    if(i>0 && j>0 && i<=DunnoTactic::M.GetSizeX() && j<=DunnoTactic::M.GetSizeY()) {
-//                        if(PassTerrain(i,j) && PassPlayer(initX-1,initY-1,i-1,j-1)) {
-//                            MapArea[i-1][j-1]=abs(initX-i)+abs(initY-j);
-//                        } else {
-//                            MapArea[i-1][j-1]=99;
-//                        }
-//                    }
-//                }
-//            }
-
-            // penghapusan daerah-daerah yang melebihi dari range move
             if(IsLumpur(initX,initY)) {
                     MapArea[initX-1][initY-1]=1;
             } else {
@@ -385,10 +383,8 @@
 		int y;
                 Job* Player = DunnoTactic::GetCharacter(initX,initY);
 		setAreaMove(initX,initY,Player->GetRangeMove());
-                cout << "wooooo1" << endl;
                 int xSaved[Player->GetRangeMove()];
                 int ySaved[Player->GetRangeMove()];
-                cout << "wooooo2" << endl;
                 int i=1;
 		int Minimum;
                 x = targetX-1;
@@ -423,8 +419,6 @@
                 clearArea();
 		int preX = initX-1;
 		int preY = initY-1;
-                bool nextIsPlayer=false;
-                bool crossPlayer=false;
                 int temp1;
                 int temp2=0;
                 pointerX=initX;
@@ -456,6 +450,8 @@
         void Display::AttackAnimated(int initX, int initY, int targetX, int targetY) {
             isAttack=true;
             int modeAttack;
+            clearArea();
+            Job * Player = DunnoTactic::GetCharacter(initX,initY);
             for(modeAttack=1;modeAttack<=5;++modeAttack) {
                 if(modeAttack%2==1) {
                     pointerX=initX;
@@ -464,6 +460,8 @@
                     pointerX=targetX;
                     pointerY=targetY;
                 }
+                shoutAttackRace(Player->GetRaceName(),modeAttack);
+                shoutAttackJob(Player->GetJobName(),modeAttack);
                 displayGame();
                 sleep(1);
             }
@@ -483,7 +481,7 @@
         void Display::SelectAttack(int x, int y) {
             clearArea();
             Job* Player = DunnoTactic::GetCharacter(x,y);
-            setAreaAttack(x,y,Player->GetRangeMove());
+            setAreaAttack(x,y,Player->GetRangeAttack());
             pointerX=x;
             pointerY=y;
             system("clear");
@@ -493,32 +491,50 @@
         void Display::HighlightGrid(int x, int y) {
             pointerX=x;
             pointerY=y;
-            Info[0]="Terrain :";
             switch(DunnoTactic::M.GetTerrain(x,y)) {
                 case 1 : {
-                    Info[1]="Tipe      : Rumput.";
-                    Info[2]="Deskripsi : Ijooooo..segerrrrr.";
+                    Info[0]="Tipe Terrain : Rumput.";
+                    Info[1]="Deskripsi    : Ijooooo..segerrrrr.";
                     break;
                 }
                 case 2 : {
-                    Info[1]="Tipe      : Air.";
-                    Info[2]="Deskripsi : Dinginnnn, brrrrrrr.";
+                    Info[0]="Tipe Terrain : Air.";
+                    Info[1]="Deskripsi    : Dinginnnn, brrrrrrr.";
                     break;
                 }
                 case 3 : {
-                    Info[1]="Tipe      : Lumpur.";
-                    Info[2]="Deskripsi : Lengket lengket gitu, ihhhh.";
+                    Info[0]="Tipe Terrain : Lumpur.";
+                    Info[1]="Deskripsi    : Lengket lengket gitu, ihhhh.";
                     break;
                 }
                 case 4 : {
-                    Info[1]="Tipe      : Pohon.";
-                    Info[2]="Deskripsi : Tinggi menjulang, wooooo.";
+                    Info[0]="Tipe Terrain : Pohon.";
+                    Info[1]="Deskripsi    : Tinggi menjulang, wooooo.";
                     break;
                 }
                 default : {
-                    Info[1]="Tipe      : Unknown";
-                    Info[2]="Deskripsi : Unknown";
+                    Info[0]="Tipe Terrain : Unknown";
+                    Info[1]="Deskripsi    : Unknown";
                     break;
+                }
+            }
+            Info[2]=" ";
+            cout << MapPlayer[x-1][y-1] << endl;
+            if(MapPlayer[x-1][y-1]!=0) {
+                if(IdPlayer(x-1,y-1)==1) {
+                    Info[3]="Player - 1";
+                } else {
+                    Info[3]="Player - 2";
+                }
+                Job* Player = DunnoTactic::GetCharacter(x,y);
+                Info[4]= Player->GetRaceName() + "-" + Player->GetJobName();
+                Info[5]="HP           : "+DunnoTactic::ToString(Player->GetHP());
+                Info[6]="SP           : "+DunnoTactic::ToString(Player->GetSP());
+                Info[7]="Attack       : "+DunnoTactic::ToString(Player->GetAttackPoint());
+                Info[8]="Defense      : "+DunnoTactic::ToString(Player->GetDefensePoint());
+            } else {
+                for(int i=3;i<=8;++i) {
+                    Info[i]="";
                 }
             }
             displayGame();
@@ -581,21 +597,61 @@
                 cout << "\033[0;33m";
             } else if (text=="blue") {
                 cout << "\033[0;34m";
-            } else if(text=="white") {
+            } else if(text=="purple") {
+                cout << "\033[0;35m";
+            } else if(text=="cyan") {
+                cout << "\033[0;36m";
+            } else if(text=="light gray") {
                 cout << "\033[0;37m";
+            } else if(text=="dark gray") {
+                cout << "\033[1;30m";
+            } else if(text=="bold red") {
+                cout << "\033[1;31m";
+            } else if (text=="bold green") {
+                cout << "\033[1;32m";
+            } else if (text=="bold yellow") {
+                cout << "\033[1;33m";
+            } else if (text=="bold blue") {
+                cout << "\033[1;34m";
+            } else if(text=="bold purple") {
+                cout << "\033[1;35m";
+            } else if(text=="bold cyan") {
+                cout << "\033[1;36m";
+            } else if(text=="white") {
+                cout << "\033[1;37m";
             } else {
                 cout << "\033[0m";
             }
             if(bg=="black") {
-                cout << "\033[1;40m";
+                cout << "\033[0;40m";
             } else if(bg=="red") {
-                cout << "\033[1;41m";
+                cout << "\033[0;41m";
             } else if (bg=="green") {
-                cout << "\033[1;42m";
+                cout << "\033[0;42m";
             } else if (bg=="yellow") {
-                cout << "\033[1;43m";
+                cout << "\033[0;43m";
             } else if (bg=="blue") {
+                cout << "\033[0;44m";
+            } else if(bg=="purple") {
+                cout << "\033[0;45m";
+            } else if(bg=="cyan") {
+                cout << "\033[0;46m";
+            } else if(bg=="light gray") {
+                cout << "\033[0;47m";
+            } else if(bg=="dark gray") {
+                cout << "\033[1;40m";
+            } else if(bg=="bold red") {
+                cout << "\033[1;41m";
+            } else if (bg=="bold green") {
+                cout << "\033[1;42m";
+            } else if (bg=="bold yellow") {
+                cout << "\033[1;43m";
+            } else if (bg=="bold blue") {
                 cout << "\033[1;44m";
+            } else if(bg=="bold purple") {
+                cout << "\033[1;45m";
+            } else if(bg=="bold cyan") {
+                cout << "\033[1;46m";
             } else if(bg=="white") {
                 cout << "\033[1;47m";
             } else {
@@ -603,10 +659,18 @@
             }
         }
 
-        void Display::printCursor() {
-            color("white","black");
-            cout << "$";
-            color("default","default");
+        void Display::printCursor(int status) {
+            switch (status) {
+                case 0 : {
+                    color("light gray","cyan");
+                    cout << "$";
+                    color("default","default");
+                    break;
+                }
+                default : {
+                    
+                }
+            }
         }
         
         bool Display::PassTerrain(int x, int y) {
@@ -632,22 +696,55 @@
 		return Pass;
 	}
 
-        void Display::printTerrain(int x, int y) {
+        void Display::printTerrain(int x, int y, int status) {
+            switch(status) {
+                case 0 : {
+                    switch(DunnoTactic::M.GetTerrain(x,y)) {
+                        case 1: {
+                            color("light gray","green");
+                            break;
+                        }
+                        case 2: {
+                            color("cyan","blue");
+                            break;
+                        }
+                        case 3: {
+                            color("bold yellow","yellow");
+                            break;
+                        }
+                        case 4: {
+                            color("bold green","green");
+                            break;
+                        }
+                        default : {
+                            color("black","black");
+                        }
+                    }
+                    break;
+                }
+                case 1 : {
+                    color("light gray","cyan");
+                    break;
+                }
+                default : {
+                    color("black","black");
+                }
+            }
             switch(DunnoTactic::M.GetTerrain(x,y)) {
                 case 1: {
-                        cout << "     ";
-                        break;
+                    cout << "     ";
+                    break;
                 }
                 case 2: {
-                        cout << " ~~~ ";
+                    cout << " ~~~ ";
                         break;
                 }
                 case 3: {
-                        cout << " ... ";
+                    cout << " ... ";
                         break;
                 }
                 case 4: {
-                        cout << " ??? ";
+                    cout << " ??? ";
                         break;
                 }
                 default: {
@@ -655,9 +752,27 @@
                         break;
                 }
             }
+            color("default","default");
         }
 
-        void Display::printPlayer(int x, int y, int line) {
+        void Display::printPlayer(int x, int y, int line, int status) {
+            switch(status) {
+                case 0 : {
+                    if(IdPlayer(x-1,y-1)==1) {
+                        color("yellow","bold red");
+                    } else {
+                        color("white","dark gray");
+                    }
+                    break;
+                }
+                case 1 : {
+                    color("light gray","cyan");
+                    break;
+                }
+                default : {
+                    
+                }
+            }
             Job* Player = DunnoTactic::GetCharacter(x,y);
             switch(line) {
                 case 1 : {
@@ -707,6 +822,7 @@
                     
                 }
             }
+            color("default","default");
         }
 
         void Display::setDistanceMove(int initx, int inity, int x, int y, int range) {
@@ -723,6 +839,157 @@
             } else {
                 MapArea[x][y]=99;
             }
+        }
+
+        void Display::shoutAttackRace(string raceName, int mode) {
+            switch(mode) {
+                case 1 : {
+                    if(raceName=="Human") {
+                        Info[0]="ohh dewa human";
+                        Info[1]=" ";
+                    } else if(raceName=="Elf") {
+                        Info[0]="ohh dewa elf";
+                        Info[1]=" ";
+                    } else if(raceName=="Fairy") {
+                        Info[0]="ohh dewa fairy";
+                        Info[1]=" ";
+                    } else if(raceName=="Orc") {
+                        Info[0]="ohh dewa orc";
+                        Info[1]=" ";
+                    } else {
+                        Info[0]="ohh dewa xxx";
+                        Info[1]=" ";
+                    }
+                    break;
+                }
+                case 2 : {
+                    Info[0]="Berilah hukumanmu kepada mereka";
+                    break;
+                }
+                case 3 : {
+                    if(raceName=="Human") {
+                        Info[0]="Berilah guardianmu ini kekuatanmu";
+                        Info[1]=" ";
+                    } else if(raceName=="Elf") {
+                        Info[0]="Berilah guardianmu ini kebijaksanaanmu";
+                        Info[1]=" ";
+                    } else if(raceName=="Fairy") {
+                        Info[0]="Berilah guardianmu ini kecerdasanmu";
+                        Info[1]=" ";
+                    } else if(raceName=="Orc") {
+                        Info[0]="Berilah guardianmu ini kesabaranmu";
+                        Info[1]=" ";
+                    } else {
+                        Info[0]="Berilah guardianmu ini xxx";
+                        Info[1]=" ";
+                    }
+                    break;
+                }
+                case 4 : {
+                    Info[0]="Wahai musuhku..";
+                    Info[1]=" ";
+                    break;
+                }
+                case 5 : {
+                    Info[0]="Rasakanlah kekuatan ini";
+                    Info[1]=" ";
+                    break;
+                }
+            }
+        }
+
+        void Display::shoutAttackJob(string jobName, int mode) {
+            switch(mode) {
+                case 1 : {
+                    if(jobName=="Archer") {
+                        Info[2]="Dengan panahku ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Assassin") {
+                        Info[2]="Dengan pisau beracunku ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Knight") {
+                        Info[2]="Dengan tombakku ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Mage") {
+                        Info[2]="Dengan tongkatku ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Sage") {
+                        Info[2]="Dengan gadaku ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Warrior") {
+                        Info[2]="Dengan panahku ini..";
+                        Info[3]=" ";
+                    } else {
+                        Info[2]="Dengan xxxku ini..";
+                        Info[3]=" ";
+                    }
+                    break;
+                }
+                case 2 : {
+                    Info[2]="Yang memberontak dari perintahmu";
+                    Info[3]=" ";
+                    break;
+                }
+                case 3 : {
+                    Info[2]="untuk melindungi tanah ini";
+                    Info[3]=" ";
+                    break;
+                }
+                case 4 : {
+                    if(jobName=="Archer") {
+                        Info[2]="Rasakan panahku menembus dadamu..";
+                        Info[3]=" ";
+                    } else if(jobName=="Assassin") {
+                        Info[2]="Rasakan perihnya racun kematian ini..";
+                        Info[3]=" ";
+                    } else if(jobName=="Knight") {
+                        Info[2]="Rasakan ujung tombak kematianku..";
+                        Info[3]=" ";
+                    } else if(jobName=="Mage") {
+                        Info[2]="Rasakan tongkatku menghentikan nadimu";
+                        Info[3]=" ";
+                    } else if(jobName=="Sage") {
+                        Info[2]="Rasakan gada suci membelah jiwa kotormu..";
+                        Info[3]=" ";
+                    } else if(jobName=="Warrior") {
+                        Info[2]="Rasakan pedangku menyayat jiwamu..";
+                        Info[3]=" ";
+                    } else {
+                        Info[2]="Rasakan xxx";
+                        Info[3]=" ";
+                    }
+                    break;
+                }
+                case 5 : {
+                    if(jobName=="Archer") {
+                        Info[2]="HUJAN SERIBU PANAH!!";
+                        Info[3]=" ";
+                    } else if(jobName=="Assassin") {
+                        Info[2]="SAYATAN RACUN KEMATIAN";
+                        Info[3]=" ";
+                    } else if(jobName=="Knight") {
+                        Info[2]="DENTUMAN TOMBAK SAKTI";
+                        Info[3]=" ";
+                    } else if(jobName=="Mage") {
+                        Info[2]="ROH PEMAKAN JIWA!!";
+                        Info[3]=" ";
+                    } else if(jobName=="Sage") {
+                        Info[2]="SINAR GADA SUCI..";
+                        Info[3]=" ";
+                    } else if(jobName=="Warrior") {
+                        Info[2]="AMARAH PEDANG IBLIS..";
+                        Info[3]=" ";
+                    } else {
+                        Info[2]="CIATTTT";
+                        Info[3]=" ";
+                    }
+                    break;
+                }
+                default : {
+                    break;
+                }
+            }
+            Info[4]="";
         }
         
 	int Display::Min2(int a, int b) {
