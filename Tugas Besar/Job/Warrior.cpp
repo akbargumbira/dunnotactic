@@ -22,7 +22,7 @@ Warrior::Warrior(const string& RaceName) : Job(RaceName){
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
-	SpecialArray[0] 	= "1.Slash                 30";
+	SpecialArray[0] 	= "1.Slash                 30 \n  Description : Menyerang lawan dengan kekuatan 2 kali lipat";
 
 }
 Warrior::Warrior(const Warrior& k){
@@ -57,9 +57,9 @@ void Warrior::SpecialArea (const int & SPC) {
 void Warrior::Special (const int & SPC, Job &Target) {
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>25) {
+			if (SP>=25) {
 				AttackPoint = int(AttackPoint*1.8*SpecialBonus) ; 
-				Acc *2.1;
+				Acc = int(float(Acc) *2.1);
 				Attack(Target);
 				AttackPoint = AttackPointDefault;
 				Acc = AccDefault;

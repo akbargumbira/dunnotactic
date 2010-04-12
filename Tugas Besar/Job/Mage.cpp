@@ -22,7 +22,7 @@ Mage::Mage(const string& RaceName) : Job(RaceName){
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
-	SpecialArray[0] 	= "1.Hell Fire             30";
+	SpecialArray[0] 	= "1.Hell Fire             30 \n  Description : Magic untuk menyerang lawan dengan range 4 kotak dari karakter\n                Attack yang diberikan menjadi 2,2 kali lipat";
 
 }
 Mage::Mage(const Mage& k){
@@ -56,7 +56,7 @@ void Mage::SpecialArea (const int & SPC){
 void Mage::Special (const int & SPC, Job &Target) {
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>30) {
+			if (SP>=30) {
 				AttackPoint = int(AttackPoint*2.2*SpecialBonus) ; 
 				Acc *= 3;
 				Attack(Target);

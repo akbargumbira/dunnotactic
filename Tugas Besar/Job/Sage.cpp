@@ -25,8 +25,8 @@ Sage::Sage(const string& RaceName) : Job(RaceName){
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
-	SpecialArray[0] 	= "1.Heal                  30";
-	SpecialArray[1] 	= "2.Circle Heal           50";
+	SpecialArray[0] 	= "1.Heal                  30 \n  Description : Menambah HP teman sebanyak 300";
+	SpecialArray[1] 	= "2.Circle Heal           50 \n  Description : Menambah HP teman dalam area sebanyak 300";
 }
 
 Sage::Sage(const Sage& k){
@@ -104,7 +104,7 @@ void Sage::SpecialArea (const int & SPC){
 void Sage::Special (const int & SPC, Job &Target){
 	if (AttackTurn == false) {
 		if (SPC == 1) {
-			if (SP>20) {
+			if (SP>=20) {
                             Target.ReceiveHP(int (300*SpecialBonus));
                             SP	-= 20;
                             AttackTurn = true;

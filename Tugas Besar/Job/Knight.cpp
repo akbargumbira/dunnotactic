@@ -22,7 +22,7 @@ Knight::Knight(const string& RaceName) : Job(RaceName){
         AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;		
-	SpecialArray[0]		= "1.Sword of Fury         30";
+	SpecialArray[0]		= "1.Sword of Fury         30 \n  Description : Menyerang lawan dengan kekuatan\n                menjadi 2 kali lipat dan acurasy menjadi 2.6 kali lipat";
 
 }
 Knight::Knight(const Knight& k){
@@ -59,7 +59,7 @@ void Knight::Special (const int & SPC, Job &Target) {
 		if (SPC == 1) {
 			if (SP>=30) {
 				AttackPoint = int(AttackPoint*2*SpecialBonus) ; 
-				Acc *2.6;
+				Acc = int(float(Acc) *2.6);
 				Attack(Target);
 				AttackPoint = AttackPointDefault;
 				Acc = AccDefault;

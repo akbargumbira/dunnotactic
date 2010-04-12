@@ -352,7 +352,11 @@ void Job::Attack (Job& Target) {
                     DunnoTactic::D.SetInfo("Karakter dengan ID "+DunnoTactic::ToString(Target.GetID())+" mati.",0);
                     DunnoTactic::D.SetInfo("",1);
                 } else {
-                    DunnoTactic::D.SetInfo("Karakter "+DunnoTactic::ToString(Target.GetID())+" menerima damage sebesar "+DunnoTactic::ToString(Damage-Target.GetDefensePoint()),0);
+                    int D = Damage-Target.GetDefensePoint();
+                    if (D<=0) {
+                        D = 1;
+                    }
+                    DunnoTactic::D.SetInfo("Karakter "+DunnoTactic::ToString(Target.GetID())+" menerima damage sebesar "+DunnoTactic::ToString(D),0);
                     DunnoTactic::D.SetInfo("HP karakter sekarang : "+DunnoTactic::ToString(Target.GetHP()),1);
                     DunnoTactic::D.SetInfo("",2);
                 }
