@@ -53,12 +53,14 @@ class Display {
 		
 		// private method
                 void color(string text, string bg);
-                void printCursor();
+                void printCursor(int status);
                 bool PassTerrain(int x, int y);
 		bool PassPlayer(int x1, int y1, int x2, int y2);
-                void printTerrain(int x, int y);
-                void printPlayer(int x, int y, int line);
+                void printTerrain(int x, int y, int status);
+                void printPlayer(int x, int y, int line, int status);
                 void setDistanceMove(int initx, int inity, int x, int y, int range);
+                void shoutAttackRace(string raceName, int mode);
+                void shoutAttackJob(string jobName, int mode);
 		int Min2(int a, int b);
 		int MinAround(int x, int y);
 		bool IsTree(int x, int y);
