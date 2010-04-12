@@ -43,51 +43,51 @@
             int turn = DunnoTactic::PlayerTurn;
             displayBoxMap();
             displayBoxInfo();
-            displayBoxTurn(turn);
+//            displayBoxTurn(turn);
         }
-	void Display::displayBoxTurn(int Turn) {
-		string Blank = "     ";
-		cout << endl;
-		cout << Blank << "::::::::::::::::::" << endl;
-		cout << Blank << ":    PLAYER " << Turn <<"    :" << endl;
-		cout << Blank << ":      TURN      :" << endl;
-		cout << Blank << "::::::::::::::::::" << endl << endl;
-	}
-	
-	void Display::displayBoxTurnWithName(string Name) {
-		string Blank = "     ";
-		cout << endl;
-		cout << Blank << "::::::::::::::::::" << endl;
-		cout << Blank << ":";
-		int sumSpace;
-		int i;
-		
-		if(Name.length()<=12) {
-			sumSpace = (16-Name.length())/2;
-			for(i=0;i<sumSpace;++i) {
-				cout << " ";
-			}
-			cout << Name;
-			if(Name.length()%2 == 1) {
-				++sumSpace;
-			}
-			for(i=0;i<sumSpace;++i) {
-				cout << " ";
-			}
-		} else {
-			sumSpace = 2;
-			for(i=0;i<sumSpace;++i) {
-				cout << " ";
-			}
-			cout << Name.substr(0,12);
-			for(i=0;i<sumSpace;++i) {
-				cout << " ";
-			}
-		}
-		cout << ":" << endl;
-		cout << Blank << ":      TURN      :" << endl;		
-		cout << Blank << "::::::::::::::::::" << endl << endl;
-	}
+//	void Display::displayBoxTurn(int Turn) {
+//		string Blank = "     ";
+//		cout << endl;
+//		cout << Blank << "::::::::::::::::::" << endl;
+//		cout << Blank << ":    PLAYER " << Turn <<"    :" << endl;
+//		cout << Blank << ":      TURN      :" << endl;
+//		cout << Blank << "::::::::::::::::::" << endl << endl;
+//	}
+//
+//	void Display::displayBoxTurnWithName(string Name) {
+//		string Blank = "     ";
+//		cout << endl;
+//		cout << Blank << "::::::::::::::::::" << endl;
+//		cout << Blank << ":";
+//		int sumSpace;
+//		int i;
+//
+//		if(Name.length()<=12) {
+//			sumSpace = (16-Name.length())/2;
+//			for(i=0;i<sumSpace;++i) {
+//				cout << " ";
+//			}
+//			cout << Name;
+//			if(Name.length()%2 == 1) {
+//				++sumSpace;
+//			}
+//			for(i=0;i<sumSpace;++i) {
+//				cout << " ";
+//			}
+//		} else {
+//			sumSpace = 2;
+//			for(i=0;i<sumSpace;++i) {
+//				cout << " ";
+//			}
+//			cout << Name.substr(0,12);
+//			for(i=0;i<sumSpace;++i) {
+//				cout << " ";
+//			}
+//		}
+//		cout << ":" << endl;
+//		cout << Blank << ":      TURN      :" << endl;
+//		cout << Blank << "::::::::::::::::::" << endl << endl;
+//	}
 	
 // Display box Map
 	void Display::displayBoxMap() {
@@ -142,9 +142,11 @@
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
                             if(pointerX==i && pointerY==j) {
-                                printPlayer(i,j,1,true);
+                                printPlayer(i,j,1,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printPlayer(i,j,1,2);
                             } else {
-                                printPlayer(i,j,1,false);
+                                printPlayer(i,j,1,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -152,10 +154,12 @@
                                 cout <<  "|";
                             }
                         } else {
-                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                printTerrain(i,j,true);
+                            if(pointerX==i && pointerY==j) {
+                                printTerrain(i,j,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printTerrain(i,j,2);
                             } else {
-                                printTerrain(i,j,false);
+                                printTerrain(i,j,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -191,9 +195,11 @@
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
                             if(pointerX==i && pointerY==j) {
-                                printPlayer(i,j,2,true);
+                                printPlayer(i,j,2,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printPlayer(i,j,2,2);
                             } else {
-                                printPlayer(i,j,2,false);
+                                printPlayer(i,j,2,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -202,10 +208,12 @@
                             }
                         }
                         else {
-                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                printTerrain(i,j,true);
+                            if(pointerX==i && pointerY==j) {
+                                printTerrain(i,j,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printTerrain(i,j,2);
                             } else {
-                                printTerrain(i,j,false);
+                                printTerrain(i,j,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -226,9 +234,11 @@
                     for(i=1;i<=P;++i) {
                         if(MapPlayer[i-1][j-1]!=0) {
                             if(pointerX==i && pointerY==j) {
-                                printPlayer(i,j,3,true);
+                                printPlayer(i,j,3,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printPlayer(i,j,3,2);
                             } else {
-                                printPlayer(i,j,3,false);
+                                printPlayer(i,j,3,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -236,10 +246,12 @@
                                 cout <<  "|";
                             }
                         } else {
-                            if((pointerX==i && pointerY==j) || MapArea[i-1][j-1]!=99) {
-                                printTerrain(i,j,true);
+                            if(pointerX==i && pointerY==j) {
+                                printTerrain(i,j,1);
+                            } else if(MapArea[i-1][j-1]!=99) {
+                                printTerrain(i,j,2);
                             } else {
-                                printTerrain(i,j,false);
+                                printTerrain(i,j,0);
                             }
                             if((pointerX==i && pointerY==j) || (pointerX==i+1 && pointerY==j)) {
                                 printCursor(0);
@@ -279,7 +291,9 @@
                     cout << "/";
             }
             cout << endl << Blank << "/";
-            for(i=0;i<lengthBox-2;++i) {
+            string Koordinat = "Koordinat : (" + DunnoTactic::ToString(pointerX) + "," + DunnoTactic::ToString(pointerY) + ")";
+            cout << "  " << Koordinat;
+            for(i=0;i<lengthBox-Koordinat.length()-4;++i) {
                     cout << " ";
             }
             cout << "/";
@@ -520,7 +534,7 @@
             }
             Info[2]=" ";
             cout << MapPlayer[x-1][y-1] << endl;
-            if(MapPlayer[x-1][y-1]!=0) {
+            if(MapPlayer[x-1][y-1]>100) {
                 if(IdPlayer(x-1,y-1)==1) {
                     Info[3]="Player - 1";
                 } else {
@@ -528,10 +542,10 @@
                 }
                 Job* Player = DunnoTactic::GetCharacter(x,y);
                 Info[4]= Player->GetRaceName() + "-" + Player->GetJobName();
-                Info[5]="HP           : "+DunnoTactic::ToString(Player->GetHP());
-                Info[6]="SP           : "+DunnoTactic::ToString(Player->GetSP());
-                Info[7]="Attack       : "+DunnoTactic::ToString(Player->GetAttackPoint());
-                Info[8]="Defense      : "+DunnoTactic::ToString(Player->GetDefensePoint());
+                Info[5]="HP      : "+DunnoTactic::ToString(Player->GetHP())+"("+DunnoTactic::ToString(Player->GetHPDefault())+") Accuracy    : "+DunnoTactic::ToString(Player->GetAcc());
+                Info[6]="SP      : "+DunnoTactic::ToString(Player->GetSP())+"("+DunnoTactic::ToString(Player->GetSPDefault())+")   Evade       : "+DunnoTactic::ToString(Player->GetEvade());
+                Info[7]="Attack  : "+DunnoTactic::ToString(Player->GetAttackPoint())+"      Move Range  : "+DunnoTactic::ToString(Player->GetRangeMove());
+                Info[8]="Defense : "+DunnoTactic::ToString(Player->GetDefensePoint())+"       Move Attack : "+DunnoTactic::ToString(Player->GetRangeAttack());
             } else {
                 for(int i=3;i<=8;++i) {
                     Info[i]="";
@@ -582,6 +596,11 @@
             {
                 return MapArea[x-1][y-1];
             }
+        }
+
+        void Display::setPointerXY(int x, int y) {
+            pointerX=x;
+            pointerY=y;
         }
 
 // method-method yang private
@@ -662,7 +681,7 @@
         void Display::printCursor(int status) {
             switch (status) {
                 case 0 : {
-                    color("light gray","cyan");
+                    color("white","bold cyan");
                     cout << "$";
                     color("default","default");
                     break;
@@ -701,19 +720,19 @@
                 case 0 : {
                     switch(DunnoTactic::M.GetTerrain(x,y)) {
                         case 1: {
-                            color("light gray","green");
+                            color("white","bold green");
                             break;
                         }
                         case 2: {
-                            color("cyan","blue");
+                            color("cyan","bold blue");
                             break;
                         }
                         case 3: {
-                            color("bold yellow","yellow");
+                            color("yellow","bold yellow");
                             break;
                         }
                         case 4: {
-                            color("bold green","green");
+                            color("green","bold green");
                             break;
                         }
                         default : {
@@ -723,11 +742,16 @@
                     break;
                 }
                 case 1 : {
-                    color("light gray","cyan");
+                    color("white","bold cyan");
+                    break;
+                }
+                case 2 : {
+                    color("white","bold purple");
                     break;
                 }
                 default : {
                     color("black","black");
+                    break;
                 }
             }
             switch(DunnoTactic::M.GetTerrain(x,y)) {
@@ -766,11 +790,16 @@
                     break;
                 }
                 case 1 : {
-                    color("light gray","cyan");
+                    color("white","bold cyan");
+                    break;
+                }
+                case 2 : {
+                    color("white","bold purple");
                     break;
                 }
                 default : {
-                    
+                    color("black","black");
+                    break;
                 }
             }
             Job* Player = DunnoTactic::GetCharacter(x,y);
