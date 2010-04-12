@@ -478,7 +478,6 @@ void DunnoTactic::DesructCharacter()
 
 void DunnoTactic::Play()
 {
-    bool error=false;
     bool info=false;
     int CountP1Turn=0;
     int CountP2Turn=0;
@@ -493,16 +492,15 @@ void DunnoTactic::Play()
     }*/
     while(true)
     {
-        if(!error && !info) {
+        if(!info) {
             D.clearArea();
             D.displayGame();
         }
-        error = false;
         info = false;
         if (IsGameOver()) {
             cout << "GameOver" << endl;
             cout << "Player " << WinPlayer << " Win." << endl;
-             break;
+            break;
         }
         cout << "play - Player"<<PlayerTurn<<" > ";
         cin.getline(Command, 99);
@@ -608,7 +606,15 @@ void DunnoTactic::Play()
             }
             else if (CommandLength==1 && CommandParse[0]=="help")
             {
-                cout << endl;
+                cout << "endturn            Mengakhiri giliran."<< endl;
+                cout << "list all           Melihat seluruh karakter."<< endl;
+                cout << "list ally          Melihat karakter milik Anda."<< endl;
+                cout << "list enemt         Melihat karakter lawan." << endl;
+                cout << "select x y         Memilih karakter yang berada pada posisi (x,y)."<<endl;
+                cout << "highlight x y      Melihat informasi yang ada pada grid (x,y)."<<endl;
+                cout << "exit               Keluar dari permainan."<<endl;
+                cout << "clear              Membersihkan layar."<<endl;
+                cout << "help               Menampilkan bantuan ini."<<endl;
                 info=true;
             }
             else
@@ -618,8 +624,8 @@ void DunnoTactic::Play()
         }
         catch(const char *e)
         {
-            cout << e << endl;
-            error=true;
+            D.SetInfo(e,0);
+            D.SetInfo("",1);
         }
     }
 }
