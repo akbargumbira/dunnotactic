@@ -704,6 +704,17 @@ void DunnoTactic::Select()
                     Special();
                 }
             }
+            else if (CommandLength==1 && CommandParse[0]=="clear") {
+                system("clear");
+            }
+            else if (CommandLength==1 && CommandParse[0]=="help") {
+                cout << "attack     Menyerang karakter lain."<<endl;
+                cout << "cancel     Membatalkan memilih karakter."<<endl;
+                cout << "clear      Membersihkan layar."<<endl;
+                cout << "help       Menampilkan bantuan ini."<<endl;
+                cout << "move       Melakukan perpindahan."<<endl;
+                cout << "wait       Menunggu giliran selanjutnya."<<endl;
+            }
             else
             {
                 throw "Perintah tidak ditemukan.";
@@ -735,6 +746,13 @@ void DunnoTactic::Move()
                 } else {
                     throw "Masukan harus integer.";
                 }
+            }
+            else if (CommandLength==1 && CommandParse[0]=="clear") {
+                system("clear");
+            } else if (CommandLength==1 && CommandParse[0]=="help") {
+                cout << "x y        Bergerak ke target x y."<<endl;
+                cout << "cancel     Kembali ke menu select."<<endl;
+                cout << "clear      Membersihkan layar."<<endl;
             } else {
                 throw "Perintah tidak ditemukan.";
             }
@@ -762,7 +780,14 @@ void DunnoTactic::Attack() {
                 } else {
                     throw "Masukan harus integer.";
                 }
-            } else {
+            } else if (CommandLength==1 && CommandParse[0]=="clear") {
+                system("clear");
+            } else if (CommandLength==1 && CommandParse[0]=="help") {
+                cout << "x y        Menyerang target x y."<<endl;
+                cout << "cancel     Kembali ke menu select."<<endl;
+                cout << "clear      Membersihkan layar."<<endl;
+            }
+            else {
                 throw "Perintah tidak ditemukan.";
             }
         } catch(const char* e) {
@@ -788,7 +813,7 @@ void DunnoTactic::Special() {
                 } else {
                     break;
                 }
-            } else {
+            }                                                                                                                                                                                                               else {
                 throw "Masukan harus integer.";
             }
         } catch (const char* e) {
@@ -813,6 +838,13 @@ void DunnoTactic::Special() {
                 } else {
                     throw "Masukan harus integer.";
                 }
+            }
+            else if (CommandLength==1 && CommandParse[0]=="clear") {
+                system("clear");
+            } else if (CommandLength==1 && CommandParse[0]=="help") {
+                cout << "x y        Menyerang target x y."<<endl;
+                cout << "cancel     Kembali ke menu select."<<endl;
+                cout << "clear      Membersihkan layar."<<endl;
             } else {
                 throw "Perintah tidak ditemukan.";
             }
