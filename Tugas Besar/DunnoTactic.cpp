@@ -1048,11 +1048,16 @@ void DunnoTactic::List(int Player, string option)
     }
 
     cout << "Race : " << P[0]->GetRaceName()<< endl;
-    cout << "Id \\ Job Name \\ Position \\ HP(HPDefault) \\ SP(SPDefault)"<< endl;
+    cout << "Id \\ Job Name \\ Position \\ Dead \\ HP(HPDefault) \\ SP(SPDefault)"<< endl;
     for(int i=0;i<P.size();++i)
     {
-        cout << P[i]->GetID() << " \\ " << P[i]->GetJobName()<< " \\ (" << P[i]->GetX()<< "," << P[i]->GetY() << ") \\ " << P[i]->GetHP();
-        cout <<"("<<P[i]->GetHPDefault()<<") \\ "<<P[i]->GetSP()<<"("<<P[i]->GetSPDefault()<<")"<<endl;
+        cout << P[i]->GetID() << " \\ " << P[i]->GetJobName()<< " \\ (" << P[i]->GetX()<< "," << P[i]->GetY() << ") \\ " ;
+        if (P[i]->GetDeath()) {
+            cout << "Ya";
+        } else {
+            cout << "Tidak";
+        }
+        cout << " \\ "<< P[i]->GetHP() <<"("<<P[i]->GetHPDefault()<<") \\ "<<P[i]->GetSP()<<"("<<P[i]->GetSPDefault()<<")"<<endl;
     }
 }
 
