@@ -348,12 +348,17 @@ void Job::Attack (Job& Target) {
 	if (z<=4) {
 		int Damage = int(float(AttackPoint) * (0.01 * float(rand()%21 + 90)));
 		Target.ReceiveAttack(Damage);
-                DunnoTactic::D.SetInfo("PLAYER DEAL DAMAGE "+DunnoTactic::ToString(Damage-Target.GetDefensePoint()),0);
-                DunnoTactic::D.SetInfo("PLAYER HP NOW "+DunnoTactic::ToString(Target.GetHP()),1);
-                DunnoTactic::D.SetInfo("",2);
+                if (Target.GetDeath()) {
+                    DunnoTactic::D.SetInfo("Karakter dengan ID "+Target.GetID()+" mati.",0);
+                    DunnoTactic::D.SetInfo("",1);
+                } else {
+                    DunnoTactic::D.SetInfo("Karakter "+Target.GetID()+" menerima damage sebesar "+DunnoTactic::ToString(Damage-Target.GetDefensePoint()),0);
+                    DunnoTactic::D.SetInfo("HP karakter sekarang : "+DunnoTactic::ToString(Target.GetHP()),1);
+                    DunnoTactic::D.SetInfo("",2);
+                }
 	}
 	else  {
-            DunnoTactic::D.SetInfo("PLAYER MISS !!!!!",0);
+            DunnoTactic::D.SetInfo("Attack Miss !!!!!",0);
             DunnoTactic::D.SetInfo("",1);
 	}
         DunnoTactic::D.displayGame();
