@@ -39,6 +39,7 @@ public:
     static void Select();
     static void Move();
     static void Attack();
+    static void Special();
     static void ParseCommand();
     static void StringToLower(char* s);
     static bool IsInteger(string &s);

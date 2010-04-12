@@ -16,9 +16,9 @@ Warrior::Warrior(const string& RaceName) : Job(RaceName){
 	RangeMove  			-= 0;
 	RangeAttack			+= 0;
 	HP         			= int(HP*1);
-	SP         			= int(SP*1.2);
+	SPDefault     			= int(SPDefault*1.2);
 	HPDefault  			= HP;
-	SPDefault  			= SP;
+	SP                              = 0;
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	

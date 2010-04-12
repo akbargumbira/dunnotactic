@@ -16,9 +16,9 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 	RangeMove  			+= 1;
 	RangeAttack			+= 6;
 	HP         			= int(HP*1);
-	SP         			= int(SP*1.2);
+	SPDefault     			= int(SPDefault*1.2);
 	HPDefault  			= HP;
-	SPDefault  			= SP;
+	SP        			= 0;
 	AccDefault 			= Acc;
 	AttackPointDefault 	= AttackPoint;
 	RangeAttackDefault 	= RangeAttack;	
@@ -59,12 +59,12 @@ void Archer::Special (const int & SPC, Job &Target) {
 			if (SP>25) {
 				AttackPoint = int(AttackPoint*1.4*SpecialBonus) ;
 				Acc *2.2;
-				RangeAttack	+= -1;
+				//RangeAttack	+= 1;
 				Attack(Target);
 				AttackPoint = AttackPointDefault;
 				RangeAttack = RangeAttackDefault;
 				Acc = AccDefault;
-				SP	-= 25;
+				SP -= 25;
 				AttackTurn = true;}
 			else { throw "SP tidak mencukupi.";
 			}
