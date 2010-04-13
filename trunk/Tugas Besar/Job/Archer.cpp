@@ -9,7 +9,7 @@ Archer::Archer(const string& RaceName) : Job(RaceName){
 
 	Name 	   			= "";
 	JobName	   			= "Archer";
-	AttackPoint			= int(AttackPoint*1);
+	AttackPoint			= int(AttackPoint*0.7);
 	Defense    			= int(Defense*0.8);
 	Acc	       			= int(Acc*1.4);
 	Evade      			= int(Evade*1.4);

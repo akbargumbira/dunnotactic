@@ -545,7 +545,7 @@
                 Info[5]="HP      : "+DunnoTactic::ToString(Player->GetHP())+"("+DunnoTactic::ToString(Player->GetHPDefault())+") Accuracy    : "+DunnoTactic::ToString(Player->GetAcc());
                 Info[6]="SP      : "+DunnoTactic::ToString(Player->GetSP())+"("+DunnoTactic::ToString(Player->GetSPDefault())+")   Evade       : "+DunnoTactic::ToString(Player->GetEvade());
                 Info[7]="Attack  : "+DunnoTactic::ToString(Player->GetAttackPoint())+"      Move Range  : "+DunnoTactic::ToString(Player->GetRangeMove());
-                Info[8]="Defense : "+DunnoTactic::ToString(Player->GetDefensePoint())+"       Move Attack : "+DunnoTactic::ToString(Player->GetRangeAttack());
+                Info[8]="Defense : "+DunnoTactic::ToString(Player->GetDefensePoint())+"       Attack Range : "+DunnoTactic::ToString(Player->GetRangeAttack());
             } else {
                 for(int i=3;i<=8;++i) {
                     Info[i]="";
