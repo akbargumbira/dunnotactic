@@ -1,17 +1,17 @@
 #include "Display.h"
+#include "../Job/Job.h"
+#include "../Job/Archer.h"
+#include "../DunnoTactic.h"
 
 int main() {
 
 	Display d;
         string Info[9];
+        DunnoTactic::P1.push_back(new Archer("human"));
         try{
-//	d.displayBoxTurn(1);
-//	d.displayBoxTurnWithName("Mukhammad Ifanto");
-//	d.setArea(5,5,4);
-//	d.displayBoxMap(9,9);
-            system("clear");
+	DunnoTactic::P1[0]->SetXY(5,5);
+	d.setAreaMove(5,5,4);
         d.MoveAnimated(5,5,5,2);
-//            d.SelectGrid(1,1);
 	cout << endl << endl;
 	
         }

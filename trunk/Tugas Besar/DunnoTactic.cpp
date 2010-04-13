@@ -17,6 +17,7 @@
 #include "Job/Sage.h"
 #include "Job/Warrior.h"
 
+/* DEKLARASI VARIABEL STATIK */
 char DunnoTactic::Command[100];
 string DunnoTactic::CommandParse[10];
 int DunnoTactic::CommandLength;
@@ -29,6 +30,7 @@ int DunnoTactic::PlayerTurn;
 int DunnoTactic::WinPlayer = 0;
 Job* DunnoTactic::CurrenctChar;
 
+/* METHOD */
 DunnoTactic::DunnoTactic() {
 }
 
@@ -44,6 +46,7 @@ void DunnoTactic::Main()
 // F.S. Ke menu play atau menu build
 // Proses : Parsing perintah, periksa perintah.
 {
+    srand(time(NULL));
     while(true)
     {
         cout << "Menu Utama > ";
@@ -55,8 +58,9 @@ void DunnoTactic::Main()
             {
                 Build();
             }
-            else if (CommandLength==2 && CommandParse[0]=="play" && CommandParse[1]=="mode")
+            else if (CommandLength==3 && CommandParse[0]=="play" && CommandParse[1]=="mode")
             {
+                M.Load(CommandParse[2]);
                 Play();
             }
             else if (CommandLength==1 && CommandParse[0]=="exit")
@@ -65,8 +69,8 @@ void DunnoTactic::Main()
             }
             else if (CommandLength==1 && CommandParse[0]=="help")
             {
-                cout << "build mode     membangun peta" << endl;
-                cout << "play mode      mulai bermain" << endl;
+                cout << "build mode                membangun peta" << endl;
+                cout << "play mode [nama file]     mulai bermain" << endl;
             }
             else if (CommandLength==1 && CommandParse[0]=="clear")
             {
@@ -90,8 +94,17 @@ void DunnoTactic::Build()
 // F.S. : Create map, edit map, save atau load map.
 // Proses : Parsing perintah, periksa perintah
 {
+    bool error=false;
+    string filename="";
+    M.CreateMap(5, 5);
     while(true)
     {
+        if(!error) {
+            system("clear");
+            D.displayBoxMap();
+        } else {
+            error=false;
+        }
         cout << "build > ";
         cin.getline(Command, 99);
         try
@@ -111,10 +124,20 @@ void DunnoTactic::Build()
             else if (CommandLength==3 && CommandParse[0]=="load" && CommandParse[1]=="map")
             {
                 M.Load(CommandParse[2]);
+                filename=CommandParse[2];
             }
-            else if (CommandLength==3 && CommandParse[0]=="save" && CommandParse[1]=="map")
+            else if ((CommandLength==3 || CommandLength==2) && CommandParse[0]=="save" && CommandParse[1]=="map")
             {
-                M.Save(CommandParse[2]);
+                if (CommandLength==3) {
+                    M.Save(CommandParse[2]);
+                    filename=CommandParse[2];
+                } else {
+                    if (filename=="") {
+                        throw "Belum pernah melakukan save atau load file.";
+                    } else {
+                        M.Save(filename);
+                    }
+                }
             }
             else if (CommandLength==4 && CommandParse[0]=="edit")
             {
@@ -144,6 +167,7 @@ void DunnoTactic::Build()
             }
             else if (CommandLength==1 && CommandParse[0]=="exit")
             {
+                system("clear");
                 D.displayBoxMap();
                 break;
             }
@@ -168,6 +192,7 @@ void DunnoTactic::Build()
         }
         catch (const char *e)
         {
+            error=true;
             cout << e << endl;
         }
     }
@@ -512,25 +537,21 @@ void DunnoTactic::Play()
 // Proses : Parsing perintah, periksa perintah
 {
     bool info=false;
+    bool error=false;
     int CountP1Turn=0;
     int CountP2Turn=0;
     SelectCharacter();
-    /*for (int i=0;i<P1.size();++i)
-    {
-        cout <<i+1<<". " << P1[i]->GetX() << " " << P1[i]->GetY() << endl;
-    }
-    for (int i=0;i<P2.size();++i)
-    {
-        cout <<i+1<<". " << P2[i]->GetX() << " " << P2[i]->GetY() << endl;
-    }*/
     D.HighlightGrid(1,1);
     while(true)
     {
-        if(!info) {
+        if(!info && !error) {
+            system("clear");
             D.clearArea();
             D.displayGame();
+        } else {
+            info = false;
+            error = true;
         }
-        info = false;
         if (IsGameOver()) {
             cout << "GameOver" << endl;
             cout << "Player " << WinPlayer << " Win." << endl;
@@ -549,6 +570,7 @@ void DunnoTactic::Play()
             else if (CommandLength==1 && CommandParse[0]=="endturn")
             {
                 cout << "Player "<< PlayerTurn <<" turn is Over." << endl;
+                info=true;
                 if (PlayerTurn==1) {
                     ++PlayerTurn;
                     ++CountP1Turn;
@@ -620,7 +642,7 @@ void DunnoTactic::Play()
                 {
                     throw "Parameter harus integer.";
                 }
-                D.HighlightGrid(CurrenctChar->GetX(), CurrenctChar->GetY());
+                D.HighlightGrid(1, 1);
             }
             else if (CommandLength==3 && CommandParse[0]=="highlight")
             {
@@ -659,8 +681,8 @@ void DunnoTactic::Play()
         }
         catch(const char *e)
         {
-            D.SetInfo(e,0);
-            D.SetInfo("",1);
+            error = true;
+            cout << e << endl;
         }
     }
 }
@@ -670,6 +692,7 @@ void DunnoTactic::Select()
 // F.S. akan melakukan attack, bergerak, special atau seleksi player dibatalkan
 // Proses : Parsing perintah, periksa perintah
 {
+    bool error=false;
     if (CurrenctChar->GetDeath()) {
         throw "Karakter telah mati.";
     }
@@ -690,7 +713,12 @@ void DunnoTactic::Select()
     {
         if (IsGameOver())
             break;
-        
+
+        if (!error) {
+            D.displayGame();
+        } else {
+            error=false;
+        }
         cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " > ";
         cin.getline(Command, 99);
         try
@@ -758,6 +786,7 @@ void DunnoTactic::Select()
         }
         catch(const char* e)
         {
+            error=true;
             cout << e << endl;
         }
     }
