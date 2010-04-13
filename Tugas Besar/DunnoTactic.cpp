@@ -40,6 +40,9 @@ DunnoTactic::~DunnoTactic() {
 }
 
 void DunnoTactic::Main()
+// I.S. Menerima Perintah
+// F.S. Ke menu play atau menu build
+// Proses : Parsing perintah, periksa perintah.
 {
     while(true)
     {
@@ -83,6 +86,9 @@ void DunnoTactic::Main()
 }
 
 void DunnoTactic::Build()
+// I.S. : Menerima perintah
+// F.S. : Create map, edit map, save atau load map.
+// Proses : Parsing perintah, periksa perintah
 {
     while(true)
     {
@@ -168,6 +174,10 @@ void DunnoTactic::Build()
 }
 
 void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player)
+// I.S. vector nama Job terdefinisi, Race dan player terdefinisi
+// F.S. vector P terisi
+// Proses : Membuat / konstruk karakter sesuai race dan jobnya
+//          id 101-500 untuk player 1. id >500 untuk player2.
 {
     cout << Race << endl;
     for (int i=0;i<NumberChar;++i)
@@ -205,7 +215,11 @@ void DunnoTactic::ConstructCharacter(vector<Job*> &P, vector<string> Job, string
     }
 }
 
-void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
+void DunnoTactic::RandomChacracterPosition(vector<Job*> &P)
+// I.S. : P terdefinisi
+// F.S. : Posisi Job-job pada vector P terupdate
+// Proses : Akan didaftar semua posisi yang bisa ditempati karakter, kemudian dipilih secara random posisi tersebut.
+//          Posisi yang telah ditempati tidak bisa dipakai lagi.
 {
     int i=0;
     int temp;
@@ -238,6 +252,9 @@ void DunnoTactic::RandomChacracterPosition(int kuadran, vector<Job*> &P)
 }
 
 void DunnoTactic::SelectNumCharacter()
+// I.S. : -
+// F.S. : - Numberchar (Jumlah karakter) terdefinisi
+// Proses : Meminta masukan user, jika salah masukan diulang lagi.
 {
     while (true)
     {
@@ -278,6 +295,9 @@ void DunnoTactic::SelectNumCharacter()
 }
 
 void DunnoTactic::SelectRace(string& Race, const string& Player)
+// I.S. : Player terdefinisi
+// F.S. : Nama Race terdefinisi.
+// Proses : meminta masukan user, jika salah masukan diulang lagi.
 {
     int length = 4;
     string race[length];
@@ -327,6 +347,10 @@ void DunnoTactic::SelectRace(string& Race, const string& Player)
 }
 
 void DunnoTactic::SelectJob(vector<string>& Job, const string& Player)
+// I.S. Player terdefinisi
+// F.S. vector string Job terdefinisi
+// Proses : meminta masukan user, pilih job secara manual atau secara random
+//          Jika masukan user salah, permintaan masukan akan diulang
 {
     int length=6;
     string job[length];
@@ -420,7 +444,6 @@ void DunnoTactic::SelectJob(vector<string>& Job, const string& Player)
     }
     else
     {
-        srand(time(NULL));
         for (int i=1;i<=NumberChar;++i)
         {
             int k = rand()%6;
@@ -431,6 +454,10 @@ void DunnoTactic::SelectJob(vector<string>& Job, const string& Player)
 }
 
 void DunnoTactic::SelectCharacter()
+// I.S. -
+// F.S. Karakter tiap player terpilih dan telah dikonstruk
+// Proses : Meminta jumlah karakter, meminta nama race, meminta nama-nama job
+//          Konstruk semua karakter, random posisi karakter
 {
     string P1Race;
     vector<string> P1Job;
@@ -446,13 +473,16 @@ void DunnoTactic::SelectCharacter()
     SelectJob(P2Job, "Player2");
 
     ConstructCharacter(P1, P1Job, P1Race, 1);
-    RandomChacracterPosition(1, P1);
+    RandomChacracterPosition(P1);
     ConstructCharacter(P2, P2Job, P2Race, 2);
-    RandomChacracterPosition(3, P2);
+    RandomChacracterPosition(P2);
     PlayerTurn = 1;
 }
 
 void DunnoTactic::DesructCharacter()
+// I.S. vector<Job*> P1 dan vector<Job*>P2 terdefinisi
+// F.S. vector<Job*> P1 dan vector<Job*>P2 kosong
+// Proses : setiap job pada vector di hapus dan setiap iterator vector dihapus juga
 {
     vector<Job*>::const_iterator i;
     vector<Job*>::const_iterator end;
@@ -477,6 +507,9 @@ void DunnoTactic::DesructCharacter()
 }
 
 void DunnoTactic::Play()
+// I.S. Menerima perintah
+// F.S. karakter terseleksi, tukar giliran, akhiri permainan, list karakter, highlight grid
+// Proses : Parsing perintah, periksa perintah
 {
     bool info=false;
     int CountP1Turn=0;
@@ -633,6 +666,9 @@ void DunnoTactic::Play()
 }
 
 void DunnoTactic::Select()
+// I.S. Menerima perintah
+// F.S. akan melakukan attack, bergerak, special atau seleksi player dibatalkan
+// Proses : Parsing perintah, periksa perintah
 {
     if (CurrenctChar->GetDeath()) {
         throw "Karakter telah mati.";
@@ -728,6 +764,9 @@ void DunnoTactic::Select()
 }
 
 void DunnoTactic::Move()
+// I.S. Menerima posisi bergerak
+// F.S. Bergerak ke posisi yang dimaksud atau batal bergerak(cancel)
+// Proses : parsing perintah, periksa perintah
 {
     while (true) {
         cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " - Move > ";
@@ -762,7 +801,11 @@ void DunnoTactic::Move()
     }
 }
 
-void DunnoTactic::Attack() {
+void DunnoTactic::Attack() 
+// I.S. Menerima posisi attack
+// F.S. menyerang posisi yang dimaksud
+// Proses : parsing perintah, periksa perintah
+{
     while (true) {
         cout << "Player" << PlayerTurn << " - " << CurrenctChar->GetID() << " - Attack > ";
         cin.getline(Command, 99);
@@ -796,7 +839,11 @@ void DunnoTactic::Attack() {
     }
 }
 
-void DunnoTactic::Special() {
+void DunnoTactic::Special() 
+// I.S. Menerima posisi attack
+// F.S. menyerang posisi yang dimaksud
+// Proses : parsing perintah, periksa perintah
+{
     int length = CurrenctChar->ShowSpecialArray();
     int pilihan=0;
     cout << endl;
@@ -855,6 +902,8 @@ void DunnoTactic::Special() {
 }
 
 void DunnoTactic::ParseCommand()
+// I.S. Command terdefinisi
+// F.S. Command dibagi menjadi beberapa kata dan disimpan di array CommandParse
 {
     int i=0;
     int j=0;
@@ -943,6 +992,8 @@ void DunnoTactic::ParseCommand()
 }
 
 void DunnoTactic::StringToLower(char* s)
+// I.S. s terdefinisi
+// F.S. semua character s menjadi lower.
 {
     int i = 0;
 
@@ -954,6 +1005,8 @@ void DunnoTactic::StringToLower(char* s)
 }
 
 bool DunnoTactic::IsInteger(string &s)
+// I.S. s terdefinisi
+// F.S. mengembalikan true jika s adalah integer, false jika tidak
 {
     for(int i=0;i<s.length();++i)
     {
@@ -967,6 +1020,8 @@ bool DunnoTactic::IsInteger(string &s)
 }
 
 string DunnoTactic::ToString(const int& n)
+// I.S. n terdefinisi
+// F.S. Mengembalikan n dalam string
 {
     ostringstream out;
     out << n;
@@ -974,6 +1029,9 @@ string DunnoTactic::ToString(const int& n)
 }
 
 Job* DunnoTactic::GetCharacter(int X, int Y)
+// I.S. X dan Y terdefinisi
+// F.S. Mengembalikan Job yang memiliki posisi X dan Y
+//      throw pesan error jika tidak menemukan JOb yang dimaksud
 {
     vector<Job*>::iterator i;
     vector<Job*>::iterator end;
@@ -1001,6 +1059,9 @@ Job* DunnoTactic::GetCharacter(int X, int Y)
 }
 
 Job* DunnoTactic::GetCharacter(int id)
+// I.S. id terdefinisi
+// F.S. Mengembalikan Job yang memiliki id yang dimaksud
+//      throw pesan error jika tidak menemukan JOb yang dimaksud
 {
     vector<Job*>::iterator i;
     vector<Job*>::iterator end;
@@ -1028,6 +1089,10 @@ Job* DunnoTactic::GetCharacter(int id)
 }
 
 void DunnoTactic::List(int Player, string option)
+// I.S. Player dan option terdefinisi
+// F.S. List semua karakter jika option = "all"
+//      List karakter player Player jika option="ally"
+//      List musuh player Player jika option="enemy"
 {
     vector<Job*> P;
     if (Player==1)
@@ -1062,6 +1127,8 @@ void DunnoTactic::List(int Player, string option)
 }
 
 void DunnoTactic::ListAll(int Player)
+// I.S. Player terdefinisi
+// F.S. List semua player
 {
     cout <<"Ally : "<<endl;
     List(Player, "ally");
@@ -1069,7 +1136,10 @@ void DunnoTactic::ListAll(int Player)
     List(Player, "enemy");
 }
 
-bool DunnoTactic::IsGameOver() {
+bool DunnoTactic::IsGameOver()
+// I.S. -
+// F.S. mengembalikan true jika semua karakter di salah satu player telah mati
+{
     int count1 = 0, count2=0;
     for (int i=0;i<NumberChar;++i)
     {

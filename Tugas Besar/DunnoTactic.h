@@ -30,7 +30,7 @@ public:
     static void Main();
     static void Play();
     static void ConstructCharacter(vector<Job*> &P, vector<string> Job, string Race, int Player);
-    static void RandomChacracterPosition(int kuadran, vector<Job*> &P);
+    static void RandomChacracterPosition(vector<Job*> &P);
     static void SelectNumCharacter();
     static void SelectCharacter();
     static void SelectJob(vector<string> &Job, const string& Player);
@@ -50,25 +50,25 @@ public:
     static void List(int Player, string option);
     static void DesructCharacter();
     static bool IsGameOver();
+
+
     struct Point {
         int X;
         int Y;
     };
 
-    static char Command[100];
-    static string CommandParse[10];
-    static int CommandLength;
-
-    static vector<Job*> P1;
-    static vector<Job*> P2;
-
-    static int NumberChar;
-    static int PlayerTurn;
-    static bool GameOver;
-    static int WinPlayer;
-    static Job* CurrenctChar;
-    static Map M;
-    static Display D;
+    static char Command[100];           // Menampung Perintah (belum diparsing)
+    static string CommandParse[10];     // Menampung perintah yang telah diparsing
+    static int CommandLength;           // Menampung jumlah perintah yang diparsing
+    static vector<Job*> P1;             // Menampung semua karakter player 1
+    static vector<Job*> P2;             // Menampung semua karakter player 2
+    static int NumberChar;              // Menampung jumlah karakter
+    static int PlayerTurn;              // Turn player saat ini
+    static bool GameOver;               // telah gameover atau belum
+    static int WinPlayer;               // Menampung player yang menang
+    static Job* CurrenctChar;           // Menampung karakter yang sekarang dipilih
+    static Map M;                       // Menampung map yang digunakan
+    static Display D;                   // Menampung display yang digunakan
     
 private:
     
