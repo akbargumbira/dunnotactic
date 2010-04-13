@@ -28,10 +28,35 @@
 
 // Display copy constructor
 	Display::Display(const Display& D) {
+            for(int i=0;i<9;++i)
+                Info[i] = D.Info[i];
+
+            for (int i=0;i<30;++i) {
+                for (int j=0;j<30;++j) {
+                    MapArea[i][j] = D.MapArea[i][j];
+                    MapPlayer[i][j] = D.MapPlayer[i][j];
+                }
+            }
+            isAttack = D.isAttack;
+            pointerX = D.pointerX;
+            pointerY = D.pointerY;
 	}
 	
 // Display operator assignment
 	Display& Display::operator=(const Display& D) {
+            for(int i=0;i<9;++i)
+                Info[i] = D.Info[i];
+            for (int i=0;i<30;++i) {
+                for (int j=0;j<30;++j) {
+                    MapArea[i][j] = D.MapArea[i][j];
+                    MapPlayer[i][j] = D.MapPlayer[i][j];
+                }
+            }
+            isAttack = D.isAttack;
+            pointerX = D.pointerX;
+            pointerY = D.pointerY;
+
+            return *this;
 	}
 
 // Display destructor
